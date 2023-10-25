@@ -1,0 +1,103 @@
+{% set activeMenu = 'center' %}
+{% set subMenu = 'center' %}
+{% set activeMenu2 = 'documentTracking' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block body %}
+    {# Fil d'Ariane #}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="Accueil">Accueil</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.home.index', { 'id' : project.id }) }}"
+                                           title="{{ project.acronyme }}">{{ project.acronyme }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.list.documentTracking', { 'id' : project.id }) }}"
+                                           title="Suivi de document">{{ 'entity.DocumentTracking.action.list'|trans }}</a></li>
+            <li class="breadcrumb-item active"> Fiche </li>
+        </ol>
+    </nav>
+
+    <h1>{{ documentTracking.title }}</h1>
+    <div class="admin-block">
+        <div class="sf-read">
+            <h5>{{ 'show.main'|trans }}</h5>
+            <dl class="row">
+                <div class="col-4">
+                    <dt>{{ 'entity.DocumentTracking.field.name'|trans }} : </dt>
+                    <dd>{{ documentTracking.title }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.DocumentTracking.field.version'|trans }} : </dt>
+                    <dd>{{ documentTracking.version }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.DocumentTracking.field.country'|trans }} : </dt>
+                    <dd>{{ documentTracking.country }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.DocumentTracking.field.scope'|trans }} : </dt>
+                    <dd>
+                        {{ documentTracking.isCenter ? 'Centre' : 'Interlocuteur' }}
+                        {% if documentTracking.toBeSent %}
+                            <span class="badge badge-info">{{ 'entity.DocumentTracking.field.toBeSent'|trans }}</span>
+                        {% endif %}
+                        {% if documentTracking.toBeReceived %}
+                            <span class="badge badge-info">{{ 'entity.DocumentTracking.field.toBeReceived'|trans }}</span>
+                        {% endif %}
+                    </dd>
+                </div>
+            </dl>
+            {% if is_granted('DOCUMENTTRACKING_EDIT', documentTracking) %}
+                <a class="btn btn-primary"
+                   href="{{ path('project.documentTracking.edit', {'id' : project.id, 'idDocumentTracking' : documentTracking.id } ) }}">
+                    {{ 'entity.DocumentTracking.action.modify'|trans }}</a>
+            {%  endif %}
+        </div>
+    </div>
+
+    <div class="admin-block">
+        <h5>{{ 'Liste des émissions/réceptions'|trans }}</h5>
+
+        <div class="table-responsive">
+            <table class="w-100" id="document-table">
+                <tr>
+                    <th>{{ documentTracking.isCenter ? 'Centre' : 'Interlocuteur' }}</th>
+                    {% if documentTracking.toBeSent %}
+                        <th>{{ 'entity.DocumentTracking.field.sentAt'|trans }}</th>
+                    {% endif %}
+                    {% if documentTracking.toBeReceived %}
+                        <th>{{ 'entity.DocumentTracking.field.receivedAt'|trans }}</th>
+                    {% endif %}
+                    {% if is_granted('DOCUMENTTRACKING_EDIT', documentTracking) %}
+                        <th>{{ 'form.action.action'|trans }}</th>
+                    {% endif %}
+                </tr>
+                {% for row in history %}
+                    <tr>
+                        <td>
+                            {% if documentTracking.isInv %}
+                                <a href="{{ path('project.interlocutor.show', {id: project.id, idInterlocutor: row.interlocutor.id}) }}">{{ row.interlocutor.fullName }}</a>
+                            {% else %}
+                                <a href="{{ path('project.center.show', {id: project.id, idCenter: row.center.id}) }}">{{ row.center.number }}</a>
+                            {% endif %}
+                        </td>
+                        {% if documentTracking.toBeSent %}
+                            <td>{{ row.sentAt is null ? '' : row.sentAt|date('d/m/Y') }}</td>
+                        {% endif %}
+                        {% if documentTracking.toBeReceived %}
+                            <td>{{ row.receivedAt is null ? '' : row.receivedAt|date('d/m/Y') }}</td>
+                        {% endif %}
+                        {% if is_granted('DOCUMENTTRACKING_EDIT', documentTracking) %}
+                            {% if documentTracking.isCenter %}
+                                <td><a title="{{ 'form.action.edit'|trans }}" href="{{ path('project.center.trackingDocument.edit', {id: project.id, idCenter: row.center.id, idDocumentTracking: row.id}) }}" class="document-edit"><i class="fa fa-edit"></i></a></td>
+                            {% else %}
+                                <td><a title="{{ 'form.action.edit'|trans }}" href="{{ path('project.interlocutor.trackingDocument.edit', {id: project.id, idInterlocutor: row.interlocutor.id, idDocumentTracking: row.id}) }}" class="document-edit"><i class="fa fa-edit"></i></a></td>
+                            {% endif %}
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

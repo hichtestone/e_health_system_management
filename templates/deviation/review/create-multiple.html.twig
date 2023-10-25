@@ -1,0 +1,102 @@
+{# set current menu #}
+{% set activeMenu = 'project' %}
+{% set subMenu = 'project' %}
+{% set activeMenu2 = 'protocol-deviation' %}
+{% set count = countDeviation %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="Accueil">{{ 'menu.project.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.show', { 'id' : project.id }) }}">{{ 'menu.project.manage'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('deviation.list', { 'projectID' : project.id }) }}">{{ 'menu.project.protocol_deviation'|trans }}</a></li>
+            <li class="breadcrumb-item active">{{ 'entity.Deviation.DeviationReview.action.createMultipleForm'|trans }}</li>
+        </ol>
+    </nav>
+
+    <h1>{{ 'entity.Deviation.DeviationReview.action.createMultiple'|trans }}</h1>
+
+
+    {% if count %}
+        <div class="admin-block">
+            <div class="sf-read">
+                <h5>{{ 'entity.Deviation.DeviationReview.multiple'|trans }}</h5>
+            </div>
+            <div class="table-responsive">
+                <table class="w-100" id="review-actions">
+                    <tr>
+                        <th>Code déviation</th>
+                        <th>Centre</th>
+                        <th>Date de constat</th>
+                        <th>Résumé</th>
+                        <th>Grade</th>
+                    </tr>
+                    {% for deviation in deviations %}
+                        {% for item in deviation %}
+                            <tr>
+                                <td><a href="{{ path('deviation.declaration', {'projectID' : project.id, 'deviationID' : item.id}) }}" target="_blank">{{ item.code }}</a></td>
+                                <td>{% if item.center %} {{ item.center.number }} {% endif %}</td>
+                                <td>{{ item.observedAt is empty ? '' : item.observedAt|date('d/m/Y') }}</td>
+                                <td>{{ item.resume }}</td>
+                                <td>{{ constant('GRADES', item)[item.grade] | trans }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        <div class="admin-block">
+            {{ form_start(form) }}
+            <div class="row mb-3">
+                <div class="col-4">
+                    {{ form_label(form.type, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.type) }}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-4">
+                    {{ form_label(form.reader, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.reader) }}
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-4">
+                    {{ form_label(form.doneAt, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.doneAt) }}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-4">
+                    {{ form_label(form.comment, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.comment) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <button type="submit" class="btn btn-primary">{{ ('entity.Deviation.DeviationReview.action.'~action)|trans }}</button>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    {% else %}
+        <h3>
+            <span class="badge badge-danger">Merci de sélectionner au moins une déviation</span>
+            <a href="{{ path('deviation.list', { 'projectID' : project.id}) }}" class="btn btn-primary">Retour sur la liste de déviation</a>
+        </h3>
+    {% endif %}
+
+{% endblock %}

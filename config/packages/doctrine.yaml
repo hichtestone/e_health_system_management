@@ -1,0 +1,27 @@
+doctrine:
+    dbal:
+#        url: 'mysql://%database.user%:%database.password%@%database.host%:%database.port%/%env(DATABASE_NAME)%'
+        server_version: '%env(DATABASE_VERSION)%'
+        host:           '%env(DATABASE_HOST)%'
+        port:           '%env(DATABASE_PORT)%'
+        dbname:         '%env(DATABASE_NAME)%'
+        user:           '%env(DATABASE_USER)%'
+        password:       '%env(DATABASE_PASSWORD)%'
+        driver:         pdo_mysql
+    orm:
+        auto_generate_proxy_classes: true
+        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+        auto_mapping: true
+        mappings:
+            App:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/ESM/Entity'
+                prefix: 'App\ESM\Entity'
+                alias: App
+            etmf:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/ETMF/Entity'
+                prefix: 'App\ETMF\Entity'
+                alias: AppETMF

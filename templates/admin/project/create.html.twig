@@ -1,0 +1,456 @@
+{% set activeMenu = 'project' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('admin.projects.index') }}" title="{{ 'menu.admin.home'|trans }}">{{ 'menu.admin.home'|trans }}</a></li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('admin.projects.index') }}" title="{{ 'menu.admin.studies' | trans }}">
+                    {{ 'menu.admin.studies' | trans }}
+                </a>
+            </li>
+            <li class="breadcrumb-item active">{{ ('form.action.'~action)|trans }}</li>
+        </ol>
+    </nav>
+
+    <h1>{{ ('entity.Project.register.action.'~action)|trans }}</h1>
+    {{ form_start(form) }}
+
+        <div class="row mb-2">
+            <div class="col-1">
+            </div>
+            <div class="col-2">
+                {{ form_label(form.projectStatus, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-2">
+                {{ form_widget(form.projectStatus) }}
+            </div>
+        </div>
+
+        <div class="admin-block">
+            <h2>{{ 'entity.Project.header.characteristic_management' | trans }}</h2>
+            <div class="row mb-1">
+                <div class="col-3">
+                    {{ form_label(form.name, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-3">
+                    {{ form_widget(form.name, {'attr': {'class': 'input-sm text-area-custom-90'}}) }}
+                </div>
+                <div class="col-3">
+                    {{ form_label(form.acronyme, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-3">
+                    {{ form_widget(form.acronyme) }}
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-3">
+                    {{ form_label(form.nameEnglish, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-3">
+                    {{ form_widget(form.nameEnglish, {'attr': {'class': 'input-sm text-area-custom-90'}}) }}
+                </div>
+                <div class="col-3">
+                    {{ form_label(form.ref, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-3">
+                    {{ form_widget(form.ref) }}
+                </div>
+            </div>
+
+
+            <div class="row mb-3">
+                <div class="col-3">
+                    {{ form_label(form.sponsor, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-3">
+                    {{ form_widget(form.sponsor) }}
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-3">
+                    {{ form_label(form.studyPopulation, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-3">
+                    {{ form_widget(form.studyPopulation) }}
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-3">
+                    {{ form_label(form.responsiblePM, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-3">
+                    {{ form_widget(form.responsiblePM) }}
+                </div>
+                <div class="col-3">
+                    {{ form_label(form.responsibleCRA, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-3">
+                    {{ form_widget(form.responsibleCRA) }}
+                </div>
+            </div>
+
+            <div class="row mb-1">
+                <div class="col-4">
+                    {{ form_label(form.eudractNumber, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.eudractNumber) }}
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-4">
+                    {{ form_label(form.nctNumber, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.nctNumber) }}
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-4">
+                    {{ form_label(form.trlIndice, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.trlIndice) }}
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-4">
+                    {{ form_label(form.territory, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.territory) }}
+                </div>
+            </div>
+
+            <div class="row mb-1">
+                <div class="col-4">
+                    {{ form_label(form.countries, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.countries) }}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="admin-block" id="newDrugField">
+            <h2>{{ 'entity.Project.header.trail_management' | trans }}</h2>
+            <div class="row mb-1">
+                <div class="col-4">
+                    {{ form_label(form.trailPhase, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.trailPhase) }}
+                </div>
+            </div>
+
+            <div class="row mb-1">
+                <div class="col-4">
+                    {{ form_label(form.membershipGroup, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.membershipGroup) }}
+                </div>
+            </div>
+
+            <div class="row mb-1" id="trailType">
+                <div class="col-4">
+                    {{ form_label(form.trailType, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.trailType) }}
+                </div>
+            </div>
+
+            {# types de traitements, Medicaments, Version BI,RCP #}
+            {% if 'update' != action %}
+            <br>
+            <div class="table-drug-project">
+                <div class="table-wrap table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>{{ 'entity.Project.register.labels.trail_treatment' | trans }}</th>
+                                <th>{{ 'entity.Project.register.labels.drug' | trans }}</th>
+                                <th>{{ 'entity.Drug.field.version_bi' | trans }}</th>
+                                <th>{{ 'entity.Drug.field.version_rcp' | trans }}</th>
+                                <th>#</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    {# Types de traitements #}
+                                    <select  class="form-control" data-drug-project  data-show="treatment_" name="trail_treatment[]">
+                                        <option value=""></option>
+                                        {% for treatment in trail_treatment_list %}
+                                            <option value="{{ treatment.id }}">{{ treatment.label }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td>
+
+                                    {# Medicaments #}
+                                    {% for treatment in trail_treatment_list %}
+                                        <div class="d-none" data-hide="treatment_" data-block="treatment_{{ treatment.id }}">
+
+                                                {# Count filled field #}
+                                                {% set counter = 0 %}
+                                                {% for drug in drugs_list %}
+                                                    {% if drug.trailTreatment == treatment %}
+                                                        {% set counter = counter + 1 %}
+                                                    {% endif %}
+                                                {% endfor %}
+
+                                                {# Show only filled field #}
+                                                {% if 0 < counter %}
+                                                    <select class="form-control" data-show="drug_rcp_bi_" data-drug-project name="drug[]">
+                                                        <option value=""></option>
+                                                        {% for drug in drugs_list %}
+                                                            {% if drug.trailTreatment == treatment %}
+                                                                <option value="{{ 't:' ~ treatment.id ~'_d:' ~ drug.id }}">{{ drug.name | capitalize }}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                {% else %}
+                                                    <div class="alert alert-info">{{ 'general.error.warning_empty_relation' | trans }} </div>
+                                                {% endif %}
+
+                                        </div>
+                                    {% endfor %}
+
+                                </td>
+                                <td>
+                                    {# Versions BI #}
+                                    {% for drug in drugs_list %}
+                                        <div class="d-none" data-hide="drug_rcp_bi_" data-block="drug_rcp_bi_{{ 't:' ~ drug.trailTreatment.id ~'_d:' ~ drug.id }}">
+
+
+                                                {# Count filled field #}
+                                                {% set counter = 0 %}
+                                                {% for version in version_bi_list %}
+                                                    {% if version.documentTransverse.drug == drug %}
+                                                        {% set counter = counter + 1 %}
+                                                    {% endif %}
+                                                {% endfor %}
+
+                                                {# Show only filled field #}
+                                                {% if 0 < counter %}
+                                                    <select  class="form-control" data-drug-project name="version_bi[]">
+                                                        <option value=""></option>
+                                                        {% for version in version_bi_list %}
+                                                            {% if version.documentTransverse.drug == drug %}
+                                                                <option value="{{ 't:' ~ version.documentTransverse.drug.trailTreatment.id ~'_d:' ~ version.documentTransverse.drug.id ~'_v:' ~ version.id }}">{{ version.version }} ({{ version.documentTransverse.name }})</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                {% else %}
+                                                    <div class="alert alert-info">{{ 'general.error.warning_empty_relation' | trans }} </div>
+                                                {% endif %}
+
+
+                                        </div>
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    {# Versions RCP #}
+                                    {% for drug in drugs_list %}
+                                        <div class="d-none" data-hide="drug_rcp_bi_" data-block="drug_rcp_bi_{{ 't:' ~ drug.trailTreatment.id ~'_d:' ~ drug.id }}">
+
+                                            {# Count filled field #}
+                                            {% set counter = 0 %}
+                                            {% for version in version_rcp_list %}
+                                                {% if version.documentTransverse.drug == drug %}
+                                                    {% set counter = counter + 1 %}
+                                                {% endif %}
+                                            {% endfor %}
+
+                                            {# Show only filled field #}
+                                            {% if 0 < counter %}
+                                                <select  class="form-control" data-drug-project name="version_rcp[]">
+                                                    <option value=""></option>
+                                                    {% for version in version_rcp_list %}
+                                                        {% if version.documentTransverse.drug == drug %}
+                                                            <option value="{{ 't:' ~ version.documentTransverse.drug.trailTreatment.id ~'_d:' ~ version.documentTransverse.drug.id ~'_v:' ~ version.id }}">{{ version.version }} ({{ version.documentTransverse.name }})</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                            {% else %}
+                                                <div class="alert alert-info">{{ 'general.error.warning_empty_relation' | trans }} </div>
+                                            {% endif %}
+
+                                        </div>
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    <a data-add-btn href="javascript:;" class="btn btn-primary"><i class="fa fa-plus-circle"></i></a>
+                                    <a data-remove-btn href="javascript:;" class="btn btn-primary d-none"><i class="fa fa-minus-circle"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <br>
+            {% endif %}
+
+
+
+        </div>
+
+        <div class="admin-block">
+            <h2>{{ 'entity.Project.header.crf_management' | trans }}</h2>
+            <div class="row mb-1">
+                <div class="col-4">
+                    {{ form_label(form.crfType, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.crfType) }}
+                </div>
+            </div>
+            <div class="row mb-1">
+                <div class="col-4">
+                    {{ form_label(form.crfUrl, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.crfUrl) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-block">
+            <h2>{{ 'entity.Project.header.sites_management'|trans }}</h2>
+            <div class="row mb-1">
+                <div class="col-4">
+                    {{ form_label(form.paymentUnit, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.paymentUnit) }}
+                </div>
+            </div>
+            <div class="row mb-1">
+                <div class="col-4">
+                    {{ form_label(form.patientNumber, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.patientNumber) }}
+                </div>
+            </div>
+            <div class="row mb-1">
+                <div class="col-4">
+                    {{ form_label(form.metasUser, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.metasUser) }}
+                </div>
+            </div>
+            <div class="row mb-1">
+                <div class="col-4">
+                    {{ form_label(form.metasParticipant, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.metasParticipant) }}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="admin-block" id="pharmoType">
+            <h2>{{ 'entity.Project.header.responsibility_management' | trans }}</h2>
+
+            <div class="row">
+                <div class="col-4">
+                    {{ form_label(form.coordinatingInvestigators, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.coordinatingInvestigators) }}
+                </div>
+            </div>
+
+            <div id="resp_deleg">
+                <h2 class="mt-3 legend-hidden">{{ 'entity.Project.header.delegation_management' | trans }}</h2>
+
+                <div class="row mt-3">
+                    <div class="col-4">
+                        {{ form_label(form.delegation.repSponsor, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                    </div>
+                    <div class="col-4">
+                        {{ form_widget(form.delegation.repSponsor) }}
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-4">
+                        {{ form_widget(form.delegation.regulatory) }}
+                    </div>
+                    <div class="col-4">
+                        {{ form_widget(form.delegation.manitoring) }}
+                    </div>
+                    <div class="col-4">
+                        {{ form_widget(form.delegation.pharmacovigilance) }}
+                        <div id="pharmaType" class="pl-4">
+                            {{ form_widget(form.delegation.dsur) }}
+                            {{ form_widget(form.delegation.susar) }}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="admin-block">
+            <div class="row mb-1">
+                <div class="col-3">
+                    <legend class="font-weight-bold col-form-label">Logo</legend>
+                </div>
+                <div class="col-3">
+                    {{ form_widget(form.logoFile) }}
+                </div>
+            </div>
+            <div class="row mb-1">
+                <div class="col-3">
+                    {{ form_label(form.backgroundColor, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-3">
+                    {{ form_widget(form.backgroundColor) }}
+                </div>
+            </div>
+            <div class="row mb-1">
+                <div class="col-3">
+                    {{ form_label(form.fontColor, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-3">
+                    {{ form_widget(form.fontColor) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <button type="submit" class="btn btn-primary" type="submit">{{ ('entity.Project.register.action.'~action)|trans }}</button>
+                <br>
+                <br>
+                <span style="color: #c30000">* {{ ('general.star.mandatory')|trans }}</span>
+            </div>
+        </div>
+    {{ form_end(form) }}
+
+    <div class="hidden data_translate"
+         data-dialog-warning_add_project="{{ 'entity.Drug.error.warning_add_project' | trans }}"
+         data-dialog-warning_add_rows="{{ 'entity.Drug.error.warning_add_rows' | trans }}"
+         {# Nombre de lignes autorisées #}
+         data-max_rows="5"
+    ></div>
+
+{% endblock %}
+

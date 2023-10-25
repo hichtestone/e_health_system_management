@@ -1,0 +1,49 @@
+{% set activeMenu = 'drugs' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'menu.admin.home'|trans }}">{{ 'menu.admin.home'|trans }}</a></li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('admin.drugs.index') }}" title="{{ 'menu.admin.drugs' | trans }}">
+                    {{ 'menu.admin.drugs' | trans }}
+                </a>
+            </li>
+            <li class="breadcrumb-item active">{{ 'general.file' | trans }}  - {{ drug.name|capitalize }} </li>
+        </ol>
+    </nav>
+
+    <h1>{{ drug.name|capitalize }}</h1>
+    <div class="admin-block">
+        <div class="sf-read">
+            <h5 style="margin-bottom: 2em;">{{ 'show.main'|trans }}</h5>
+
+            <dl class="row">
+                <div class="col-4">
+                    <dt>{{ 'entity.Drug.field.name'|trans }} : </dt>
+                    <dd>{{ drug.name }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Drug.field.TreatmentType'|trans }} : </dt>
+                    <dd>{{ drug.trailTreatment   }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Drug.field.isValid'|trans }} : </dt>
+                    <dd>
+                        {% if drug.isValid %}
+                            <span class="badge badge-success">{{ 'entity.Drug.status.valid' |trans }}</span>
+                        {% else %}
+                            <span class="badge badge-danger">{{ 'entity.Drug.status.invalid' | trans}} </span>
+                        {% endif %}</dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+
+    {# Liste des documents transverses dans un medicament #}
+    {{ render_esi(controller('App\\Controller\\DocumentTransverseController::drug_single_list', { 'id': drug.id })) }}
+
+{% endblock %}

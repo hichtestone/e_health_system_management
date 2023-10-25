@@ -1,0 +1,13 @@
+{% block content %}
+    <h1>{{'entity.NoConformity.field.system.review.crex.delete.title'|trans}}</h1>
+
+    <div class="admin-block">
+        <p>{{'entity.NoConformity.field.system.review.crex.delete.description'|trans}} <br>
+            <a href type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'general.cancel'|trans }}</a>
+        <a class="btn btn-primary" href="{{ path('no_conformity.system_crex.action.delete.btn', { 'reviewSystemCrexID' : reviewSystemCrexID, 'actionID': actionID }) }}">{{ 'general.confirm'|trans }}</a>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('deviation-system') }}
+{% endblock %}

@@ -1,0 +1,36 @@
+{% block content %}
+
+    <h1>{{ ('entity.Interlocutor.action.'~action)|trans }}</h1>
+
+    <div class="admin-block">
+
+        {{ form_start(form, {'action': url}) }}
+
+            {{ form_row(form.service) }}
+            {{ form_row(form.enabledAt) }}
+            {{ form_row(form.disabledAt) }}
+
+            <div id="afterService">
+                {{ form_row(form.interlocutor) }}
+                {% if form.isPrincipalInvestigator is defined %}
+                    <div id="isPrincipalInvestigator" style="{{ canPI is defined and not canPI ? 'display: none;' : '' }}">
+                        {{ form_row(form.isPrincipalInvestigator) }}
+                    </div>
+                {% endif %}
+            </div>
+
+            {% if action == 'edit' and isPI == false %}
+                {{ form_row(form.disabledAt) }}
+            {% endif %}
+
+            <button type="submit" class="btn btn-primary">{{ ('entity.Interlocutor.action.'~action)|trans }}</button>
+
+        {{ form_end(form) }}
+
+        {% if formHelperUrl is defined %}
+            <div id="formHelperUrl" class="d-none">{{ formHelperUrl }}</div>
+        {% endif %}
+
+    </div>
+
+{% endblock %}

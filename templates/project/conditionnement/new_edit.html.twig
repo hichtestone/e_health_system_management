@@ -1,0 +1,80 @@
+{% set activeMenu = 'settings' %}
+{% set subMenu = 'settings' %}
+{% set activeMenu2 = 'diagram-study' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{# Bloc visit - modifier l'attribut "class=" : masquer/afficher #}
+{% set class_visit_bloc = action == 'create' ? 'd-none' : '' %}
+{% set class_visit_bloc = action == 'edit' and form.vars.value.phaseVisit == 'visit' ? '' : 'd-none' %}
+
+{# Bloc phase - modifier l'attribut "class=" : masquer/afficher #}
+{% set class_phase_bloc = action == 'create' ? 'd-none' %}
+{% set class_phase_bloc = action == 'edit' and form.vars.value.phaseVisit == 'phase' ? '' : 'd-none' %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('project.home.index', { 'id' : project.id }) }}" title="{{ project.acronyme }}">{{ project.acronyme }}</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <a href="{{ path('project.list.visit.setting', { 'id' : project.id }) }}" title="phase-setting">{{ 'entity.VisitSetting.label'|trans }}</a>
+            </li>
+        </ol>
+    </nav>
+
+    {# Onglets Dans Schema d'etudes #}
+    {% include 'menu/schema_etude.html.twig' with {'activetab': 'conditionnement_settings'} %}
+
+    <h1>
+        {% if edit %}
+            {{ 'entity.SchemaCondition.action.edit'|trans }}
+        {%  else %}
+            {{ 'entity.SchemaCondition.action.create'|trans }}
+        {% endif %}
+    </h1>
+
+    <div class="admin-block" id="new-add">
+
+        <div class="row">
+
+            <div class="col-12">
+
+                {{ form_start(form) }}
+                {{ form_row(form.label) }}
+                {{ form_row(form.phaseVisit) }}
+
+                <div class="{{ class_phase_bloc }}" id="field_phase">
+                    {{ form_row(form.phase) }}
+                </div>
+
+                <div class="{{ class_visit_bloc }}" id="field_visit">
+                    {{ form_row(form.visit) }}
+                </div>
+
+                {# <pre>{{ querybuilder | json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
+                <pre>{{ condition.condition }}</pre>#}
+
+                <div data-value="{{ condition.condition  | url_encode }}" data-filter="{{ querybuilder | json_encode  | url_encode }}" id="builder-basic" class="query-builder form-inline"></div>
+
+                <br>
+
+                <button type="submit" class="btn btn-primary" type="submit">{{ ('entity.SchemaCondition.'~action)|trans }}</button>
+                <br>
+                <br>
+                <span style="color: #c30000">* {{ ('general.star.mandatory')|trans }}</span>
+
+            </div>
+
+        </div>
+
+        {{ form_end(form) }}
+
+    </div>
+
+{% endblock %}

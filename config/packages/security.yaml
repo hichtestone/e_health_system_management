@@ -1,0 +1,58 @@
+security:
+  encoders:
+    App\ESM\Entity\User:
+      algorithm: auto
+
+  providers:
+    # used to reload user from session & other features (e.g. switch_user)
+    in_memory: { memory: ~ }
+    database_users:
+      entity:
+        class: App\ESM\Entity\User
+        property: email
+
+  firewalls:
+    dev:
+      pattern: ^/(_(profiler|wdt)|css|images|js)/
+      security: false
+
+    api:
+      pattern: ^/api
+      anonymous: lazy
+      stateless: true
+      provider: database_users
+      guard:
+        authenticator:
+          - App\ESM\Security\Guard\ApiAuthenticator
+
+    main:
+      pattern: ^/
+      user_checker: App\ESM\Security\UserChecker
+      anonymous: lazy
+      provider: database_users
+      stateless: false
+      guard:
+        authenticator:
+          - App\ESM\Security\Guard\MainAuthenticator
+      logout:
+        path: logout
+        target: login
+        success_handler: App\ESM\EventSubscriber\LogoutListener
+
+  access_control:
+    - { path: ^/api/get-token,      roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/api,                roles: ROLE_USER }
+
+    - { path: ^/public,             roles: IS_AUTHENTICATED_ANONYMOUSLY }
+
+    - { path: ^/login$,             roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/logincheck,         roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/forgotten-password, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/set-password,       roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/language,           roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/tos,                roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/,                   roles: ROLE_USER }
+    - { path: ^/test,               roles: ROLE_SUPER_ADMIN }
+
+  role_hierarchy:
+    ROLE_SUPER_ADMIN: ROLE_USER

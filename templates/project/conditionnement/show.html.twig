@@ -1,0 +1,63 @@
+{% set activeMenu = 'settings' %}
+{% set subMenu = 'settings' %}
+{% set activeMenu2 = 'diagram-study' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.home.index', { 'id' : project.id }) }}" title="{{ project.acronyme }}">{{ project.acronyme }}</a></li>
+            <li class="breadcrumb-item active"><a href="{{ path('project.list.visit.setting', { 'id' : project.id }) }}" title="phase-setting">{{ 'entity.VisitSetting.label'|trans }}</a></li>
+        </ol>
+    </nav>
+
+    {# Onglets Dans Schema d'etudes #}
+    {% include 'menu/schema_etude.html.twig' with {'activetab': 'conditionnement_settings'} %}
+
+    <br>
+
+    <div class="admin-block" >
+
+        <div class="row">
+
+            <div class="col-12">
+
+                <dl class="row">
+
+                    <div class="col-6">
+                        <dt>{{ 'entity.SchemaCondition.field.label' | trans }} :</dt>
+                        <dd>{{ condition.label }}</dd>
+                    </div>
+
+                    <div class="col-6">
+
+                        {% if condition.visit is not null %}
+                        <dt>{{ 'entity.SchemaCondition.field.visits' | trans }} :</dt>
+                            <dd>{{ condition.visit.short ?? '' }}</dd>
+                        {% endif %}
+
+                        {% if condition.phase is not null %}
+                        <dt>{{ 'entity.SchemaCondition.field.phases' | trans }} :</dt>
+                        <dd>{{ condition.phase.label ?? '' }}</dd>
+                        {% endif %}
+
+                    </div>
+
+                </dl>
+
+                <dt>{{ 'entity.SchemaCondition.field.condition' | trans }} :</dt>
+
+                <div data-readonly="1" data-value="{{ condition.condition  | url_encode }}" data-filter="{{ querybuilder | json_encode  | url_encode }}" id="builder-basic" class="query-builder form-inline"></div>
+
+                <br>
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}

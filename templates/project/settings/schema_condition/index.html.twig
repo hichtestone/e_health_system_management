@@ -1,0 +1,47 @@
+{% set activeMenu = 'settings' %}
+{% set subMenu = 'settings' %}
+{% set activeMenu2 = 'diagram-study' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block body %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="Accueil">Accueil</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.show', { 'id' : project.id }) }}"
+                                           title="{{ project.name }}">{{ project.name }}</a></li>
+            <li class="breadcrumb-item active"><a href="{{ path('project.list.visit.setting', { 'id' : project.id }) }}"
+                                                  title="phase-setting">{{ 'entity.VisitSetting.label'|trans }}</a></li>
+        </ol>
+    </nav>
+
+    {# Onglets Dans Schema d'etudes #}
+    {% include 'menu/schema_etude.html.twig' with {'activetab': 'conditionnement_settings'} %}
+
+    <h1>{{ 'entity.SchemaCondition.action.list'|trans }}</h1>
+
+    {# Translate text js #}
+    <div class="d-none data_translate"
+         data-entity-schemaCondition-field-label = "{{ 'entity.SchemaCondition.field.label' | trans }}"
+         data-entity-schemaCondition-field-condition = "{{ 'entity.SchemaCondition.field.condition' | trans }}"
+         data-entity-schemaCondition-field-phases-visits = "{{ 'entity.SchemaCondition.field.phases_visits_list' | trans }}"
+         data-entity-schemaCondition-action-list = "{{ 'entity.SchemaCondition.action.list' | trans }}"
+         data-entity-schemaCondition-action-create = "{{ 'entity.SchemaCondition.action.create' | trans }}"
+         data-entity-schemaCondition-field-modal-name = "{{ 'entity.SchemaCondition.field.modal.name' | trans }}"
+         data-entity-schemaCondition-field-modal-add = "{{ 'entity.SchemaCondition.field.modal.add' | trans }}"
+         data-entity-schemaCondition-field-modal-cancel = "{{ 'entity.SchemaCondition.field.modal.cancel' | trans }}"
+         data-entity-schemaCondition-field-phases = "{{ 'entity.SchemaCondition.field.phases' | trans }}"
+         data-entity-schemaCondition-field-visits = "{{ 'entity.SchemaCondition.field.visits' | trans }}"
+         data-general-start-mandatory = "{{ 'general.star.mandatory' | trans }}"
+    ></div>
+
+    {% set isGrantedWrite = is_granted('IDENTIFICATIONVARIABLE_WRITE') %}
+
+    {# Transfer role #}
+    <div class="d-none"
+         data-isGrantedWrite= "{{ isGrantedWrite }}"
+    ></div>
+
+    <schema-condition-table :project-id="{{ project.id }}" :rules="{{ variables }}" id="SchemaConditionTable" />
+
+{% endblock %}

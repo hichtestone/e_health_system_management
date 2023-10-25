@@ -1,0 +1,13 @@
+{# set current menu #}
+{% set activeMenu = 'audit_trail' %}
+{% set subMenu = 'audit_trail' %}
+{% set activeMenu2 = 'profile' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+
+    <h1>{{ 'Audit trail profils'|trans }}</h1>
+    {{ list.render|raw }}
+
+{% endblock %}

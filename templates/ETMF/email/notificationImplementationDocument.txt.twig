@@ -1,0 +1,15 @@
+{% extends 'email/base.html.twig' %}
+
+{% block body %}
+
+    L'application ETMF de Unicancer vous informe que le document suivant va être mise en application dès aujourd'hui :\n\n
+
+    Projet : {{ documentVersion.document.project.name }}
+    Document : {{ documentVersion.document.name }}
+    Version : {{ documentVersion.numberVersion }}
+
+    \n\n
+
+    Nous vous conseillons d'en prendre connaissance dès à présent en vous rendant sur le site de l'ETMF Unicancer \n\n\n
+
+{% endblock %}

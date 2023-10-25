@@ -1,0 +1,52 @@
+
+/**
+    includes
+ */
+@import "variables";
+@import "layout_frontend";
+@import "menu";
+@import "component";
+@import "layout_admin";
+@import "form";
+@import "table";
+
+// pour import
+$icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
+
+// import librairies
+@import "~bootstrap/scss/bootstrap";
+@import "~flatpickr/dist/flatpickr.css";
+@import "~@fortawesome/fontawesome-free/css/all.min.css";
+@import "~tail.select/css/bootstrap4/tail.select-default.min.css";
+@import "jquery-ui.min.css";
+
+.vich-image {
+  .CFcheckbox {
+    @extend .mt-3;
+  }
+
+  img {
+    @extend .mb-2;
+    @extend .rounded;
+    @extend .shadow;
+    @extend .img-thumbnail;
+  }
+
+  a {
+    pointer-events: none;
+  }
+}
+
+li a.auditTrail.active { color: #e02833; }
+
+.form-builder-dialog.positioned {
+  left: 230px;
+}
+
+.text-area-custom-150 {
+  min-height: 150px;
+}
+
+.text-area-custom-90 {
+  min-height: 90px;
+}

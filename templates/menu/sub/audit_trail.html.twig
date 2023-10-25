@@ -1,0 +1,24 @@
+{% set arr = ['user', 'profile', 'project', 'user_project', 'publication', 'funding', 'institution', 'service',
+    'interlocutor', 'center', 'interlocutor_center', 'date', 'rule', 'submission', 'project_database_freeze',
+    'document_tracking', 'document_tracking_center', 'document_tracking_interlocutor', 'courbe_setting','patient','patient_data',
+    'visit_patient', 'drug', 'document_transverse', 'version_document_transverse', 'deviation_correction', 'deviation',
+    'deviation_review', 'deviation_action', 'report_visit', 'deviation_sample', 'deviation_sample_action', 'deviation_sample_correction',
+    'deviation_system', 'deviation_system_correction', 'deviation_system_action', 'deviation_system_review', 'zone', 'section', 'artefact', 'mailgroup', 'tag', 'document', 'document_version'] %}
+
+<div class="form-group">
+    <input id="at-search" type="text" data-list="at-list" placeholder="search" />
+</div>
+
+<ul class="list-unstyled" id="at-list">
+    {% for item in arr %}
+        <li class="auditTrail">
+            <a class="auditTrail" href="{{ path('admin.audit_trail.generic.index', {category: item}) }}">{{ ('menu.header.'~item)|trans }}</a>
+        </li>
+    {% endfor %}
+    <li class="auditTrail">
+        <a class="auditTrail" href="{{ path('admin.audit_trail.connexion') }}">{{ 'Connexions' | trans }}</a>
+    </li>
+    <li class="auditTrail">
+        <a class="auditTrail" href="{{ path('admin.audit_trail.connexion_error') }}">{{ 'Erreurs de connexion' | trans }}</a>
+    </li>
+</ul>

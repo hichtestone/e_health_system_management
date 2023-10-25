@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<html lang="{{ app.request.locale }}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" type="image/png" href="{{ asset('build/images/favicon.png') }}">
+
+    <title>{% block title %}{{ app_name }} {{ app_version }} {{ app.environment }}{% endblock %}</title>
+
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+        {{ encore_entry_link_tags('app-etmf') }}
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css"/>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css"/>
+    {% endblock %}
+</head>
+
+<body>
+
+    {% block javascripts %}
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap3.min.js"></script>
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+    
+    {# Flash message #}
+    <div id="mpFlash" style="z-index: 99999999; position: absolute; top: 225px">
+
+        <p>ici 3</p>
+
+        {% for category in ['success','warning','danger','info'] %}
+            {% for flashMessage in app.session.flashbag.get(category) %}
+                <span class="d-inline-block alert alert-{{ category }}">{{ flashMessage|trans }}</span>
+            {% endfor %}
+        {% endfor %}
+
+    </div>
+
+    {# Menu #}
+    <header id="header">
+        {% block menu %}
+        {% endblock %}
+    </header>
+
+    {# Contenu #}
+    <main role="main" id="content">
+        <div id="main-fluid-pre" class="container-fluid">
+            {% block prebody %}{% endblock %}
+        </div>
+        <div id="main" class="container">
+            {% block body %}{% endblock %}
+        </div>
+        <div id="main-fluid-post" class="container-fluid">
+            {% block postbody %}{% endblock %}
+        </div>
+    </main>
+
+    {# Footer #}
+    <footer id="footer">
+        {% block footer %}
+            <div class="container-fluid">
+                <a href="{{ path('app.index') }}" title="{{ 'app.home'|trans }}">
+                    {{ app_name is defined ? app_name : "" }}
+                    {{ app_version is defined ? "v" ~ app_version : "" }}
+                    {{ app.environment is same as('prod') ? '' : app.environment }}
+                </a>
+                <span> - © 2020 - </span>
+                <a href="javascript:void(0)" data-ajax-popup="{{ path('popup.support') }}" data-ap-type="question" data-ap-title="{{ 'support.label'|trans }}">{{ 'support.label'|trans }}</a>
+                <span> - made by <a href="https://clinfile.com/">Clinfile</a></span>
+{#                <span> - <a href="{{ path('app.release_notes') }}">{{ 'app.release_note'|trans }}</a></span>#}
+            </div>
+        {% endblock %}
+    </footer>
+
+    <div id="footer-phantom"></div>
+
+    {# Translate text js #}
+    <div class="d-none data_translate"
+         data-form-btn-reset="{{ 'form.btn.reset' | trans }}"
+         data-form-btn-advanced_search="{{ 'form.btn.advanced_search' | trans }}"
+         data-txt-en_application="{{ 'txt.en_application' | trans }}"
+         data-txt-placeholder_select_sponsor="{{ 'txt.placeholder_select_sponsor' | trans }}"
+    ></div>
+
+</body>
+
+</html>

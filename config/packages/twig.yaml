@@ -1,0 +1,14 @@
+twig:
+    paths:
+        - '%kernel.project_dir%/templates'
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    form_themes:
+        - 'bootstrap_4_layout.html.twig'
+        - 'form/fields.html.twig'
+    globals:
+        app_version: '%env(APP_VERSION)%'
+        app_name: '%env(APP_NAME)%'
+        documents_path: '%DOCUMENTS_PATH%'
+        resources_path: '%RESOURCES_PATH%'
+        socket_url: '%env(SOCKET_URL)%'

@@ -1,0 +1,64 @@
+{% set activeMenu = 'no_conformity' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block title %}Deviation échantillon biologique - corrections{% endblock %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ path('no_conformity.protocol_deviation_crex') }}" title="Accueil">Non-Conformités</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('no_conformity.deviation.sample.index') }}">{{ 'entity.NoConformity.menu.sample'|trans }}</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('no_conformity.deviation.sample.declaration', { 'deviationSampleID' : deviationSample.id }) }}">{{ 'Déclaration'|trans }}</a>
+            </li>
+            <li class="breadcrumb-item active">
+                Associer une déviation protocolaire
+            </li>
+        </ol>
+    </nav>
+
+    <h1>Associer une déviation protocolaire à un échantillon biologique</h1>
+
+    {% include 'menu/no_conformity.html.twig' with {'activetab': 'sample'} %}
+
+    <br>
+    <h2>Ajouter une déviation protocolaire</h2>
+    <br>
+
+    <div class="admin-block">
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-lg-12">{{ form_row(form.deviation) }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-lg-12">{{ form_row(form.resume) }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <a href="{{ path('no_conformity.deviation.sample.declaration', { 'deviationSampleID' : deviationSample.id }) }}" type="button" class="btn btn-secondary">Annuler</a>
+                <button class="btn btn-primary" id="associateDeviation" type="submit">Ajouter</button>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('deviation-sample') }}
+{% endblock %}

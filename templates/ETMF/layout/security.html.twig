@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block menu %}
+    {{ parent() }}
+{% endblock %}
+
+{% block prebody %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+    <header class="mt-3">
+        <ul id="flags" class="text-center">
+            <li class="mx-3 mx-lg-1"><a href="{{ path('language.select', {'code': 'en'}) }}" title="English"><img src="{{ asset('build/images/flags/en.png') }}" alt="en"></a></li>
+            <li class="mx-3 mx-lg-1"><a href="{{ path('language.select', {'code': 'fr'}) }}" title="Français"><img src="{{ asset('build/images/flags/fr.png') }}" alt="fr"></a></li>
+        </ul>
+    </header>
+
+    <h1 id="login-logo" class="mt-5">
+        <img src="{{ asset('build/images/etmf-clinfile.svg') }}"  alt="{{ app_name is defined ? app_name : "" }} {{ app_version is defined ? "v" ~ app_version : "" }}" />
+    </h1>
+
+    {% block content %}
+    {% endblock %}
+
+{% endblock %}
+
+{% block postbody %}
+    {{ parent() }}
+{% endblock %}
+
+{% block footer %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

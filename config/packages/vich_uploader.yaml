@@ -1,0 +1,33 @@
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        project_image:
+            uri_prefix: /images/projects
+            upload_destination: '%kernel.project_dir%/public/images/projects'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+        meeting_file:
+            uri_prefix: /files/meetings
+            upload_destination: '%DOCUMENTS_PATH%/meetings'
+            #namer: Vich\UploaderBundle\Naming\UniqidNamer
+        training_file:
+            uri_prefix: /files/trainings
+            upload_destination: '%DOCUMENTS_PATH%/trainings'
+            #namer: Vich\UploaderBundle\Naming\UniqidNamer
+        document_transverse_file:
+            uri_prefix: /files/documentsTransverse
+            upload_destination: '%DOCUMENTS_PATH%/documentsTransverse'
+        document_transverse_version_file:
+            uri_prefix: /files/documentsTransverseVersion
+            upload_destination: '%DOCUMENTS_PATH%/documentsTransverseVersion'
+        report_end_file:
+            uri_prefix: /files/reports/visit-end
+            upload_destination: '%DOCUMENTS_REPORTS_VISIT_END_PATH%'
+        deviation_sample_decision_file:
+            uri_prefix: /files/deviations/sample/declaration/decisionTaken
+            upload_destination: '%DOCUMENTS_DEVIATIONS_SAMPLE_DECLARATION_DECISION%'
+
+    #mappings:
+    #    products:
+    #        uri_prefix: /images/products
+    #        upload_destination: '%kernel.project_dir%/public/images/products'

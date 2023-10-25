@@ -1,0 +1,27 @@
+
+@import "../../css/vars";
+
+
+.CFloading{
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 999999;
+}
+
+
+
+.ssoloading{
+  border: 8px solid $c_blue_light;
+  border-top: 8px solid $c_blue_dark;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin: auto;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

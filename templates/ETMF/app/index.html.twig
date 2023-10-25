@@ -1,0 +1,161 @@
+{% set activeMenu = 'etmf' %}
+
+{% extends 'ETMF/layout/app.html.twig' %}
+
+{% block body %}
+
+{#    <nav aria-label="breadcrumb">#}
+{#        <ol class="breadcrumb">#}
+{#            <li class="breadcrumb-item active">Accueil</li>#}
+{#        </ol>#}
+{#    </nav>#}
+
+    <h1>Accueil eTMF</h1>
+
+    <div class="admin-block">
+
+        <h1>Rappels</h1>
+
+    </div>
+
+    <div class="admin-block">
+        <h1>Documents</h1>
+
+        {{ form_start(searchForm) }}
+            <div class="row">
+                <div class="col-lg-4">{{ form_row(searchForm.sponsor) }}</div>
+                <div class="col-lg-4">{{ form_row(searchForm.project) }}</div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">{{ form_row(searchForm.country) }}</div>
+                <div class="col-lg-4">{{ form_row(searchForm.center) }}</div>
+                <div class="col-lg-4">{{ form_row(searchForm.tag) }}</div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">{{ form_row(searchForm.zone) }}</div>
+                <div class="col-lg-4">{{ form_row(searchForm.section) }}</div>
+                <div class="col-lg-4">{{ form_row(searchForm.artefact) }}</div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4">{{ form_row(searchForm.status) }}</div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-lg-4">
+                    <button type="submit" class="btn btn-primary">Rechercher</button>
+                    <button id="search_reset" class="btn btn-secondary">Réinitialiser</button>
+                </div>
+            </div>
+
+        {{ form_end(searchForm) }}
+
+        {% if documentsVersion is not null %}
+        <div class="row">
+            <div class="col-lg-12">
+                <table id="dtDocument" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="th-sm">Sponsor</th>
+                            <th class="th-sm">Étude</th>
+                            <th class="th-sm">Zone</th>
+                            <th class="th-sm">Section</th>
+                            <th class="th-sm">Artefact</th>
+                            <th class="th-sm">Pays</th>
+                            <th class="th-sm">Centre</th>
+                            <th class="th-sm">Tag</th>
+                            <th class="th-sm">Nom du document</th>
+                            <th class="th-sm">Statut</th>
+                            <th class="th-sm">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for documentVersion in documentsVersion %}
+                            <tr>
+                                <td>
+                                    {% if documentVersion.document.sponsor is not null %}
+                                        {{ documentVersion.document.sponsor.label }} ({{ documentVersion.document.sponsor.id }})
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if documentVersion.document.project is not null %}
+                                        {{ documentVersion.document.project.acronyme }} ({{ documentVersion.document.project.id }})
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if documentVersion.document.zone is not null %}
+                                        {{ documentVersion.document.zone.name }} ({{ documentVersion.document.zone.id }})
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if documentVersion.document.section is not null %}
+                                        {{ documentVersion.document.section.name }} ({{ documentVersion.document.section.id }})
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if documentVersion.document.artefact is not null %}
+                                        {{ documentVersion.document.artefact.name }} ({{ documentVersion.document.artefact.id }})
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if documentVersion.document is not null %}
+                                        {% if documentVersion.document.countries is not null %}
+                                            {{ documentVersion.document.countries|map((country) => country.name )|join(' | ') }}
+                                        {% endif %}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if documentVersion.document is not null %}
+                                        {% if documentVersion.document.centers is not null %}
+                                            {{ documentVersion.document.centers|map((center) => center.name )|join(' | ') }}
+                                        {% endif %}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if documentVersion.document is not null %}
+                                        {% if documentVersion.document.tags is not null %}
+                                            {{ documentVersion.document.tags|map((tag) => tag.name )|join(' | ') }}
+                                        {% endif %}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if documentVersion.document is not null %}
+                                        {{ documentVersion.document.name }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {{ constant('STATUS', documentVersion)[documentVersion.status] }}
+                                </td>
+                                <td>
+                                    {% if documentVersion is not null %}
+                                        <a href="{{ path('app.etmf.documentVersion.show', { 'id' : documentVersion.id }) }}"> <i class="fa fa-eye c-grey"></i></a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+
+    <div class="admin-block">
+
+        <h1>
+            {{ 'etmf.document.label'|trans }}
+            <a class="btn btn-primary" href="{{ path('app.etmf.document.new') }}">
+                <i class="fa fa-plus"></i>
+            </a>
+        </h1>
+
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('app-etmf') }}
+{% endblock %}
+

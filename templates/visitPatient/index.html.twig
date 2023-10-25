@@ -1,0 +1,29 @@
+{% set activeMenu = 'center' %}
+{% set subMenu = 'center' %}
+{% set activeMenu2 = 'patient' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block body %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.home.index', { 'id' : project.id }) }}" title="{{ project.acronyme }}">{{ project.acronyme }}</a></li>
+            <li class="breadcrumb-item active"><a href="{{ path('project.list.patients', { 'id' : project.id }) }}" title="patient-tracking">{{ 'entity.VisitPatient.action.list'|trans }}</a></li>
+        </ol>
+    </nav>
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('project.list.patients', { 'id' : project.id }) }}">{{ 'entity.PatientTracking.sub_menu.list_patient'|trans }}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="{{ path('project.list.visits', { 'id' : project.id }) }}">{{ 'entity.PatientTracking.sub_menu.list_statuts'|trans }}</a>
+        </li>
+    </ul>
+
+    <h1>{{ 'entity.VisitPatient.action.list'|trans }}</h1>
+
+    {{ list.render|raw }}
+
+{% endblock %}

@@ -1,0 +1,35 @@
+@startuml
+
+class interlocuteur {
+    -interlocuteur_center_id : interlocuteur_center (relation)
+}
+
+class interlocuteur_center {
+    -interlocuteur_id : interlocuteur (relation)
+    -center_id : center (relation)
+    -service_id : service (relation)
+}
+
+class "center" {
+}
+
+class service {
+    -project_id : project (relation)
+}
+
+class institution {
+    -id : int
+    -interlocuteur_id : interlocuteur (relation)
+    -center_id : center (relation)
+    -service_id : int
+}
+
+interlocuteur "n" -- "1" interlocuteur_center
+"center" "n" -- "1" interlocuteur_center
+interlocuteur_center "n" -- "1" service
+
+institution "n" -- "n" interlocuteur
+institution "n" -- "n" "center"
+institution "1" -- "n" service
+
+@enduml

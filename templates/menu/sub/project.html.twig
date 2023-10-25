@@ -1,0 +1,44 @@
+
+{# Intervenants #}
+{% if is_granted('ROLE_PROJECT_INTERVENANT_READ') %}
+    <li class="nav-item">
+        <a class="nav-link{{ activeMenu2 == 'user_project' ? ' active' : ''}}" href="{{ path('project.user.list', {'id' : project.id }) }}">{{ 'menu.project.project_intervener'|trans }}</a>
+    </li>
+{% endif %}
+
+{# communications #}
+{% if is_granted('ROLE_COMMUNICATION_READ') %}
+    <li class="nav-item">
+        <a class="nav-link{{ activeMenu2 == 'communication' ? ' active' : ''}}" href="{{ path('project.list.meetings', {'id' : project.id }) }}">{{ 'menu.project.communications'|trans }}</a>
+    </li>
+{% endif %}
+
+{# publications #}
+{% if is_granted('ROLE_PUBLICATION_READ') %}
+    <li class="nav-item">
+        <a class="nav-link{{ activeMenu2 == 'publication' ? ' active' : ''}}" href="{{ path('project.list.publications', {'id' : project.id }) }}">{{ 'menu.project.publication'|trans }}</a>
+    </li>
+{% endif %}
+
+{# financements #}
+{% if is_granted('ROLE_FUNDING_READ') %}
+    <li class="nav-item">
+        <a class="nav-link{{ activeMenu2 == 'funding' ? ' active' : ''}}" href="{{ path('project.list.fundings', {'id' : project.id }) }}">{{ 'menu.project.financial'|trans }}</a>
+    </li>
+{% endif %}
+
+{# Liste des Dates et chiffres #}
+{% if is_granted('ROLE_DATE_READ') or is_granted('ROLE_SUBMISSION_READ') or is_granted('ROLE_PROJECT_RULE_READ') %}
+    <li class="nav-item">
+        <a class="nav-link{{ activeMenu2 == 'dates' ? ' active' : ''}}" href="{{ path('project.list.dates', {'id' : project.id }) }}">{{ 'menu.project.statutory'|trans }}</a>
+    </li>
+{% endif %}
+
+{# Déviations Protocolaires #}
+{% if is_granted('ROLE_DEVIATION_READ') %}
+<li class="nav-item">
+    <a class="nav-link{{ activeMenu2 == 'protocol-deviation' ? ' active' : ''}}" href="{{ path('deviation.list', {'projectID' : project.id }) }}">{{ 'menu.project.protocol_deviation.protocol_deviation'|trans }}</a>
+</li>
+{% endif %}
+
+

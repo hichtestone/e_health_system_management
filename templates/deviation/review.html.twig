@@ -1,0 +1,16 @@
+{# set current menu #}
+{% set activeMenu = 'center' %}
+{% set subMenu = 'project' %}
+{% set activeMenu2 = 'protocol-deviation' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <h1>Deviations protocolaires</h1>
+
+    {% include 'menu/deviation.html.twig' with {'activetab': 'review','deviationID' : deviation.id} %}
+
+{% endblock %}

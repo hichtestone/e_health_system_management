@@ -1,0 +1,21 @@
+{% set activeMenu = 'center' %}
+{% set subMenu = 'center' %}
+{% set activeMenu2 = 'center' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block body %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.home.index', { 'id' : project.id }) }}"
+                                           title="{{ project.acronyme }}">{{ project.acronyme }}</a></li>
+            <li class="breadcrumb-item active">{{ 'entity.Center.suite.list'|trans }}</li>
+        </ol>
+    </nav>
+
+    <h1>{{ 'entity.Center.suite.list'|trans }}</h1>
+
+    {{ list.render|raw }}
+
+{% endblock %}

@@ -1,0 +1,115 @@
+
+// bootstrap variables
+$navbar-toggler-font-size: 2.5rem;
+
+/*
+  MENU
+ */
+.topnav {
+  overflow: hidden;
+}
+nav.navbar {
+  background-color: $app-menu-bg;
+  width: 100%;
+  top: 0;
+  //border-bottom: $c-blue_dark solid 3px;
+  font-size: 1.2rem;
+  padding: 0 !important;
+
+  box-shadow: 0 0.36875rem 1.1875rem rgba(13,16,45,0.01), 0 0.6375rem 1.00625rem rgba(13,16,45,0.01), 0 0.15rem 0.33125rem rgba(13,16,45,0.03), 0 0.085rem 0.0875rem rgba(13,16,45,0.02);
+
+
+  a{
+    color: $app-menu-color;
+    text-decoration: none;
+
+    &:hover {
+      color: $app-menu-color-hover;
+    }
+
+  }
+
+  .topnav a {
+    float: left;
+    display: block;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    border-bottom: 3px solid transparent;
+
+    &:hover, &.active {
+      border-bottom: 3px solid $app-menu-color;
+    }
+
+  }
+}
+
+
+.dropdown-toggle::after{
+  vertical-align: 0.1em;
+}
+
+/**
+  PROFILE DROPDOWN
+ */
+#profile-ss-menu{
+  border: 0;
+  background-color: $app-menu-bg;
+}
+
+
+/**
+  DRAPEAUX
+ */
+#flags{
+  padding: 0;
+  min-width: 102px;
+  text-align: center;
+
+  a{
+    text-align: center;
+  }
+  img{
+    height: 30px;
+  }
+  li{
+    display: inline;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+#menu-profile, #lang{
+  .dropdown-menu{
+    font-size: inherit;
+    margin: 1.125rem 0 0 !important;
+  }
+}
+
+
+#submenu {
+  a {
+    padding: 0 0.4rem!important;
+    font-size: 1rem!important;
+  }
+}
+
+#menu {
+  &.admin {
+    a {
+      color: $c_red;
+
+      &.active {
+        border-color: $c_red;
+      }
+
+      &:hover {
+        border-color: $c_red;
+      }
+
+    }
+
+  }
+}

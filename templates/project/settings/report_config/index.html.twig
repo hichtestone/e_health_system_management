@@ -1,0 +1,29 @@
+{% set activeMenu = 'settings' %}
+{% set subMenu = 'settings' %}
+{% set activeMenu2 = 'report-config' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="Accueil">Accueil</a></li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('project.home.index', { 'id' : project.id }) }}" title="{{ project.acronyme }}">{{ project.acronyme }}</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <a href="{{ path('project.settings.report.config.version.index', { 'projectID' : project.id }) }}" title="{{ 'entity.report_config.title' | trans }}">
+                    {{ 'entity.report_config.title'|trans }}
+                </a>
+            </li>
+        </ol>
+    </nav>
+
+    <h1>
+        {{ 'entity.report_config.title' | trans }}
+    </h1>
+
+     {{ list.render|raw}}
+
+{% endblock %}

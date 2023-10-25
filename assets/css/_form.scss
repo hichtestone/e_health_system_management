@@ -1,0 +1,152 @@
+
+input,
+select,
+.form-control {
+  max-height: 30px;
+}
+
+select[multiple] {
+  max-height: 150px;
+}
+
+select,
+input,
+textarea {
+  &.form-control {
+    font-size: 14px;
+    padding: 0.2rem 0.5rem;
+  }
+}
+
+.btn {
+  padding: 0.2rem 0.5rem !important;
+}
+
+/* Search */
+.search-component {
+  padding: 3px;
+  border: solid 1px #e4e4e4;
+  border-radius: 6px;
+  background-color: $c_white;
+
+  input {
+    border: 0;
+    box-shadow: none;
+
+    &:focus {
+      border-color: transparent !important;
+      outline: 0;
+    }
+  }
+
+  button {
+    margin: 2px 0 0 0;
+    background: none;
+    box-shadow: none;
+    border: 0;
+    color: #666666;
+    padding: 0 8px 0 10px;
+    border-left: solid 1px #ccc;
+
+    &:hover {
+      border: 0;
+      box-shadow: none;
+      border-left: solid 1px #ccc;
+      background: none;
+      color: #666666;
+    }
+  }
+}
+
+.form-group {
+  .fp-icon {
+    position: absolute;
+    right: 35px;
+    bottom: 9px;
+  }
+
+
+
+  /* =========================================================================================== */
+  /*                                          toggle switch                                      */
+  /* =========================================================================================== */
+
+
+  .switch {
+
+    position: relative;
+    display: flex;
+
+    input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .lab {
+      margin-left: 55px;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      width: 50px;
+      height: 25px;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 22px;
+      width: 22px;
+      left: 2px;
+      bottom: 2px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    input:checked + .slider {
+      background-color: $c-blue_dark;
+    }
+
+    input:focus + .slider {
+      box-shadow: 0 0 1px $c-blue_dark;
+    }
+
+    input:checked + .slider:before {
+      -webkit-transform: translateX(24px);
+      -ms-transform: translateX(24px);
+      transform: translateX(24px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
+
+  }
+
+}
+
+/*=======================================*/
+/* Box ajout points dans courbe_settings */
+/*=======================================*/
+#containpoint{
+  button {
+      &.removeDrug {
+        margin-top: 27px;
+      }
+  }
+}

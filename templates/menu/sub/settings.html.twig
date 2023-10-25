@@ -1,0 +1,24 @@
+{# Fiche project #}
+<li class="nav-item">
+    <a class="nav-link{{ activeMenu2 == 'home' ? ' active' : ''}}" href="{{ path('project.show.file', {'id' : project.id }) }}">{{ 'menu.project.setting.file' | trans }}</a>
+</li>
+{# Courbe théorique #}
+{% if is_granted('ROLE_PROJECT_SETTINGS_READ') %}
+    <li class="nav-item">
+        <a class="nav-link{{ activeMenu2 == 'courbe' ? ' active' : ''}}" href="{{ path('project.list.courbe.setting', { 'id' : project.id }) }}">{{ 'menu.project.setting.curbe' | trans }}</a>
+    </li>
+{% endif %}
+
+{% if is_granted('IDENTIFICATIONVARIABLE_LIST') %}
+{# Schémas d\'étude #}
+<li class="nav-item">
+    <a class="nav-link{{ activeMenu2 == 'diagram-study' ? ' active' : ''}}" href="{{ path('project.settings.variable.index', { 'id' : project.id }) }}">{{ 'menu.project.setting.study' | trans }}</a>
+</li>
+{% endif %}
+
+{% if is_granted('ROLE_CONFIGURATION_MONITORING_MODEL') %}
+    {# Rapports de monitoring #}
+    <li class="nav-item">
+        <a class="nav-link{{ activeMenu2 == 'report-config' ? ' active' : ''}}" href="{{ path('project.settings.report.config.version.index', { 'projectID' : project.id }) }}">{{ 'menu.project.setting.monitoring' | trans }}</a>
+    </li>
+{% endif %}

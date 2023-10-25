@@ -1,0 +1,29 @@
+{% set activeMenu = 'project' %}
+{% set subMenu = 'project' %}
+{% set activeMenu2 = 'communication' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block body %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="Accueil">{{ 'app.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.show', { 'id' : project.id }) }}"
+                                           title="{{ project.name }}">{{ project.name }}</a></li>
+            <li class="breadcrumb-item active">Communication</li>
+        </ol>
+    </nav>
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" href="{{ path('project.list.meetings', { 'id' : project.id }) }}">{{ 'entity.Meeting.field.name'|trans}}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('project.list.trainings', { 'id' : project.id }) }}">{{ 'entity.Training.field.name'|trans}}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('project.list.contacts', { 'id' : project.id }) }}">{{ 'entity.Contact.field.name'|trans}}</a>
+        </li>
+    </ul>
+
+{% endblock %}

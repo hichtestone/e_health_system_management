@@ -1,0 +1,80 @@
+{% set activeMenu = 'project' %}
+{% set subMenu = 'project' %}
+{% set activeMenu2 = 'publication' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+    {# Fil d'Ariane #}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.home.index', { 'id' : project.id }) }}"
+                                           title="{{ project.acronyme }}">{{ project.acronyme }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.list.publications', { 'id' : project.id }) }}" title="formations">Publications</a></li>
+            <li class="breadcrumb-item active">{{ 'app.home'|trans }}</li>
+        </ol>
+    </nav>
+
+    <div class="admin-block">
+        <div class="sf-read">
+            <h5>{{ 'show.main'|trans }}</h5>
+
+            <dl class="row">
+                <div class="col-12">
+                    {% if is_granted('PUBLICATION_ARCHIVE', publication) and is_granted('PROJECT_WRITE', project) %}
+                        <a class="btn btn-info float-right" href="{{ path('project.publication.archive', {'id': project.id, 'idPublication': publication.id}) }}">Archiver</a>
+                    {% endif %}
+                    {% if is_granted('PUBLICATION_RESTORE', publication) and is_granted('PROJECT_WRITE', project) %}
+                        <a class="btn btn-info float-right" href="{{ path('project.publication.restore', {'id': project.id, 'idPublication': publication.id}) }}">Désarchiver</a>
+                    {%  endif %}
+                </div>
+            </dl>
+
+            <dl class="row">
+                <div class="col-4">
+                    <dt>{{ 'entity.Project.publication.register.labels.communicationType'|trans }} :</dt>
+                    <dd>{{ publication.communicationType }}</dd>
+                </div>
+                {% if publication.isCongress %}
+                    <div class="col-4">
+                        <dt>{{ 'entity.Project.publication.register.labels.isCongress'|trans }} :</dt>
+                        <dd>{{ publication.isCongress }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Project.publication.register.labels.congress'|trans }} :</dt>
+                        <dd>{{ publication.congress }}</dd>
+                    </div>
+                {% else %}
+                    <div class="col-4">
+                        <dt>{{ 'entity.Project.publication.register.labels.journals'|trans }} :</dt>
+                        <dd>{{ publication.journals }}</dd>
+                    </div>
+                {% endif %}
+
+                <div class="col-4">
+                    <dt>{{ 'entity.Project.publication.register.labels.postType'|trans }} :</dt>
+                    <dd>{{ publication.postType }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Project.publication.register.labels.comment'|trans }} :</dt>
+                    <dd>{{ publication.comment }}</dd>
+                </div>
+
+                <div class="col-4">
+                    <dt>{{ 'entity.Project.publication.register.labels.reference'|trans }} :</dt>
+                    <dd>{{ publication.postNumber }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Project.publication.register.labels.postAt'|trans }} :</dt>
+                    <dd>{{ publication.date is empty ? '' : publication.date|date('d/m/Y') }}</dd>
+                </div>
+            </dl>
+            {% if is_granted('PUBLICATION_EDIT', publication) and is_granted('PROJECT_WRITE', project) %}
+                <a class="btn btn-primary" href="{{ path('project.publications.edit', {
+                    'id': project.id, 'idPublication': publication.id }) }}"
+                >{{ 'entity.Publication.modify'|trans }}</a>
+            {%  endif %}
+        </div>
+    </div>
+{% endblock %}

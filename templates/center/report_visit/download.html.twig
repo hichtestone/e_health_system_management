@@ -1,0 +1,61 @@
+{# set current menu #}
+{% set activeMenu = 'center' %}
+{% set subMenu = 'center' %}
+
+{% extends 'layout/app.html.twig' %}
+{% block title %}{% endblock %}
+
+{% block body %}
+    {# Fil d'Ariane #}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.home.index', { 'id' : project.id }) }}"
+                                           title="{{ project.acronyme }}">{{ project.acronyme }}</a></li>
+            {% if activeMenu2 == 'center' %}
+                <li class="breadcrumb-item">
+                    <a href="{{ path('project.center.index', { 'id' : project.id }) }}"
+                                               title="Suivi centres">{{ 'entity.Center.suite.list'|trans }}</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ path('project.center.show', { 'id' : project.id, 'idCenter' : center.id }) }}" title="{{ center.name }}">Fiche - {{ center.name }}</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ path('project.center.report.visit.index', { 'projectID' : project.id, 'centerID' : center.id }) }}"
+                       title="{{ 'entity.report_visit.title' | trans }}">{{ 'entity.report_visit.title' | trans }}</a>
+                </li>
+            {% endif %}
+            <li class="breadcrumb-item active">Téléchargement de rapport final</li>
+        </ol>
+    </nav>
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('project.center.show', { 'id' : project.id, 'idCenter' : center.id }) }}">Fiche centre</a>
+        </li>
+        {% if activeMenu2 == 'center' %}
+            <li class="nav-item">
+                <a class="nav-link active" href="{{ path('project.center.report.visit.index', { 'projectID' : project.id, 'centerID' : center.id }) }}">Visites de monitoring</a>
+            </li>
+        {% endif %}
+    </ul>
+
+    <div class="row mt-5">
+        <div class="col-4">
+            {% if is_granted('REPORT_VISIT_REPORT_DOWNLOAD_REPORT', reportVisit) %}
+                <a class="btn btn-primary" href="{{ vich_uploader_asset(reportVisit, 'reportFileVich') }}" download title="{{ 'Télécharger le rapport final'|trans}}">
+                    Cliquez ici pour télécharger le rapport final
+                </a>
+            {% endif %}
+
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-4">
+            <a class="btn btn-secondary" href="{{ path('project.center.report.visit.index', { 'projectID' : project.id, 'centerID' : center.id }) }}">
+                Retour
+            </a>
+        </div>
+    </div>
+{% endblock %}

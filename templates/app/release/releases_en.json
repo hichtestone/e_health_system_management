@@ -1,0 +1,43 @@
+[
+    {
+        "version": "1.0.1",
+        "date": "2020-03-30",
+        "children": [
+            {
+                "item": "Features: ",
+                "children": [
+                    {
+                        "item": "Patient document - add field status mandatory on upload"
+                    },
+                    {
+                        "item": "Document explorer - improve the document search interface"
+                    },
+                    {
+                        "item": "Document explorer - new user role Pending document"
+                    }
+                ]},
+            {
+                "item": "Bugs: ",
+                "children": [
+                    {
+                        "item": "Minor bugs fixes"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "version": "1.0.0",
+        "date": "2016-09-30",
+        "children": [
+            {
+                "item": "Others: ",
+                "children": [
+                    {
+                        "item": "First ICC v1.0 on line"
+                    }
+                ]
+            }
+        ]
+    }
+]

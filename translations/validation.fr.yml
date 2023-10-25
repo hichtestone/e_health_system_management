@@ -1,0 +1,26 @@
+security:
+  password:
+    bad_confirm: Le nouveau mot de passe et sa confirmation ne correspondent pas
+    bad_credentials: Identifiants incorrects
+    constraints: Le mot de passe doit faire au moins 8 caractères avec au moins un chiffre, une majuscule et un caractère spécial (&#([@])$£%*µ,?;.:/!§²).
+    same_password: Vous ne pouvez pas utiliser le mot de passe actuel
+
+Entity:
+    visit:
+      reference_delay_date_error: Délai, délai approximatif et date de référence obligatoires
+
+    unit_variable_visit_exam: Une variable, une visite ou un examen porte déjà ce nom
+    unit_report_block: Un bloc porte déjà ce nom. Choississez un autre nom.
+    unit_report_model: Ce nom de modèle de rapport existe déjà. Choississez un autre nom.
+    name_unique_error: Le nom est déja utilisé
+    unit_zone: Deux zones ne devraient pas pouvoir avoir le même numéro ou le même nom
+    integer_duration_meeting: 'La durée doit être au format suivant : HH:mm'
+
+
+version:
+  bad_length: La version ne doit comporter que 10 caractères alphanumériques
+  name: Le nom de la version est déjà utilisé
+drug:
+  name: Ce Nom est déjà utilisé
+document:
+  name: Ce Nom est déjà utilisé.

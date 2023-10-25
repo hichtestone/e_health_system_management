@@ -1,0 +1,12 @@
+{% block content %}
+    <h1>{{ 'entity.report_block.action.delete'|trans }}</h1>
+
+    <div class="admin-block">
+        <p>
+            {{ 'entity.report_block.action.delete_message'|trans }}
+        </p>
+        <a href type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'form.action.cancel'|trans }}</a>
+        <a class="btn btn-primary" href="{{ path('admin.report.model.version.block.delete.btn', { 'reportModelVersionID' : reportModelVersionID , 'reportBlockID': reportBlockID}) }}">{{ 'form.action.valid'|trans }}</a>
+    </div>
+{% endblock %}
+

@@ -1,0 +1,165 @@
+parameters:
+
+    database.version:   'env(DATABASE_VERSION)%'
+    database.host:      '%env(DATABASE_HOST)%'
+    database.port:      '%env(DATABASE_PORT)%'
+    database.name:      '%env(DATABASE_NAME)%'
+    database.user:      '%env(DATABASE_USER)%'
+    database.password:  '%env(DATABASE_PASSWORD)%'
+
+    session.timeout: 1800
+    session.ping: 10
+
+    redis.host: localhost
+    redis.port: 6379
+    redis.auth: null
+
+    email.url: smtp://localhost:1025
+    email.notification.adress:                          '%env(NOTIFICATION_EMAIL)%'
+
+    APP_ENV:                                            '%env(APP_ENV)%'
+    APP_NAME:                                           '%env(APP_NAME)%'
+
+    DOCUMENTS_REPORTS_PATH:                             '%env(DOCUMENTS_REPORTS_PATH)%'
+    DOCUMENTS_REPORTS_CONFIG_PATH:                      '%env(DOCUMENTS_REPORTS_CONFIG_PATH)%'
+    DOCUMENTS_REPORTS_MODEL_PATH:                       '%env(DOCUMENTS_REPORTS_MODEL_PATH)%'
+    DOCUMENTS_REPORTS_VISIT_BEGIN_PATH:                 '%env(DOCUMENTS_REPORTS_VISIT_BEGIN_PATH)%'
+    DOCUMENTS_REPORTS_VISIT_END_PATH:                   '%env(DOCUMENTS_REPORTS_VISIT_END_PATH)%'
+    DOCUMENTS_TMP_PATH:                                 '%env(DOCUMENTS_TMP_PATH)%'
+    DOCUMENTS_PATH:                                     '%kernel.project_dir%/public/files'
+    RESOURCES_PATH:                                     '%kernel.project_dir%/documents/public'
+    DOCUMENTS_DEVIATIONS_SAMPLE_DECLARATION_DECISION:   '%env(DOCUMENTS_DEVIATIONS_SAMPLE_DECLARATION_DECISION)%'
+
+    DOCUMENTS_ETMF_PATH:                                '%env(DOCUMENTS_ETMF)%'
+
+    IMPORTS_PATH:                                       '%env(IMPORTS_PATH)%'
+    IMPORTS_INTEROPERABILITY_PATH:                      '%env(IMPORTS_INTEROPERABILITY_PATH)%'
+    IMPORTS_INTEROPERABILITY_ARCHIVE_PATH:              '%env(IMPORTS_INTEROPERABILITY_ARCHIVE_PATH)%'
+    IMPORTS_INTEROPERABILITY_ERROR_PATH:                '%env(IMPORTS_INTEROPERABILITY_ERROR_PATH)%'
+    IMPORTS_REPRISE_PATH:                               '%env(IMPORTS_REPRISE_PATH)%'
+    IMPORTS_REPRISE_ARCHIVE_PATH:                       '%env(IMPORTS_REPRISE_ARCHIVE_PATH)%'
+    IMPORTS_REPRISE_ERROR_PATH:                         '%env(IMPORTS_REPRISE_ERROR_PATH)%'
+
+    default_locale: '%env(LANG_DEFAULT)%'
+    fallbacks_locale:
+        - en
+        - fr
+
+    app.maintenance_mode: 0
+
+    email.admin: infocrf@clinfile.com
+    email.dev: dev@clinfile.com
+    email.from: no-reply@clinfile.com
+    email.from_name: Clinfile Team
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        bind:
+            $default_lang: '%env(LANG_DEFAULT)%'
+            $documents_path: '%DOCUMENTS_PATH%'
+            $resources_path: '%RESOURCES_PATH%'
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\ESM\Controller\:
+        resource: '../src/ESM/Controller'
+        tags: ['controller.service_arguments']
+
+    App\ETMF\Controller\:
+        resource: '../src/ETMF/Controller'
+        tags: [ 'controller.service_arguments' ]
+
+    # deleted at / created at
+    App\ESM\Doctrine\DeletedAtEvent:
+        tags:
+            - { name: 'doctrine.event_listener', event: 'preFlush' }
+    App\ESM\Doctrine\CreatedAtEvent:
+        tags:
+            - { name: 'doctrine.event_listener', event: 'preFlush' }
+
+    # audit trail
+    App\ESM\Service\AuditTrail\DoctrineSubscriber:
+        tags:
+            - { name: 'doctrine.event_subscriber' }
+
+    # mailer
+    App\ESM\Service\Mailer\MailerService:
+        arguments: [ '%APP_NAME%', '%APP_ENV%', '%email.from%', '%email.dev%', '%email.admin%', '%email.from_name%']
+
+    # redis
+    #App\ESM\Service\Redis\RedisClient:
+    #    arguments: ['%redis.host%', '%redis.port%', '%redis.auth%']
+
+    # maintenance
+    App\ESM\EventSubscriber\MaintenanceModeSubscriber:
+      arguments: ['%app.maintenance_mode%']
+
+    # portal stuff
+    App\ESM\Service\HttpClient\PortalClient:
+      arguments: ['%env(PORTAL_URL)%', '%env(APP_SECRET)%']
+    App\ESM\Controller\Api\SecurityController:
+      arguments: ['%env(jwt_private_key)%']
+    App\ESM\Service\HttpClient\ClinfileClient:
+      arguments: ['%env(jwt_private_key)%']
+
+    # session
+    App\ESM\Service\DeviceSession\DeviceSession:
+      arguments: ['%session.timeout%', '%session.ping%']
+
+    App\ESM\Form\EventSubscriber\DocumentTypeSubscriber:
+        arguments:
+            - route
+
+    App\ESM\Doctrine\VersionStatus:
+        tags:
+            - { name: 'doctrine.event_listener', event: 'postPersist' }
+            - { name: 'doctrine.event_listener', event: 'postUpdate' }
+
+    App\ESM\Doctrine\DocumentStatus:
+        tags:
+            - { name: 'doctrine.event_listener', event: 'postPersist' }
+            - { name: 'doctrine.event_listener', event: 'postUpdate' }
+
+    #App\ESM\Doctrine\ProjectEvent:
+        #tags:
+            #- { name: 'doctrine.event_listener', event: 'postPersist' }
+
+    # deviation
+    App\ESM\Service\Deviation\DeviationService:
+
+    # Word generator
+    App\ESM\Service\Office\WordGenerator:
+        arguments: [
+            '%kernel.project_dir%',
+            '%env(DOCUMENTS_REPORTS_PATH)%',
+            '%env(DOCUMENTS_TMP_PATH)%',
+            '%env(DOCUMENTS_REPORTS_MODEL_PATH)%',
+            '%env(DOCUMENTS_REPORTS_CONFIG_PATH)%',
+            '%env(DOCUMENTS_REPORTS_VISIT_BEGIN_PATH)%'
+        ]
+
+    App\ETMF\Maker\MakerDruc:
+        arguments:
+            - '@maker.doctrine_helper'
+            - '@maker.renderer.form_type_renderer'
+            - '@app_listgen_renderer'
+
+    App\ETMF\EventSubscriber\MaintenanceModeSubscriber:
+        arguments: ['%app.maintenance_mode%']
+
+    app_listgen_renderer:
+        class: App\ETMF\Maker\ListgenRenderer
+        arguments:
+            - '@maker.generator'
+
+    App\ETMF\Service\Mailer\MailerService:
+        arguments: [ '%env(APP_NAME)%', '%APP_ENV%', '%email.from%', '%email.dev%', '%email.admin%', '%email.from_name%' ]

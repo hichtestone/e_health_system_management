@@ -1,0 +1,47 @@
+{% set activeMenu = 'report_model' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ path('projects.index') }}" title="{{ 'menu.admin.home'|trans }}">{{ 'menu.admin.home'|trans }}</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('admin.report.model.index') }}" title="{{ 'entity.report_model.title' | trans }}">
+                    {{ 'entity.report_model.title' | trans }}
+                </a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('admin.report.model.version.show', { 'reportModelVersionID' : reportModelVersion.id }) }}">
+                    {{ 'general.file' | trans }} Modèle - {{ reportModelVersion.reportModel.name }} (Version : {{ reportModelVersion.numberVersion }})
+                </a>
+            </li>
+            <li class="breadcrumb-item active"> bloc - ({{ ('form.action.'~action)|trans }})</li>
+        </ol>
+    </nav>
+
+    <h1>{{ ('entity.report_block.action.'~action)|trans }}</h1>
+
+    <div class="admin-block">
+
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-6">
+                {{ form_row(form.name) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <a href="{{ path('admin.report.model.version.show', { 'reportModelVersionID' : reportModelVersion.id }) }}" class="btn btn-secondary">{{ 'form.action.cancel'|trans }} / {{ 'form.action.back'|trans }}</a>
+                <button type="submit" class="btn btn-primary">{{ 'form.btn.submit'|trans }}</button>
+                <br>
+                <br>
+                <span style="color: #c30000;">* {{ ('general.star.mandatory')|trans }}</span>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

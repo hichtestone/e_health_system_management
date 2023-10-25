@@ -1,0 +1,19 @@
+{% set activetab = activetab is defined ? activetab : '' %}
+
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link {{ 'variable_settings' == activetab ? ' active' : ''}}" href="{{ path('project.settings.variable.index', { 'id' : project.id }) }}">{{ 'entity.EcrfSetting.label'|trans }}</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ 'phase_settings' == activetab ? ' active' : ''}}" href="{{ path('project.list.phase.setting', { 'id' : project.id }) }}">{{ 'entity.PhaseSetting.label'|trans }}</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ 'visit_settings' == activetab ? ' active' : ''}}" href="{{ path('project.list.visit.setting', { 'id' : project.id }) }}">{{ 'entity.VisitSetting.label'|trans }}</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ 'exam_settings' == activetab ? ' active' : ''}}" href="{{ path('project.list.exam.setting', { 'id' : project.id }) }}">{{ 'entity.ExamSetting.label'|trans }}</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ 'conditionnement_settings' == activetab ? ' active' : ''}}" href="{{ path('project.conditionnement.index', { 'id' : project.id }) }}">{{ 'entity.SchemaCondition.label'|trans }}</a>
+    </li>
+</ul>

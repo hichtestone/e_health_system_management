@@ -1,0 +1,121 @@
+{# set current menu #}
+{% set activeMenu = 'interlocutor' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="Accueil">Accueil</a></li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('admin.interlocutor.show',{'id': interlocutor.id }) }}" >
+                    {{ interlocutor.firstName }}
+                </a>
+            </li>
+            <li class="breadcrumb-item active">créer document transverse</li>
+        </ol>
+    </nav>
+
+    <h1>Upload Document transverse {{ attachement==0? 'Interlocuteur': attachement==1?'Etablissement': attachement==2?'Médicament': "" }}</h1>
+
+
+    <div class="admin-block" id="new-add-Docsinterlocutor">
+        {{ form_start(form) }}
+        <div class="row mb-2">
+            <div class="col-4">
+                {{ form_label(form.name, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-6">
+                {{ form_widget(form.name) }}
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-4">
+                <label class="font-weight-bold">{{ ('entity.DocumentTransverse.field.porteeDocument')|trans }}</label>
+            </div>
+            <div class="col-6">
+                {{ form_widget(form.porteeDocument) }}
+
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-4">
+                {{ form_label(form.TypeDocument, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-6">
+                {{ form_widget(form.TypeDocument) }}
+            </div>
+        </div>
+        <div id="validStartAt" style="{{ attachement==2? 'display:none':'display:block'}}">
+            <div class="row mb-2 required">
+                <div class="col-4">
+                    {{ form_label(form.validStartAt, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-6">
+                    {{ form_widget(form.validStartAt) }}
+                </div>
+            </div>
+
+
+        </div>
+        <div class="row mb-2">
+            <div class="col-4">
+                {{ attachement==0? form_label(form.interlocutor, null, {'label_attr': {'class': 'font-weight-bold'}}) : attachement==1? form_label(form.institution, null, {'label_attr': {'class': 'font-weight-bold'}}) : form_label(form.interlocutor, null, {'label_attr': {'class': 'font-weight-bold'}})}}
+
+            </div>
+            <div class="col-6" style="{{ attachement==0? 'display:block':'display:none' }}">
+
+                       {{ form_widget(form.interlocutor) }}
+
+            </div>
+            <div class="col-6" style="{{ attachement==1? 'display:block':'display:none' }}">
+
+                    {{ form_widget(form.institution) }}
+
+
+            </div>
+            <div class="col-6" style="{{ attachement==2? 'display:block':'display:none' }}">
+                {{ form_widget(form.drug) }}
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+        <div id="interlocutorSpecs">
+            <div class="row mb-2 required">
+                <div class="col-4">
+                    {{ form_label(form.filename, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-6">
+                    {{ form_widget(form.filename) }}
+                </div>
+            </div>
+
+
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <button type="submit" class="btn btn-primary" type="submit">
+                    {% if edit %} {{ ('entity.DocumentTransverse.action.edit')|trans }} {%  else %} {{ 'entity.DocumentTransverse.action.create'|trans }} {% endif %}
+                </button>
+                <br>
+                <br>
+                <span style="color: #c30000">* {{ ('general.star.mandatory')|trans }}</span>
+            </div>
+        </div>
+
+        <input type="hidden" name="attachement" value="{{ attachement }}">
+
+
+
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

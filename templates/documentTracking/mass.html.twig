@@ -1,0 +1,53 @@
+{% block content %}
+
+    <div class="admin-block">
+        {{ form_start(form) }}
+
+        {% if level == 1 %}
+
+            {% set emptyChoice = form.centers.vars.choices|length < 1 %}
+
+            <div>
+                {{ form_label(form.centers) }}
+            </div>
+            <div>
+                {{ form_widget(form.centers) }}
+            </div>
+            {% if emptyChoice %}
+                <div>
+                    <p class="font-italic text-danger">
+                        {{ 'form.message.empty_center_choice'|trans }}
+                    </p>
+                </div>
+            {% endif %}
+
+        {% else %}
+
+            {% set emptyChoice = form.interlocutors.vars.choices|length < 1 %}
+
+            <div>
+                {{ form_label(form.interlocutors) }}
+            </div>
+            <div>
+                {{ form_widget(form.interlocutors) }}
+            </div>
+            {% if emptyChoice %}
+                <div>
+                    <p class="font-italic text-danger">
+                        {{ 'form.message.empty_interlocutor_choice'|trans }}
+                    </p>
+                </div>
+            {% endif %}
+
+        {% endif %}
+
+        {{ form_row(form.sentAt) }}
+
+        <button type="submit" class="btn btn-primary" type="submit" {% if emptyChoice %}disabled{% endif %}>{{ ('form.select')|trans }}</button>
+
+        {{ form_end(form) }}
+
+    </div>
+
+{% endblock %}
+

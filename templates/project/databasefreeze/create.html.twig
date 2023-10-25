@@ -1,0 +1,19 @@
+{% block content %}
+    <h1>{{ ('form.action.'~action)|trans }}</h1>
+
+    <div class="admin-block">
+        {{ form_start(form, {'action': url}) }}
+
+        {{ form_row(form.frozenAt) }}
+        {{ form_row(form.reason) }}
+        <div id="reason-other">
+            {{ form_row(form.otherReason) }}
+        </div>
+        {{ form_row(form.reportDate) }}
+
+        <button type="submit" class="btn btn-primary" type="submit">{{ ('form.action.'~action)|trans }}</button>
+
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

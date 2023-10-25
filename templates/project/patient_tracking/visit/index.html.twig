@@ -1,0 +1,60 @@
+{% set activeMenu = 'center' %}
+{% set subMenu = 'center' %}
+{% set activeMenu2 = 'patient' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.home.index', { 'id' : project.id }) }}" title="{{ project.acronyme }}">{{ project.acronyme }}</a></li>
+            <li class="breadcrumb-item active">{{ 'entity.PatientTracking.action.list.visit'|trans }}</a></li>
+        </ol>
+    </nav>
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('project.patientTracking.patient.index', { 'id' : project.id }) }}">{{ 'entity.PatientTracking.sub_menu.list_patient'|trans }}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="{{ path('project.patientTracking.visit.index', { 'id' : project.id }) }}">{{ 'entity.PatientTracking.sub_menu.list_statuts'|trans }}</a>
+        </li>
+    </ul>
+
+    <h1>{{ 'entity.PatientTracking.action.list.visit'|trans }}</h1>
+
+    {# Translate text js #}
+    <div class="d-none data_translate"
+         data-entity-VisitPatient-field-center = "{{ 'entity.VisitPatient.field.center' | trans }}"
+         data-entity-VisitPatient-field-patient = "{{ 'entity.VisitPatient.field.patient' | trans }}"
+         data-entity-VisitPatient-field-visit = "{{ 'entity.VisitPatient.field.visit' | trans }}"
+         data-entity-VisitPatient-field-phase = "{{ 'entity.VisitPatient.field.phase' | trans }}"
+         data-entity-VisitPatient-field-monitoredAt = "{{ 'entity.VisitPatient.field.monitoredAt' | trans }}"
+         data-entity-VisitPatient-field-occuredAt = "{{ 'entity.VisitPatient.field.occuredAt' | trans }}"
+         data-entity-VisitPatient-field-status = "{{ 'entity.VisitPatient.field.status' | trans }}"
+         data-entity-VisitPatient-field-export = "{{ 'entity.VisitPatient.field.export' | trans }}"
+         data-entity-VisitPatient-field-reset = "{{ 'entity.VisitPatient.field.reset' | trans }}"
+         data-entity-VisitPatient-field-modal-title = "{{ 'entity.VisitPatient.field.modal.title' | trans }}"
+         data-entity-VisitPatient-field-modal-add = "{{ 'entity.VisitPatient.field.modal.add' | trans }}"
+         data-entity-VisitPatient-field-modal-cancel = "{{ 'entity.VisitPatient.field.modal.cancel' | trans }}"
+    ></div>
+
+    {% set isGrantedRead = is_granted('ROLE_PATIENTTRACKING_READ') %}
+    {% set isGrantedWrite = is_granted('ROLE_PATIENTTRACKING_WRITE') %}
+    {% set isGrantedArchive = is_granted('ROLE_PATIENT_ARCHIVE') %}
+    {% set isGrantedProjectWrite = is_granted('PROJECT_WRITE', project) %}
+
+    {# Transfer role #}
+    <div class="d-none"
+         data-isGrantedRead= "{{ isGrantedRead }}"
+         data-isGrantedWrite= "{{ isGrantedWrite }}"
+         data-isGrantedArchive= "{{ isGrantedArchive }}"
+         data-ecrf-type="{{ project.crfType }}"
+         data-isGrantedProjectWrite= "{{ isGrantedProjectWrite }}"
+    ></div>
+
+    <list-visit-table :project-id="{{ project.id }}" id="ListVisitTable" />
+
+{% endblock %}

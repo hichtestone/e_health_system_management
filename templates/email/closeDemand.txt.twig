@@ -1,0 +1,8 @@
+{% extends 'email/base.html.twig' %}
+
+{% set project_show = project is defined ? path('admin.project.show', {'id': project.id}) : '' %}
+
+{% block body %}
+    Une demande de clôture du projet {{ project.name }} a été soumise par {{ user.lastname }} {{ user.firstname }} ({{ user.profile.name }}).
+    Cliquer sur le lien suivant afin de traiter cette demande : {{ app.request.schemeAndHttpHost ~ project_show }}
+{% endblock %}

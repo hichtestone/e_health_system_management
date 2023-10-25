@@ -1,0 +1,29 @@
+{% set activeMenu = 'monitoring_model' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'menu.admin.home'|trans }}">{{ 'menu.admin.home'|trans }}</a></li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('admin.monitoring.model.index') }}" title="{{ 'entity.monitoring_model.title' | trans }}">
+                    {{ 'entity.monitoring_model.title' | trans }}
+                </a>
+            </li>
+        </ol>
+    </nav>
+
+    <h1>{{ 'entity.monitoring_model.title' | trans }}</h1>
+    <h1>
+        {% if is_granted('ROLE_MONITORING_MODEL_WRITE') %}
+            <a class="btn btn-primary" href="" >{{ 'entity.monitoring_model.add' | trans }}</a>
+        {% endif %}
+    </h1>
+
+    {{ list.render|raw }}
+
+{% endblock %}

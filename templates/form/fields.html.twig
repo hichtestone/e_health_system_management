@@ -1,0 +1,120 @@
+{%- block date_widget -%}
+    <div class="form-group">
+        <div class="d-none">
+            <input type="text" id="{{ id }}_day" name="{{ full_name }}[day]" value="{{ data|date('j') }}" />
+            <input type="text" id="{{ id }}_month" name="{{ full_name }}[month]" value="{{ data|date('n') }}" />
+            <input type="text" id="{{ id }}_year" name="{{ full_name }}[year]" value="{{ data|date('Y') }}" />
+        </div>
+        <input value="{{ data|date('Y-m-d') }}" name="{{ id }}" class="flatpickrDate form-control" type="text" placeholder="31/12/2018" {{ required ? 'required="required"' : '' }} data-input />
+    </div>
+{%- endblock -%}
+
+{%- block time_widget -%}
+    <div class="form-group">
+        <div class="d-none">
+            <input type="text" id="{{ id }}_time_hour" name="{{ full_name }}[hour]" value="{{ data|date('H') }}" />
+            <input type="text" id="{{ id }}_time_minute" name="{{ full_name }}[minute]" value="{{ data|date('i') }}" />
+        </div>
+        <input value="{{ data|date('H:i') }}" name="{{ id }}" class="flatpickrTime form-control" type="text" placeholder="14:00" {{ required ? 'required="required"' : '' }} data-input />
+    </div>
+{%- endblock -%}
+
+{%- block checkbox_widget -%}
+    <div class="form-check form-check-inline">
+        <label class="form-check-label">
+            <input type="checkbox" class="form-check-input" id="{{ id }}" name="{{ full_name }}"
+                   value="{{ value }}" {{ data == true ? 'checked="checked"' : '' }} {{ required ? 'required="required"' : '' }} >
+            {{ translation_domain is same as(false) ? label : label|trans }}</span>
+        </label>
+    </div>
+{%- endblock -%}
+
+{%- block radio_widget -%}
+    <div class="form-check form-check-inline">
+        <label class="form-check-label">
+        <input type="radio" class="form-check-input" id="{{ id }}" name="{{ full_name }}"
+               value="{{ value }}" {{ data == true ? 'checked="checked"' : '' }} {{ required ? 'required="required"' : '' }} {{ disabled ? 'disabled="disabled"' : ''}} >
+        {{ translation_domain is same as(false) ? label : label|trans }}</label>
+    </div>
+{%- endblock -%}
+
+{%- block bool_widget -%}
+    <div class="form-group">
+        {{ form_errors(form) }}
+        <label class="switch {{ required ? 'required' : '' }}">
+            <input type="checkbox" id="{{ id }}" name="{{ full_name }}" value="{{ value }}" {{ data == true ? 'checked="checked"' : '' }} {{ required ? 'required="required"' : '' }} >
+            <span class="slider round"></span>
+            <span class="lab">{{ translation_domain is same as(false) ? label : label|trans }}</span>
+        </label>
+    </div>
+{%- endblock -%}
+
+{%- block form_row -%}
+    <div class="form-group {{ (attr.wrap_class is defined) ? attr.wrap_class : '' }}">
+        {{ form_label(form) }}
+        {#{{ form_errors(form) }}#}
+        {{ form_widget(form) }}
+    </div>
+{%- endblock -%}
+
+{%- block form_rows -%}
+    <div class="{{ (form.vars.wrap_class is defined) ? form.vars.wrap_class : '' }}">
+        {% for child in form %}
+            {% if not child.rendered %}
+                {{- form_row(child) -}}
+            {% endif %}
+        {% endfor %}
+    </div>
+{%- endblock -%}
+
+{%- block button_row -%}
+    <div class="form-group {{ (attr.wrap_class is defined) ? attr.wrap_class : '' }}">
+        {{- form_widget(form) -}}
+    </div>
+{%- endblock button_row -%}
+
+{% block form_errors %}
+    {%- if errors|length > 0 -%}
+        <span class="{% if form is not rootform %}invalid-feedback{% else %}alert alert-danger{% endif %} d-block">
+            {%- for error in errors -%}
+                <span class="d-block">
+                    <span class="form-error-message">{{ error.message|trans({}, 'validation') }}</span>
+                </span>
+            {%- endfor -%}
+        </span>
+    {%- endif %}
+{% endblock form_errors %}
+
+{%- block tree_widget -%}
+    <div class="form-group">
+        {# champs Form caché #}
+        <div class="d-none jstree-form">{{ block('choice_widget')}}</div>
+        {% set treeOptions = {
+            'read_only':disabled,
+            'show_all':attr.jstree_show_all}
+        %}
+        {# jstree visible connecté au champs form #}
+        {{ treeview(choices, value, treeOptions)|raw }}
+    </div>
+{%- endblock -%}
+
+{%- block textarray_widget -%}
+    <div class="form-group" data-textarray="" data-ta-id="{{ id }}" data-ta-name="{{ full_name }}">
+        {% set i = 0 %}
+        {% for key,item in data %}
+            <div data-ta-item="{{ i }}">
+                <input type="text" id="{{ id }}_{{ i }}" name="{{ full_name }}[]" value="{{ data[key] }}"
+                {% if loop.first and required %}
+                    required="required"
+                {% endif %}
+                />
+                <a href="javascript:void(0)" class="btn btn-primary"><i class="fa fa-minus-circle"></i></a>
+            </div>
+            {% set i = i + 1 %}
+        {% endfor %}
+        <div data-ta-item="{{ i }}">
+            <input type="text" id="{{ id }}_{{ i }}" name="{{ full_name }}[]" value="" />
+            <a href="javascript:void(0)" class="btn btn-primary"><i class="fa fa-plus-circle"></i></a>
+        </div>
+    </div>
+{%- endblock -%}

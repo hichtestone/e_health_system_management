@@ -1,0 +1,27 @@
+{% set activeMenu = 'etmf-mailgroup' %}
+
+{% extends 'ETMF/layout/app.html.twig' %}
+
+{% block title %}Edition liste de diffusion{% endblock %}
+
+{% block body %}
+
+    <h1>Edition d'une liste de notifications d'utilisateurs</h1>
+
+    {{ form_start(form) }}
+
+        <div class="row">
+            <div class="col-lg-5">
+                {{ form_row(form.name) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-3">
+                {{ form_row(form.users) }}
+            </div>
+        </div>
+
+    {{ form_end(form) }}
+
+{% endblock %}

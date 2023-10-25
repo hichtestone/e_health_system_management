@@ -1,0 +1,56 @@
+<a href="{{ path('projects.index') }}">{{ 'menu.admin.home' | trans }}</a>
+{# Intervenants #}
+{% if is_granted('USER_LIST') %}
+    <a href="{{ path('admin.user.index') }}" {{ activeMenu == 'user' ? ' class="active"' : '' }}>
+        {{ 'menu.admin.users' | trans }}
+    </a>
+{% endif %}
+
+{# Profils #}
+{% if is_granted('PROFILE_LIST') %}
+    <a href="{{ path('admin.profiles.index') }}" {{ activeMenu == 'profile' ? ' class="active"' : '' }}>
+        {{ 'menu.admin.profiles' | trans }}
+    </a>
+{% endif %}
+
+{# Projets #}
+{% if is_granted('PROJECT_LIST') %}
+    <a href="{{ path('admin.projects.index') }}" {{ activeMenu == 'project' ? ' class="active"' : '' }}>
+        {{ 'menu.admin.studies' | trans }}
+    </a>
+{% endif %}
+
+{# Institutions #}
+{% if is_granted('INSTITUTION_LIST') %}
+    <a href="{{ path('admin.institutions.index') }}" {{ activeMenu == 'institution' ? ' class="active"' : '' }}>
+        {{ 'menu.admin.institutions' | trans }}
+    </a>
+{% endif %}
+
+{# Participants|Interlocuteurs #}
+{% if is_granted('INTERLOCUTOR_LIST') %}
+    <a href="{{ path('admin.interlocutors.index') }}" {{ activeMenu == 'interlocutor' ? ' class="active"' : '' }}>
+        {{ 'menu.admin.interlocutors' | trans }}
+    </a>
+{% endif %}
+
+{# Médicaments #}
+{% if is_granted('DRUG_LIST') %}
+    <a href="{{ path('admin.drugs.index') }}" {{ activeMenu == 'drugs' ? ' class="active"' : '' }}>
+        {{ 'menu.admin.drugs' | trans }}
+    </a>
+{% endif %}
+
+{# Modèles de rapports de monitoring #}
+{% if is_granted('ROLE_MONITORING_MODEL_READ') %}
+    <a href="{{ path('admin.report.model.index') }}" {{ activeMenu == 'report_model' ? ' class="active"' : '' }}>
+        {{ 'menu.admin.report_model' | trans }}
+    </a>
+{% endif %}
+
+{# Audit Trail #}
+{% if is_granted('ROLE_SHOW_AUDIT_TRAIL') %}
+    <a href="{{ path('admin.audit_trail.generic.index', {category: 'project'}) }}" {{ activeMenu == 'audit_trail' ? ' class="active"' : '' }}>
+        {{ 'menu.admin.auditTrail' | trans }}
+    </a>
+{% endif %}

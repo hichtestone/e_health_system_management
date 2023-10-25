@@ -1,0 +1,22 @@
+{# set current menu #}
+{% set activeMenu = 'project' %}
+{% set subMenu = 'project' %}
+{% set activeMenu2 = 'protocol-deviation' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block title %}Deviation - Liste corrections{% endblock %}
+
+{% block body %}
+
+    <h1>Deviations protocolaires</h1>
+
+    {% include 'menu/deviation.html.twig' with {'activetab': 'corrections'} %}
+
+    <br>
+
+    <h2>Liste des corrections <a class="btn btn-primary" href="{{ path('deviation.correction.new', {'projectID': project.id, 'deviationID': deviation.id }) }}"><i class="fa fa-plus"></i></a></h2>
+
+    {{ listDeviationCorrections.render|raw }}
+
+{% endblock %}

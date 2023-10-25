@@ -1,0 +1,312 @@
+{% set activeMenu = 'center' %}
+{% set subMenu = 'center' %}
+{% set allow_document_transverse_institution = is_granted('INSTITUTION_READ_WRITE_ARCHIVE_DOCUMENTTRANSVERSE', institution) %}
+
+
+{% extends 'layout/app.html.twig' %}
+{% block title %}{% endblock %}
+
+{% block body %}
+    {# Fil d'Ariane #}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.home.index', { 'id' : project.id }) }}"
+                                           title="{{ project.acronyme }}">{{ project.acronyme }}</a></li>
+            {% if activeMenu2 == 'center' %}
+                <li class="breadcrumb-item"><a href="{{ path('project.center.index', { 'id' : project.id }) }}"
+                                               title="{{ 'entity.Center.suite.list'|trans }}">{{ 'entity.Center.suite.list'|trans }}</a></li>
+            {% else %}
+                <li class="breadcrumb-item"><a href="{{ path('project.selection.index', { 'id' : project.id }) }}"
+                                               title="{{ 'entity.Center.action.list'|trans }}">{{ 'entity.Center.action.list'|trans }}</a></li>
+            {% endif %}
+            <li class="breadcrumb-item active">{{ 'general.file'|trans}} - {{ center.name|capitalize }}</li>
+        </ol>
+    </nav>
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" href="{{ path('project.selection.show', { 'id' : project.id, 'idCenter' : center.id }) }}">{{ 'entity.Center.field.title_tab'|trans }}</a>
+        </li>
+        {% if is_granted('REPORT_VISIT_LIST') and (center.centerStatus.type == 2 or center.centerStatus.type == 3) %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('project.center.report.visit.center.index', { 'projectID' : project.id, 'centerID' : center.id }) }}">{{ 'entity.Center.field.visit_tab'|trans }}</a>
+            </li>
+        {% endif %}
+    </ul>
+
+    <h1>{{ center.name | capitalize }}</h1>
+    <div class="admin-block">
+        <div class="sf-read">
+            <h5>{{ 'show.main'|trans }}</h5>
+
+            <div class="row">
+                <div class="col-12">
+                    {% if is_granted('CENTER_ARCHIVE', center) %}
+                        <a class="btn btn-info float-right" href="{{ path('project.center.archive', {'id': project.id, 'idCenter': center.id}) }}">{{ 'general.archive' | trans }}</a>
+                    {% endif %}
+                    {% if is_granted('CENTER_RESTORE', center) %}
+                        <a class="btn btn-info float-right" href="{{ path('project.center.restore', {'id': project.id, 'idCenter': center.id}) }}"> {{ 'general.unarchive' | trans }}</a>
+                    {%  endif %}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-4">
+                    <dt>{{ 'entity.Center.field.number'|trans }} :</dt>
+                    <dd>{{ center.number }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Center.field.name'|trans }} :</dt>
+                    <dd>{{ center.name }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Center.field.centerStatus'|trans }} :</dt>
+                    <dd>{{ center.centerStatus }}</dd>
+                </div>
+            </div>
+            {% if is_granted('CENTER_EDIT', center) %}
+                {% if activeMenu2 == 'center' %}
+                    <a class="btn btn-primary"
+                       href="{{ path('project.center.edit', {'id' : project.id, 'idCenter' : center.id } ) }}">
+                        {{ 'entity.Center.action.modify'|trans }}</a>
+                {% else %}
+                    <a class="btn btn-primary"
+                       href="{{ path('project.selection.edit', {'id' : project.id, 'idCenter' : center.id } ) }}">
+                        {{ 'entity.Center.action.modify'|trans }}</a>
+                {% endif %}
+            {%  endif %}
+        </div>
+    </div>
+
+    <div class="admin-block">
+        <div class="sf-read">
+            <h5>{{ 'entity.Center.action.institution.list'|trans }}</h5>
+            <div class="table-responsive">
+                <table class="w-100">
+                    <tr>
+                        <th>{{ 'entity.Center.field.institution'|trans}}</th>
+                        <th>{{ 'entity.Institution.field.address1'|trans}}</th>
+                        <th>{{ 'entity.Institution.field.country'|trans}}</th>
+                        <th>{{ 'entity.Institution.field.postalCode'|trans}}</th>
+                        <th>{{ 'entity.Institution.field.city'|trans}}</th>
+                    </tr>
+                    {% for institution in center.institutions %}
+                        <tr>
+                            <td>
+                                <a href="{{ path('project.institution.show', {'id': project.id, 'idInstitution': institution.id } ) }}" data-sw-link="" data-sw-type="information" data-sw-title="{{ institution.name }}">{{ institution.name }}</a>
+                            </td>
+                            <td>{{ institution.address1 }}</td>
+                            <td>{{ institution.country }}</td>
+                            <td>{{ institution.postalCode }}</td>
+                            <td>{{ institution.city }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="admin-block">
+        <div class="sf-read">
+            <h5>{{ 'entity.Center.action.interlocutor.list'|trans }}
+                {% if is_granted('CENTER_EDIT', center) %}
+                    <a class="btn btn-primary" id="interlocutor-new" href="{{ path('project.interlocutor_center.new', {id: project.id, idCenter: center.id}) }}" ><i class="fa fa-plus"></i></a>
+                {% endif %}
+            </h5>
+            <div class="table-responsive">
+                <table class="w-100" id="center-interlocutors" data-center-id="{{ center.id }}">
+                    <tr>
+                        <th>{{ 'entity.Center.field.interlocutor'|trans}}</th>
+                        <th>{{ 'entity.Interlocutor.field.job'|trans}}</th>
+                        <th>{{ 'entity.Center.field.institution'|trans}}</th>
+                        <th>{{ 'entity.Center.field.service'|trans}}</th>
+                        <th>{{ 'entity.Center.field.createdAt'|trans}}</th>
+                        <th>{{ 'entity.Center.field.deletedAt'|trans}}</th>
+                        {% if is_granted('CENTER_EDIT', center) %}
+                            <th>{{ 'form.action.action'|trans }}</th>
+                        {% endif %}
+                    </tr>
+                    {% for interlocutorCenter in center.interlocutorCenters %}
+                        <tr>
+                            <td>
+                                <a href="{{ path('project.interlocutor.show', {id: project.id, idInterlocutor: interlocutorCenter.interlocutor.id}) }}">{{ interlocutorCenter.interlocutor.fullName }}</a>
+                                {% if interlocutorCenter.isPrincipalInvestigator %}<span class="badge badge-info">PI</span>{% endif %}
+                            </td>
+                            <td>{{ interlocutorCenter.interlocutor.job.label }}</td>
+                            <td><a href="{{ path('project.institution.show', {'id': project.id, 'idInstitution': interlocutorCenter.service.institution.id } ) }}" data-sw-link="" data-sw-type="information" data-sw-title="{{ interlocutorCenter.service.institution.name }}">{{ interlocutorCenter.service.institution.name }}</a></td>
+                            <td><a href="{{ path('project.service.show', {'id': project.id, 'idService': interlocutorCenter.service.id } ) }}" data-sw-link="" data-sw-type="information" data-sw-title="{{ interlocutorCenter.service.name }}">{{ interlocutorCenter.service.name }}</a></td>
+                            <td>{{ interlocutorCenter.enabledAt is empty ? '' : interlocutorCenter.enabledAt|date('d/m/Y') }}</td>
+                            <td>{{ interlocutorCenter.disabledAt is empty ? '' : interlocutorCenter.disabledAt|date('d/m/Y') }}</td>
+                            {% if is_granted('CENTER_EDIT', center) %}
+                                <td>
+                                    {% if interlocutorCenter.disabledAt is null %}
+                                        <a title="{{ 'form.action.edit'|trans }}" href="{{ path('project.interlocutor_center.edit', {id: project.id, idInterlocutorCenter: interlocutorCenter.id}) }}" class="interlocutor-edit">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <a class="center-user-disable" title="{{ 'form.action.disable'|trans }}" href="{{ path('project.interlocutor_center.disable', {id: project.id, idInterlocutorCenter: interlocutorCenter.id}) }}">
+                                            <i class="fa fa-check c-green"></i>
+                                        </a>
+                                    {% else %}
+                                        {% for institution in center.institutions %}
+                                            {% if interlocutorCenter.interlocutor.deletedAt is empty and interlocutorCenter.service.institution.name == institution.name %}
+                                                <a class="center-user-enable" title="{{ 'form.action.enable'|trans }}" href="{{ path('project.interlocutor_center.enable', {id: project.id, idInterlocutorCenter: interlocutorCenter.id}) }}">
+                                                    <i class="fa fa-times c-red"></i>
+                                                </a>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="admin-block">
+        <h5>{{ 'entity.DocumentTracking.label'|trans }}
+            {% if is_granted('CENTER_EDIT', center) and is_granted('PROJECT_WRITE', project) %}
+                <a class="btn btn-primary" id="document-new" href="{{ path('project.center.trackingDocument.new', {id: project.id, idCenter: center.id}) }}" ><i class="fa fa-plus"></i></a>
+            {% endif %}
+        </h5>
+
+        <div class="table-responsive">
+            <table class="w-100" id="center-document-tracking-table">
+                <tr>
+                    <th>{{ 'entity.DocumentTracking.field.document'|trans }}</th>
+                    <th>{{ 'entity.DocumentTracking.field.sentAt'|trans }}</th>
+                    <th>{{ 'entity.DocumentTracking.field.receivedAt'|trans }}</th>
+                    {% if is_granted('CENTER_EDIT', center) %}
+                        <th>{{ 'form.action.action'|trans }}</th>
+                    {% endif %}
+                </tr>
+                {% for documentTracking in documentTrackings %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('project.documentTracking.show', {id: project.id, idDocumentTracking: documentTracking.id}) }}">{{ documentTracking.documentTracking.title }} {{ documentTracking.documentTracking.version }}</a>
+                        </td>
+                        <td>
+                            <span>{{ documentTracking.sentAt is null ? '' : documentTracking.sentAt|date('d/m/Y') }}</span>
+                        </td>
+                        <td>
+                            <span>{{ documentTracking.receivedAt is null ? '' : documentTracking.receivedAt|date('d/m/Y') }}</span>
+                        </td>
+                        {% if is_granted('CENTER_EDIT', center) and is_granted('PROJECT_WRITE', project) %}
+                            <td><a title="{{ 'form.action.edit'|trans }}" href="{{ path('project.center.trackingDocument.edit', {id: project.id, idCenter: center.id, idDocumentTracking: documentTracking.id}) }}" class="document-edit"><i class="fa fa-edit"></i></a></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <div class="admin-block">
+        <h5>{{ 'entity.Center.action.history.list'|trans }}</h5>
+
+        <div class="table-responsive">
+            <table class="w-100">
+                <tr>
+                    <th>{{ 'entity.Center.action.history.statut'|trans }}</th>
+                    <th>{{ 'entity.Center.action.history.date'|trans }}</th>
+                </tr>
+                {% for row in auditTrail %}
+                    {% if row.details.centerStatus is defined %}
+                        <tr>
+                            {% if row.modiftype == 1 %}
+                                <td>{{ preg_match('/(.+)\\(\\d+\\)/', row.details.centerStatus) }}</td>
+                            {% else %}
+                                <td>{{ preg_match('/(.+)\\(\\d+\\)/', row.details.centerStatus[1]) }}</td>
+                            {% endif %}
+                            <td>{{ row.date|date('d/m/Y H:i:s') }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <div class="admin-block">
+
+            <h5 style="margin-bottom: 2em;">{{ 'entity.Center.action.doc_transverse.list'|trans }}
+
+                {% if allow_document_transverse_institution and isClosed %}
+                    <a class="btn btn-primary"
+                       href="{{ path('admin.institution.addTransverseDocument', {'id': institution.id }) }}">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                {% endif %}
+            </h5>
+
+            <div class="table-responsive">
+
+                <table class="w-100">
+                    <tr>
+                        <th>{{ 'entity.DocumentTransverse.field.name'|trans }}</th>
+                        <th>{{ 'entity.DocumentTransverse.field.porteeDocument'|trans }}</th>
+                        <th>{{ 'entity.DocumentTransverse.field.TypeDocument'|trans }}</th>
+                        <th>{{ 'entity.DocumentTransverse.field.validStartAt' |trans }}</th>
+                        <th>{{ 'entity.DocumentTransverse.field.validEndAt' |trans }}</th>
+                        <th>{{ 'entity.DocumentTransverse.field.isValid'|trans }}</th>
+                        <th>{{ 'entity.DocumentTransverse.action.label'|trans }}</th>
+                    </tr>
+
+                    {% for oneInstitution in institutions %}
+                        {% for document in oneInstitution.DocumentTransverses %}
+                            <tr>
+                                <td>
+                                    <a href="{{ path('document_transverse_institution.show', {'institution': oneInstitution.id, 'id': document.id}) }}">{{ document.name }}</a>
+                                </td>
+                                <td>{{ document.porteeDocument.name }}</td>
+                                <td>{{ document.TypeDocument.name }}</td>
+
+                                <td>{{ document.validStartAt|date('d-m-Y') }}</td>
+                                <td>{{ document.validEndAt|date('d-m-Y') }}</td>
+
+                                <td>
+                                    {% if document.isValid %}
+                                        <span class="badge badge-success">{{ 'entity.DocumentTransverse.action.valid'|trans }} </span>
+                                    {% else %}
+                                        <span class="badge badge-danger"> {{ 'entity.DocumentTransverse.action.invalid'|trans }} </span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if isClosed  %}
+                                        <a title="Voir fiche"
+                                           href="{{ path('document_transverse_institution.show', {'institution': oneInstitution.id, 'id': document.id}) }}">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                    {% endif %}
+                                    {% if is_granted('ROLE_DOCUMENTTRANSVERSE_READ', oneInstitution) %}
+                                        {% if document.filename != null and isClosed  %}
+                                            <a href="{{ vich_uploader_asset(document, 'filenameVich') }}" download
+                                               title="{{ 'entity.DocumentTransverse.action.download'|trans }}">
+                                                <i class="fa fa-download" aria-hidden="true"></i>
+                                            </a>
+                                        {% endif %}
+                                    {% else %}
+                                        <i class="fa fa-download c-grey"></i>
+                                    {% endif %}
+
+                                    {% if allow_document_transverse_institution and document.deletedAt is null and isClosed %}
+                                        <a href="{{ path('document_transverse.archive_restore', { id: document.id}) }}" title="{{ 'form.action.archive'|trans}}" >
+                                            <i class="fa fa-archive"></i>
+                                        </a>
+                                    {% endif %}
+
+                                    {% if allow_document_transverse_institution and document.deletedAt is not null  and isClosed %}
+                                        <a href="{{ path('document_transverse.archive_restore', { id: document.id}) }}" title="{{ 'form.action.restore'|trans}}" >
+                                            <i class="fa fa-box-open"></i>
+                                        </a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+
+
+{% endblock %}

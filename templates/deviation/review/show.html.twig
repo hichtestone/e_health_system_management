@@ -1,0 +1,252 @@
+{# set current menu #}
+{% set activeMenu = 'project' %}
+{% set subMenu = 'project' %}
+{% set activeMenu2 = 'protocol-deviation' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="Accueil">{{ 'menu.project.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.show', { 'id' : project.id }) }}">{{ 'menu.project.manage'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('deviation.list', { 'projectID' : project.id }) }}">{{ 'menu.project.protocol_deviation.protocol_deviation'|trans }}</a></li>
+            <li class="breadcrumb-item active"><a href="{{ path('deviation.review', { 'projectID' : project.id, 'deviationID' : deviation.id }) }}">{{ 'deviation.titre.review'|trans|capitalize }}</a></li>
+            <li class="breadcrumb-item active">Revue N° {{ review.number }}</li>
+        </ol>
+    </nav>
+
+    {% include 'menu/deviation.html.twig' with {'activetab': 'review'} %}
+
+    <h1> Revue N° {{ review.number }}</h1>
+    <h2>
+        {{ 'entity.NoConformity.field.system.declaration.statut'|trans }}: {{ constant('STATUS', review)[review.status]|trans }}
+    </h2>
+
+    <div class="admin-block">
+        <div class="sf-read">
+            <h5>{{ 'entity.Deviation.DeviationReview.file.deviation'|trans }}</h5>
+        </div>
+
+        <dl class="row">
+            <div class="col-4">
+                <dt>{{ 'menu.project.protocol_deviation.review.status'|trans }} :</dt>
+                <dd>{{ constant('STATUS', review.deviation)[review.deviation.status]  | trans }}</dd>
+            </div>
+            <div class="col-4">
+                <dt>{{ 'menu.project.protocol_deviation.review.closedAt'|trans }}  :</dt>
+                <dd>{{ review.deviation.closedAt is empty ? '' : review.deviation.closedAt|date('d/m/Y') }}</dd>
+            </div>
+        </dl>
+
+        <dl class="row">
+            <div class="col-4">
+                <dt>{{ 'menu.project.protocol_deviation.review.project'|trans }} :</dt>
+                <dd>{{ project.name }}</dd>
+            </div>
+        </dl>
+
+        <dl class="row">
+            <div class="col-4">
+                <dt>{{ 'menu.project.protocol_deviation.review.center'|trans }} :</dt>
+                <dd>{% if deviation.center %} {{ deviation.center.number }} {% endif %}</dd>
+            </div>
+            <div class="col-4">
+                <dt>{{ 'menu.project.protocol_deviation.review.institution'|trans }} :</dt>
+                {% if deviation.center %}
+                    {% for institution in deviation.center.institutions %}
+                        <dd>{{ institution.name }}</dd>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="col-4">
+                <dt>{{ 'menu.project.protocol_deviation.review.patient'|trans }} :</dt>
+                <dd>{% if deviation.patient %} {{ deviation.patient.number }} {% endif %}</dd>
+            </div>
+        </dl>
+
+        <dl class="row">
+            <div class="col-4">
+                <dt>{{ 'menu.project.protocol_deviation.review.ref'|trans }} :</dt>
+                <dd>{{ review.deviation.code }}</dd>
+            </div>
+            <div class="col-4">
+                <dt>{{ 'menu.project.protocol_deviation.review.resume'|trans }} :</dt>
+                <dd>{{ review.deviation.resume }}</dd>
+            </div>
+            <div class="col-4">
+                <dt>{{ 'menu.project.protocol_deviation.review.description'|trans }} :</dt>
+                <dd style="min-height: 125px;">{{ review.deviation.description}}</dd>
+            </div>
+        </dl>
+
+        <div class="sf-read mt-5">
+            <h5>{{ 'entity.Deviation.field.action'|trans }}</h5>
+        </div>
+
+        <div class="table-responsive">
+            <table class="w-100" id="review-actions">
+                <tr>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.type'|trans }}</th>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.description'|trans }}</th>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.applicationAt'|trans }}</th>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.doneAt'|trans }}</th>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.status'|trans }}</th>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.interlocutor_intervenant'|trans }}</th>
+                </tr>
+
+                {% for devitionAction in deviationActions %}
+                    <tr>
+                        <td>{{ constant('TYPE_ACTION', devitionAction)[devitionAction.typeAction]  | trans }}</td>
+                        <td>{{ devitionAction.description }}</td>
+                        <td>{{ devitionAction.applicationAt is empty ? '' : devitionAction.applicationAt|date('d/m/Y') }}</td>
+                        <td>{{ devitionAction.doneAt is empty ? '' : devitionAction.doneAt|date('d/m/Y') }}</td>
+                        <td>{% if devitionAction.status is not empty %} {{ constant('STATUS', devitionAction)[devitionAction.status] | trans }} {% else %} {% endif %}</td>
+                        <td>
+                            {% if devitionAction.interlocutor is not empty %}
+                                {{ devitionAction.interlocutor.displayName }}
+                            {% endif %}
+
+                            {% if devitionAction.intervener is not empty %}
+                                {{ devitionAction.intervener.displayName }}
+                            {% endif %}
+                        </td></tr>
+                {% endfor %}
+
+                {% for reviewAction in reviewActions %}
+                    <tr>
+                        <td>{{ constant('TYPE_ACTION', reviewAction)[reviewAction.typeAction]  | trans }}</td>
+                        <td>{{ reviewAction.description }}</td>
+                        <td>{{ reviewAction.applicationAt is empty ? '' : reviewAction.applicationAt|date('d/m/Y') }}</td>
+                        <td>{{ reviewAction.doneAt is empty ? '' : reviewAction.doneAt|date('d/m/Y') }}</td>
+                        <td>{{ constant('STATUS', reviewAction)[reviewAction.status] | trans }}</td>
+                        <td>
+                            {% if reviewAction.interlocutor is not empty %}
+                                {{ reviewAction.interlocutor.displayName }}
+                            {% endif %}
+
+                            {% if reviewAction.user is not empty %}
+                                {{ reviewAction.user.displayName }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <div class="admin-block">
+        <div class="sf-read">
+            <h5>{{ 'entity.Deviation.DeviationReview.file.review'|trans }}</h5>
+        </div>
+
+        <dl class="row">
+            <div class="col-4">
+                <dt>{{ 'entity.Deviation.DeviationReview.field.typeReview'|trans }}:</dt>
+                <dd>{{ constant('TYPE', review)[review.type]  | trans }}</dd>
+            </div>
+        </dl>
+
+        <dl class="row">
+            <div class="col-4">
+                <dt>{{ 'entity.Deviation.DeviationReview.field.readerName'|trans }} :</dt>
+                <dd>{{ review.reader }}</dd>
+            </div>
+        </dl>
+
+        <dl class="row">
+            <div class="col-4">
+                <dt>{{ 'entity.Deviation.DeviationReview.field.doneAtReview'|trans }} :</dt>
+                <dd>{{ review.doneAt is empty ? '' : review.doneAt|date('d/m/Y') }}</dd>
+            </div>
+            <div class="col-4">
+                <dt>{{ 'entity.Deviation.DeviationReview.field.comment'|trans }} :</dt>
+                <dd>{{ review.comment }}</dd>
+            </div>
+        </dl>
+
+        <div class="sf-read mt-5">
+            <h5>{{ 'entity.Deviation.DeviationReview.file.action'|trans }}
+                {% if is_granted('DEVIATION_REVIEW_ACTION_CREATE', review) and is_granted('PROJECT_WRITE', project) %}
+                    <a href="{{ path('deviation.review.show.action.new', { 'projectID' : project.id, 'deviationID': deviation.id ,'reviewID' : review.id }) }}" class="btn btn-primary ml-2"><i class="fa fa-plus"></i></a>
+                {% endif %}
+            </h5>
+        </div>
+        <div class="table-responsive">
+            <table class="w-100" id="review-actions">
+                <tr>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.type'|trans }}</th>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.description'|trans }}</th>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.applicationAt'|trans }}</th>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.doneAt'|trans }}</th>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.status'|trans }}</th>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.interlocutor_intervenant'|trans }}</th>
+                    <th>Action</th>
+                </tr>
+
+                {% for action in actions %}
+                    <tr>
+                        <td>{{ constant('TYPE_ACTION', action)[action.typeAction]  | trans }}</td>
+                        <td>{{ action.description }}</td>
+                        <td>{{ action.applicationAt is empty ? '' : action.applicationAt|date('d/m/Y') }}</td>
+                        <td>{{ action.doneAt is empty ? '' : action.doneAt|date('d/m/Y') }}</td>
+                        <td>{{ constant('STATUS', action)[action.status] | trans }}</td>
+                        <td>
+                            {% if action.interlocutor is not empty %}
+                                {{ action.interlocutor.displayName }}
+                            {% endif %}
+
+                            {% if action.user is not empty %}
+                                {{ action.user.displayName }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if is_granted('DEVIATION_REVIEW_ACTION_EDIT', action.deviationReview) and is_granted('PROJECT_WRITE', project) %}
+                                <a href="{{ path('deviation.review.show.action.edit', { 'projectID' : project.id, 'deviationID': deviation.id, 'reviewID' : action.deviationReview.id, 'actionID' : action.id}) }}"><i
+                                            class="fa fa-edit"></i></a>
+                            {% endif %}
+                            {% if is_granted('DEVIATION_REVIEW_ACTION_DELETE', action.deviationReview) and is_granted('PROJECT_WRITE', project) %}
+                                <a class="deleteReviewActionBtn"
+                                   href="{{ path('deviation.review.show.action.delete', { 'projectID' : project.id, 'deviationID': deviation.id, 'reviewID' : action.deviationReview.id, 'actionID' : action.id }) }}"
+                                >
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+    </div>
+
+    <dl class="row">
+        <div class="col-4">
+            {% if is_granted('DEVIATION_REVIEW_DELETE', review) and is_granted('PROJECT_WRITE', project) %}
+                <a class="btn btn-primary"
+                   id="deleteReviewDraftBtn"
+                   href="{{ path('deviation.review.delete', { 'projectID' : project.id, 'deviationID': deviation.id, 'reviewID' : review.id}) }}">{{ 'entity.Deviation.DeviationReview.action.delete'|trans }}</a>
+            {% endif %}
+        </div>
+        <div class="col-4"></div>
+        <div class="col-4">
+            {% if is_granted('DEVIATION_REVIEW_EDIT', review) and is_granted('PROJECT_WRITE', project) %}
+                <a href="{{ path('deviation.review.edit', { 'projectID' : project.id, 'deviationID': deviation.id, 'reviewID' : review.id}) }}" class="btn btn-primary">{{ 'entity.Deviation.DeviationReview.action.modify'|trans }}</a>
+            {% endif %}
+
+            {% if is_granted('DEVIATION_REVIEW_CLOSE', review) and is_granted('PROJECT_WRITE', project) %}
+                <a class="btn btn-primary float-right"
+                   id="closeReviewBtn"
+                   href="{{ path('deviation.review.close', { 'projectID' : project.id, 'deviationID': deviation.id, 'reviewID' : review.id}) }}" class="btn btn-primary float-right">{{ 'entity.Deviation.DeviationReview.action.close'|trans }}</a>
+            {% endif %}
+        </div>
+    </dl>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('deviation') }}
+{% endblock %}

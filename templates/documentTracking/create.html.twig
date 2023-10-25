@@ -1,0 +1,56 @@
+{% set activeMenu = 'center' %}
+{% set subMenu = 'center' %}
+{% set activeMenu2 = 'documentTracking' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block body %}
+    {# Fil d'Ariane #}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="Accueil">Accueil</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.home.index', { 'id' : project.id }) }}"
+                                           title="{{ project.acronyme }}">{{ project.acronyme }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.list.documentTracking', { 'id' : project.id }) }}"
+                                           title="formations">{{ 'entity.DocumentTracking.action.list'|trans }}</a></li>
+            <li class="breadcrumb-item active">{% if edit %} Modifier {% else %} Créer {% endif %}</li>
+        </ol>
+    </nav>
+
+    <h1>{% if edit %} {{ 'entity.DocumentTracking.action.modify'|trans }} {% else %} {{ 'entity.DocumentTracking.action.new'|trans }} {% endif %}</h1>
+
+    <div class="admin-block" id="new-center">
+        {{ form_start(form) }}
+
+        <div class="row">
+            <div class="col-6">
+                {{ form_row(form.title) }}
+                {{ form_row(form.version) }}
+                {{ form_row(form.country) }}
+                {{ form_row(form.level) }}
+                {{ form_row(form.toBeSent) }}
+                {{ form_row(form.toBeReceived) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                {% if edit%}
+                    <button type="submit" class="btn btn-primary">
+                        {{ ('entity.DocumentTracking.action.modify')|trans }}
+                    </button>
+                {% else %}
+                    <button type="submit" class="btn btn-primary">
+                        {{ ('entity.DocumentTracking.action.create')|trans }}
+                    </button>
+                {% endif %}
+
+                <br>
+                <br>
+                <span style="color: #c30000">* {{ ('general.star.mandatory')|trans }}</span>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+

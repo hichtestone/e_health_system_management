@@ -1,0 +1,8 @@
+<a href="{{ path('app.etmf.project.index') }}" {{ activeMenu == 'etmf-project' ? ' class="active"' : '' }}>{{ 'etmf.menu.projects' | trans }}</a>
+<a href="{{ path('app.etmf.artefact') }}" {{ activeMenu == 'etmf-artefact' ? ' class="active"' : '' }}>{{ 'etmf.menu.structure' | trans }}</a>
+<a href="{{ path('app.etmf.tag.list') }}" {{ activeMenu == 'etmf-tag' ? ' class="active"' : '' }}>{{ 'etmf.menu.tag' | trans }}</a>
+<a href="{{ path('app.etmf.mailgroup.list') }}" {{ activeMenu == 'etmf-mailgroup' ? ' class="active"' : '' }}>{{ 'etmf.menu.mailgroup' | trans }}</a>
+
+<a href="{{ path('home') }}" {{ activeMenu == 'home' ? ' class="active"' : '' }} style="padding-left: 80px">
+    <img alt="ESM" height="30" width="60" src="{{  asset('build/images/esm-clinfile.svg') }}" >
+</a>

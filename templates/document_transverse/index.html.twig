@@ -1,0 +1,200 @@
+{% set activeMenu = 'documentTransverse' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% set filterList = filter ?? [] %}
+{% set querySort = filter['sort'] is defined and 'asc' == filter['sort'] ? 'desc' : 'asc' %}
+{% set arrowSort = filter['sort'] is defined and 'asc' == filter['sort'] ? 'fa-arrow-down' : 'fa-arrow-up' %}
+{% set param_query = {
+    'sort': querySort ,
+    'filter[option]': app.request.query.get('filter')['option'] ?? '',
+    'filter[portee]': app.request.query.get('filter')['portee'] ?? '',
+    'filter[type]': app.request.query.get('filter')['type'] ?? '',
+    'filter[status]': app.request.query.get('filter')['status'] ?? '',
+} %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="Accueil">Accueil</a></li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('document_transverse.index') }}" title="{{ 'menu.DocumentTransverse.label' | trans }}">
+                    {{ 'menu.DocumentTransverse.label' | trans }}
+                </a>
+            </li>
+        </ol>
+    </nav>
+
+    <h1>{{ 'entity.DocumentTransverse.title'|trans }}
+    </h1>
+
+    <div class="admin-block">
+        <div>
+            <div class="p-3">
+                <form action="{{ path('document_transverse.index') }}">
+                    <div>
+                        <div class="card row p-3 my-1">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <select class="form-control" name="filter[option]">
+                                            {% for filter_option in ['global', 'myproject'] %}
+                                                <option value="{{ filter_option }}"{{ (filterList['filter']['option'] is defined and filter_option == filterList['filter']['option'] ? ' selected="selected"' : '') | raw }}>{{ ('entity.DocumentTransverse.filter.option.' ~ filter_option) | trans }}</option>
+                                            {% endfor %}
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" data-filter-date>
+
+                                <div class="col-4">
+                                    <select class="form-control" name="filter[portee]">
+                                        <option value="">
+                                            &lt;&lt;{{ 'entity.DocumentTransverse.field.porteeDocument' | trans }}&gt;&gt;
+                                        </option>
+                                        {% for filter_option in portee_list %}
+                                            <option value="{{ filter_option.id }}"{{ (filterList['filter']['portee'] is defined and filter_option.id == filterList['filter']['portee'] ? ' selected="selected"' : '') | raw }}>{{ filter_option.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <div class="col-4">
+                                    <select class="form-control" name="filter[type]">
+                                        <option value="">
+                                            &lt;&lt;{{ 'entity.DocumentTransverse.field.TypeDocument' | trans }}&gt;&gt;
+                                        </option>
+                                        {% for filter_option in type_list %}
+                                            <option value="{{ filter_option.id }}"{{ (filterList['filter']['type'] is defined and filter_option.id == filterList['filter']['type'] ? ' selected="selected"' : '') | raw }}>{{ filter_option.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <div class="col-4">
+                                    <select class="form-control" name="filter[status]">
+                                        <option value="">&lt;&lt;{{ 'Statut' | trans }}&gt;&gt;</option>
+                                        {% for filter_option in [1, 2] %}
+                                            <option value="{{ filter_option }}"{{ (filterList['filter']['status'] is defined and filter_option == filterList['filter']['status'] ? ' selected="selected"' : '') | raw }}>{{ ('entity.DocumentTransverse.filter.status.' ~ filter_option) | trans }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            {# Btn apply reset #}
+                            <div class="mt-2 clearfix">
+                                <div class="float-right">
+                                    <button type="submit"
+                                            class="btn btn-primary">
+                                        <i class="fa fa-search"></i> {{ 'entity.DocumentTransverse.search.action' | trans }}
+                                    </button>
+
+                                    <a href="{{ path('document_transverse.index') }}"
+                                       class="btn btn-secondary">{{ 'form.action.reset' | trans }}</a>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <hr>
+                    </div>
+                </form>
+            </div>
+
+            <table class="clickableTable">
+                <tr>
+                    <th>
+                        <a href="{{ path(app.request.get('_route'), {'order': 'name'} | merge(param_query) ) }}">
+                            <i class="fa {{ arrowSort }}"></i>
+                        </a> {{ 'entity.DocumentTransverse.field.name'|trans }}
+                    </th>
+
+                    <th>{{ 'entity.DocumentTransverse.field.porteeDocument'|trans }}</th>
+                    <th>{{ 'entity.DocumentTransverse.field.TypeDocument'|trans }}</th>
+                    <th>{{ 'entity.DocumentTransverse.field.drug' |trans }}</th>
+                    <th>
+                        <a href="{{ path(app.request.get('_route'), {'order': 'validStartAt'} | merge(param_query) ) }}">
+                            <i class="fa {{ arrowSort }}"></i>
+                        </a> {{ 'entity.DocumentTransverse.field.validStartAt' |trans }}</th>
+                    <th><a href="{{ path(app.request.get('_route'), {'order': 'validEndAt'} | merge(param_query) ) }}">
+                            <i class="fa {{ arrowSort }}"></i>
+                        </a> {{ 'entity.DocumentTransverse.field.validEndAt' |trans }}</th>
+
+                    <th>{{ 'entity.DocumentTransverse.field.isValid'|trans }}</th>
+                    <th>{{ 'entity.DocumentTransverse.action.label'|trans }}</th>
+                </tr>
+                {% for document in documents %}
+                    <tr data-document-id="{{ document.id }}" class="document-version">
+                        {% if document.institution == null and document.interlocutor == null %}
+                            <td>
+                                <a href="{{ path('document_transverse_drug.show', { drug: document.drug.id, id: document.id }) }}">{{ document.name }}</a>
+                            </td>
+                        {% endif %}
+                        {% if document.institution == null and document.drug == null %}
+                            <td>
+                                <a href="{{ path('document_transverse_interlocuteur.show', { interlocutor: document.interlocutor.id, id: document.id }) }}">{{ document.name }}</a>
+                            </td>
+                        {% endif %}
+                        {% if document.drug == null and document.interlocutor == null %}
+                            <td>
+                                <a href="{{ path('document_transverse_institution.show', { institution: document.institution.id, id: document.id}) }}">{{ document.name }}</a>
+                            </td>
+                        {% endif %}
+
+                        <td>{{ document.porteeDocument.name }}</td>
+                        <td>{{ document.TypeDocument.name }}</td>
+                        {% if document.drug !=null %}
+                            <td>{{ document.drug.name }}</td>
+                        {% endif %}
+                        {% if document.institution !=null %}
+                            <td>{{ document.institution.name }}</td>
+                        {% endif %}
+                        {% if document.interlocutor !=null %}
+                            <td>{{ document.interlocutor.firstName }} {{ document.interlocutor.lastName }}</td>
+                        {% endif %}
+
+                        <td>{{ document.validStartAt|date('d-m-Y') }}</td>
+                        <td>{{ document.validEndAt|date('d-m-Y') }}</td>
+
+                        <td>{{ document.isValid ? 'Valide': 'Invalide' }}</td>
+                        <td>
+                            {% if document.porteeDocument.code == 'INSTITUTION' and document.filename != null and role_download_institution %}
+                                <a href="{{ vich_uploader_asset(document, 'filenameVich') }}" download
+                                   title="{{ 'entity.DocumentTransverse.action.download'|trans }}">
+                                    <i class="fa fa-download" aria-hidden="true"></i>
+                                </a>
+                            {% endif %}
+
+                            {% if document.porteeDocument.code == 'INTERLOCUTOR' and document.filename != null and role_download_interlocutor %}
+                                <a href="{{ vich_uploader_asset(document, 'filenameVich') }}" download
+                                   title="{{ 'entity.DocumentTransverse.action.download'|trans }}">
+                                    <i class="fa fa-download" aria-hidden="true"></i>
+                                </a>
+                            {% endif %}
+
+
+                            {% if document.porteeDocument.code == 'MEDICAMENT' and document.versionDocumentTransverses|length >= 1 and role_download_drug %}
+                                <a target="_blank" class="show-version"
+                                   href="{{ path('document_transverse.version.show', {id: document.id}) }}"
+                                   title="{{ 'entity.VersionDocumentTransverse.action.liste'|trans }}">
+                                    <i class="fa fa-th-list"></i>
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                {% endfor %}
+
+            </table>
+        </div>
+
+    </div>
+
+    <div class="navigation">
+        <ul class="pagination justify-content-right">  {{ knp_pagination_render(documents) }}</ul>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,15 @@
+.table-drug-project {
+  padding-top: 10px;
+}
+.table-drug-project th {
+  background-color: #2c4d7a;
+  color: white;
+}
+
+.table-drug-project .table-wrap {
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  -webkit-box-shadow: -1px 5px 36px 5px #dbdbdb;
+  box-shadow: -1px 5px 36px 5px #dbdbdb;
+  overflow: auto;
+}

@@ -1,0 +1,13 @@
+
+{% extends 'email/base.html.twig' %}
+{% block body %}
+    <tr border="1" style="border-color: lightgray;">
+        <td align="left" style="font-size: 0; padding: 10px 25px; word-break: break-word; border-bottom: 1px solid lightgray;">
+            <div class="inter" style="font-family:Lato, Helvetica, Arial, sans-serif; font-size: 18px; text-align: left; color: #000000;">
+                Une nouvelle version du document {{ version }}  a été ajoutée à {{ document.name}} par {{ user.firstName }} {{ user.lastName }}
+
+                Cliquer sur le lien suivant afin d'accéder à ce médicament : <br> <a href="https://formation-ctms.unicancer.fr/admin/drug/{{ drug.id }}/show" style="color: #0a6aa1;"> https://formation-ctms.unicancer.fr/admin/drug/{{ drug.id }}/show</a>
+            </div>
+        </td>
+    </tr>
+{% endblock %}

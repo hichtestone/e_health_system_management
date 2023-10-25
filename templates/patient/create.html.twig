@@ -1,0 +1,58 @@
+{% set activeMenu = 'center' %}
+{% set subMenu = 'center' %}
+{% set activeMenu2 = 'patient' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block body %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="Accueil">Accueil</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.home.index', { 'id' : project.id }) }}"
+                                           title="{{ project.name }}">{{ project.name }}</a></li>
+            <li class="breadcrumb-item active"><a href="{{ path('project.list.patients', { 'id' : project.id }) }}"
+                                           title="patient-tracking">{{ 'entity.PatientTracking.action.list'|trans }}</a></li>
+
+            <li class="breadcrumb-item active">{% if edit %} Modification {% else %} Création {% endif %}</li>
+        </ol>
+    </nav>
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" href="{{ path('project.list.patients', { 'id' : project.id }) }}">{{ 'entity.PatientTracking.sub_menu.list_patient'|trans }}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('project.list.visits', { 'id' : project.id }) }}">{{ 'entity.PatientTracking.sub_menu.list_statuts'|trans }}</a>
+        </li>
+    </ul>
+
+    <h1>{% if edit %} {{ 'entity.PatientTracking.action.edit'|trans }} {%  else %} {{ 'entity.PatientTracking.action.create'|trans }} {% endif %}</h1>
+
+    <div class="admin-block" id="new-phase-setting">
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-6">
+                {{ form_row(form.center) }}
+                {{ form_row(form.patient_number) }}
+                {{ form_row(form.consentAt) }}
+                {{ form_row(form.randoAt) }}
+                {{ form_row(form.endOfStudyAt) }}
+                {{ form_row(form.enrolledAt) }}
+                {{ form_row(form.randoAt) }}
+                {{ form_row(form.randoGroup) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <button type="submit" class="btn btn-primary" type="submit">
+                    {% if edit %} {{ ('entity.PatientTracking.action.edit')|trans }} {%  else %} {{ 'entity.PatientTracking.action.create'|trans }} {% endif %}
+                </button>
+                <br>
+                <br>
+                <span style="color: #c30000">* {{ ('general.star.mandatory')|trans }}</span>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

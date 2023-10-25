@@ -1,0 +1,11 @@
+{% extends 'layout/app.html.twig' %}
+
+{% block body %}
+    <div class="row" style="margin-top: 20%;">
+        <div class="col-12 text-center" >
+            <img src="{{ asset('build/images/error.png') }}" style="max-width: 90%;">
+            <h1>{{ 'app.error.500'|trans }}</h1>
+            <a href="{{ path('home') }}" class="btn btn-primary" style="color: white;">{{ 'app.home'|trans }}</a>
+        </div>
+    </div>
+{% endblock %}

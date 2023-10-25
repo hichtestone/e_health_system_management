@@ -1,0 +1,66 @@
+{% set isAdminMenu = is_granted('ROLE_SUPER_ADMIN') or (app.user.profile is defined and 'ADM' == app.user.profile.acronyme)%}
+
+{% set activeMenu = activeMenu ?? '' %}
+{% set activeMenu2 = activeMenu2 ?? '' %}
+
+{% set cssActive = 'active' %}
+{% set cssInactive = '' %}
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+
+        <a class="navbar-brand pl-3" title="{{ 'app.home'|trans }}" href="{{ path('app.etmf.home') }}">
+            <img alt="{{ app_name }} v{{ app_version }}" height="30" src="{{ asset('build/images/etmf-clinfile.svg') }}" />
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#bs-nav-main" aria-controls="bs-nav-main" aria-expanded="false">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse pl-md-3 pl-0 pl-lg-5" id="bs-nav-main">
+
+            <div class="navbar-nav mr-auto topnav">
+
+                {{ include('ETMF/menu/sub/default.html.twig') }}
+
+            </div>
+
+            <ul class="navbar-nav mr-3 px-3" id="menuDroite">
+
+                <li id="lang" class="dropdown pr-4 mb-3 mb-lg-0 d-block text-center">
+                    <a href="{{ path('app.help') }}">{{ 'menu.help' | trans }}</a>
+                </li>
+
+                <li id="lang" class="dropdown pr-4 mb-3 mb-lg-0 d-block text-center">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ 'txt.language.label'|trans({'%count%':2}) }}</a>
+                    <ul id="flags" class="dropdown-menu">
+                        <li class="py-4 mx-3 mx-lg-1"><a href="{{ path('language.select', {"code": "en"}) }}" title="{{ ('txt.language.en')|trans }}"><img src="{{ asset('build/images/flags/en.png') }}" alt="en" /></a></li>
+                        <li class="py-4 mx-3 mx-lg-1"><a href="{{ path('language.select', {"code": "fr"}) }}" title="{{ ('txt.language.fr')|trans }}"><img src="{{ asset('build/images/flags/fr.png') }}" alt="fr" /></a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown mb-3 mb-lg-0 text-center" id="menu-profile">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i> {{ app.user.displayName is defined ? app.user.displayName : "" }}</a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li class="pl-2 my-1 mb-3 mb-lg-0"><a href="{{ path('account') }}">{{ 'txt.profile.label'|trans }}</a></li>
+                        <li class="pl-2 my-1 mb-3 mb-lg-0"><a id="but-logout" href="{{ path('logout') }}" title="{{ 'txt.logout'|trans }}">{{ 'txt.logout'|trans }} <i class="fa fa-sign-out"></i></a></li>
+                    </ul>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </nav>
+
+    <nav id="submenu" class="navbar navbar-expand-lg navbar-dark">
+        {% if subMenu != '' %}
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto topnav">
+                    {{ include('menu/sub/'~subMenu~'.html.twig') }}
+                </ul>
+            </div>
+        {% endif %}
+    </nav>
+
+</header>

@@ -1,0 +1,25 @@
+{% extends 'layout/security.html.twig' %}
+
+{#
+    on envoi en post le token et la page demandée par le user au service provider
+#}
+
+{% block title %}SSO{% endblock %}
+
+{% block content %}
+
+    <h1>{{ 'app.wait'|trans }}</h1>
+    <div class="ssoloading"></div>
+
+    <form id="ssoform" action="{{ target }}" method="post" class="d-none">
+        {% for key,val in fields %}
+            <input type="text" name="{{ key }}" value="{{ val }}" />
+        {% endfor %}
+        <input type="submit" name="ok" value="ok" />
+    </form>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function(event) {
+            document.getElementById('ssoform').submit();
+        });
+    </script>
+{% endblock %}

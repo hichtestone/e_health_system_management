@@ -1,0 +1,12 @@
+{% set activeMenu = 'audit_trail' %}
+{% set subMenu = 'audit_trail' %}
+{% set activeMenu2 = 'connexion_error' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+
+    <h1>{{ 'Audit trail erreurs de connexion'|trans }}</h1>
+    {{ list.render|raw }}
+
+{% endblock %}

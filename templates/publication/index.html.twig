@@ -1,0 +1,26 @@
+{% set activeMenu = 'project' %}
+{% set subMenu = 'project' %}
+{% set activeMenu2 = 'publication' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.home.index', { 'id' : project.id }) }}"
+                                           title="{{ project.acronyme }}">{{ project.acronyme }}</a></li>
+            <li class="breadcrumb-item active">Publications</li>
+        </ol>
+    </nav>
+
+    <h1>Publications <br>
+        {% if is_granted('PROJECT_ACCESS_AND_OPEN', project) and is_granted('PROJECT_WRITE', project) and is_granted('PUBLICATION_CREATE') %}
+            <a class="btn btn-primary" href="{{ path('project.publications.new', {'id' : project.id}) }}" >{{ 'entity.Publication.new'|trans }}</a>
+        {% endif %}
+    </h1>
+
+    {{ list.render|raw }}
+
+{% endblock %}

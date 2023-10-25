@@ -1,0 +1,49 @@
+{% set activeMenu = 'center' %}
+{% set subMenu = 'center' %}
+
+{% extends 'layout/app.html.twig' %}
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('project.home.index', { 'id' : project.id }) }}" title="{{ project.acronyme }}">{{ project.acronyme }}</a>
+            </li>
+            {% if activeMenu2 == 'center' %}
+                <li class="breadcrumb-item">
+                    <a href="{{ path('project.center.index', { 'id' : project.id }) }}" title="{{ 'entity.Center.suite.list'|trans }}">{{ 'entity.Center.suite.list'|trans }}</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ path('project.center.show', { 'id' : project.id, 'idCenter' : center.id }) }}" title="{{ center.name }}">{{ 'general.file'|trans}}  - {{ center.name }}</a>
+                </li>
+            {% endif %}
+            <li class="breadcrumb-item active">{{ 'entity.report_visit.title' | trans }}</li>
+        </ol>
+    </nav>
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('project.center.show', { 'id' : project.id, 'idCenter' : center.id }) }}">{{ 'entity.Center.field.title_tab'|trans }}</a>
+        </li>
+        {% if activeMenu2 == 'center' and (center.centerStatus.type == 2 or center.centerStatus.type == 3) %}
+            <li class="nav-item">
+                <a class="nav-link active" href="{{ path('project.center.report.visit.index', { 'projectID' : project.id, 'centerID' : center.id }) }}">{{ 'entity.Center.field.visit_tab'|trans }}</a>
+            </li>
+        {% endif %}
+    </ul>
+
+    <h1>
+        {{ 'entity.report_visit.title' | trans }} <br>
+        {% if is_granted('REPORT_VISIT_CREATE') and is_granted('PROJECT_WRITE', project) %}
+            <a class="btn btn-primary" href="{{ path('project.center.report.visit.center.new', { 'projectID' : project.id, 'centerID' : center.id }) }}">{{ 'entity.report_visit.action.add' | trans }}</a>
+        {% endif %}
+    </h1>
+
+    {{ list.render|raw }}
+
+{% endblock %}

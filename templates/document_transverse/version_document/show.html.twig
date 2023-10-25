@@ -1,0 +1,30 @@
+{% block content %}
+    <h1>{{ ('entity.VersionDocumentTransverse.action.liste')|trans }}</h1>
+
+    <div class="admin-block" style="width: 100%;">
+        <div class="table-responsive">
+            <table class="w-100">
+                <tr style="padding-bottom: 2em;">
+                    <th>{{ 'entity.VersionDocumentTransverse.field.version'|trans }}</th>
+                    <th>{{ 'entity.VersionDocumentTransverse.field.isValid'|trans }}</th>
+                    <th>{{ 'entity.VersionDocumentTransverse.action.label'|trans }}</th>
+                </tr>
+                {% for version in document.versionDocumentTransverses %}
+                    <tr>
+                        <td>{{ version.version }}</td>
+
+                        <td>{{ version.isValid? 'Valide' : 'Invalide' }}</td>
+                        <td>
+                            {% if version.filename1 != null %}
+                                <a href="{{ vich_uploader_asset(version, 'filename1Vich') }}" download title="{{ 'entity.DocumentTransverse.action.download'|trans}}">
+                                    <i class="fa fa-download" aria-hidden="true"></i>
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

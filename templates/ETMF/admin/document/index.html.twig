@@ -1,0 +1,35 @@
+{% extends 'ETMF/layout/app.html.twig' %}
+
+{% block file_widget %}
+
+    <!-- drag and drop -->
+    <div id="filedrag">
+
+        <span id="filedrag_text_drop" >{{ 'form.text_drag_choose' | trans }}</span>
+        <span id="filedrag_text_hover" class="d-none">{{ 'form.text_drag_hover' | trans }}</span>
+
+        <div class="d-none"><label for="document_logo">{{ form_widget(form) }}</label></div>np
+
+    </div>
+    <!-- info files + progress -->
+    <div class="mx-auto d-none" id="info_file">
+        <div id="preview_file"></div>
+        <div id="">{{ 'description_file' | trans }} : <strong id="description_file"></strong></div>
+    </div>
+
+{% endblock %}
+
+{% block body %}
+
+        {% form_theme form _self %}
+        {% if not form is null %}
+
+            {{ form_start(form) }}
+            {{ form_rest(form) }}
+                <button type="submit" class="btn btn-primary" type="submit">{{ ('form.btn.'~(action == 'create' ? 'create' : 'save'))|trans }}</button>
+            {{ form_end(form) }}
+
+        {% endif %}
+
+{% endblock %}
+

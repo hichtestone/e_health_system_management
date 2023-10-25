@@ -1,0 +1,68 @@
+{% block content %}
+<dl class="row">
+    <div class="col-6">
+        <dt>{{ 'entity.Institution.field.name'|trans }} : </dt>
+        <dd>{{ institution.name }}</dd>
+    </div>
+    <div class="col-6">
+        <dt>{{ 'entity.Institution.field.type'|trans }} : </dt>
+        <dd>{{ institution.institutionType }}</dd>
+    </div>
+    <div class="col-6">
+        <dt>{{ 'entity.Institution.field.address1'|trans }} : </dt>
+        <dd>{{ institution.address1 }}</dd>
+    </div>
+
+    <div class="col-6">
+        <dt>{{ 'entity.Institution.field.address2'|trans }} : </dt>
+        <dd>{{ institution.address2 }}</dd>
+    </div>
+    <div class="col-6">
+        <dt>{{ 'entity.Institution.field.postalCode'|trans }} : </dt>
+        <dd>{{ institution.postalCode }}</dd>
+    </div>
+    <div class="col-6">
+        <dt>{{ 'entity.Institution.field.department'|trans }} : </dt>
+        <dd>{{ institution.countryDepartment }}</dd>
+    </div>
+
+    <div class="col-6">
+        <dt>{{ 'entity.Institution.field.city'|trans }} : </dt>
+        <dd>{{ institution.city }}</dd>
+    </div>
+    <div class="col-6">
+        <dt>{{ 'entity.Institution.field.country'|trans }} : </dt>
+        <dd>{{ institution.country.name }}</dd>
+    </div>
+    {% if institution.country.id == 1 %}
+        <div class="col-6">
+            <dt>{{ 'entity.Institution.field.canceropole'|trans }} : </dt>
+            <dd>{{ institution.countryDepartment is null ? '' : institution.countryDepartment.parent }}</dd>
+        </div>
+    {% endif %}
+
+    {% if institution.country.id == 1 and institution.institutionType.id not in typeIdNoFiness %}
+        <div class="col-6">
+            <dt>{{ 'entity.Institution.field.finess'|trans }} : </dt>
+            <dd>{{ institution.finess }}</dd>
+        </div>
+        <div class="col-6">
+            <dt>{{ 'entity.Institution.field.siret'|trans }} : </dt>
+            <dd>{{ institution.siret }}</dd>
+        </div>
+    {% endif %}
+    <div class="col-6">
+        <dt>{{ 'entity.Institution.field.phone'|trans }} : </dt>
+        <dd>{{ institution.phone }}</dd>
+    </div>
+
+    <div class="col-6">
+        <dt>{{ 'entity.Institution.field.fax'|trans }} : </dt>
+        <dd>{{ institution.fax }}</dd>
+    </div>
+    <div class="col-6">
+        <dt>{{ 'entity.Institution.field.email'|trans }} : </dt>
+        <dd>{{ institution.email }}</dd>
+    </div>
+</dl>
+{% endblock %}

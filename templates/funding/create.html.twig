@@ -1,0 +1,115 @@
+{# set current menu #}
+{% set activeMenu = 'project' %}
+{% set subMenu = 'project' %}
+{% set activeMenu2 = 'funding' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a></li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('project.home.index', { 'id' : project.id }) }}" title="{{ project.acronyme }}">{{ project.acronyme }}</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('project.list.fundings', { 'id' : project.id }) }}" title="formations">{{ 'entity.Funding.action.list'|trans }}</a>
+            </li>
+            <li class="breadcrumb-item active">{% if edit %} {{ 'form.action.modification'|trans }} {% else %}  {{ 'form.action.creation'|trans }} {% endif %}</li>
+
+        </ol>
+    </nav>
+
+    <h1>{% if edit %} {{ 'entity.Funding.action.modify'|trans }} {% else %} {{ 'entity.Funding.action.new'|trans }} {% endif %}</h1>
+
+    <div class="admin-block" id="new-funding">
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-3">
+                {{ form_label(form.funder, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-4">
+                {{ form_widget(form.funder) }}
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-3">
+                {{ form_label(form.publicFunding, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-4">
+                {{ form_widget(form.publicFunding) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                {{ form_label(form.callProject, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-4">
+                {{ form_widget(form.callProject) }}
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-3">
+                {{ form_label(form.demandedAt, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-4">
+                {{ form_widget(form.demandedAt) }}
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-3">
+                {{ form_label(form.amount, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-2">
+                {{ form_widget(form.amount) }}
+            </div>
+            <div class="col-2">
+                {{ form_widget(form.devise) }}
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-3">
+                {{ form_label(form.obtainedAt, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-4">
+                {{ form_widget(form.obtainedAt) }}
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-3">
+                {{ form_label(form.comment, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-4">
+                {{ form_widget(form.comment) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                {% if edit  %}
+                    <button type="submit" class="btn btn-primary"
+                            type="submit">{{ ('entity.Funding.action.modify')|trans }}</button>
+                {% else %}
+                    <button type="submit" class="btn btn-primary"
+                            type="submit">{{ ('entity.Funding.action.add')|trans }}</button>
+                {% endif %}
+
+                <br>
+                <br>
+                <span style="color: #c30000">* {{ ('general.star.mandatory')|trans }}</span>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}
+
+

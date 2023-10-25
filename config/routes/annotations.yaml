@@ -1,0 +1,11 @@
+controllers_ESM:
+    resource: ../../src/ESM/Controller/
+    type: annotation
+
+controllers_ETMF:
+    resource: ../../src/ETMF/Controller/
+    type: annotation
+
+kernel:
+    resource: ../../src/Kernel.php
+    type: annotation

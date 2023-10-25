@@ -1,0 +1,27 @@
+{# set current menu #}
+{% set activeMenu = 'interlocutor' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('admin.projects.index') }}" title="{{ 'menu.admin.home'|trans }}">{{ 'menu.admin.home'|trans }}</a></li>
+            <li class="breadcrumb-item active">
+                {{ 'menu.admin.interlocutors' | trans }}
+            </li>
+        </ol>
+    </nav>
+
+    <h1>{{ 'entity.Interlocutor.action.list'|trans }}
+        {% if is_granted('INTERLOCUTOR_CREATE') %}
+            <a class="btn btn-primary" href="{{ path('admin.interlocutor.new') }}" ><i class="fa fa-plus"></i></a>
+        {% endif %}
+    </h1>
+
+    {{ list.render|raw }}
+
+{% endblock %}

@@ -1,0 +1,13 @@
+{% set activeMenu = 'home' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <h1>{{ 'entity.Project.list.my_project'|trans }}</h1>
+
+    {{ list.render|raw }}
+
+{% endblock %}

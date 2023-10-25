@@ -1,0 +1,47 @@
+{% set activeMenu = 'drugs' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'menu.admin.home'|trans }}">{{ 'menu.admin.home'|trans }}</a></li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('admin.drugs.index') }}" title="{{ 'menu.admin.drugs' | trans }}">
+                    {{ 'menu.admin.drugs' | trans }}
+                </a>
+            </li>
+            <li class="breadcrumb-item active">{{ ('form.action.'~action)|trans }}</li>
+        </ol>
+    </nav>
+    {% if app.request.get('_route') == 'admin.drug.new' or app.request.get('_route') == 'admin.drug.edit'  %}
+        <input type="hidden" id="newDrug">
+    {% endif %}
+    <h1>{{ ('entity.Drug.field.'~action)|trans }}</h1>
+
+    <div class="admin-block" id="new-add-institution">
+
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-6">
+                {{ form_row(form.name) }}
+            </div>
+            <div class="col-6">
+                {{ form_row(form.TrailTreatment) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <button type="submit" class="btn btn-primary">
+                    {{ ('entity.Drug.action.'~action)|trans }}
+                </button>
+                <br>
+                <br>
+                <span style="color: #c30000">* {{ ('general.star.mandatory')|trans }}</span>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

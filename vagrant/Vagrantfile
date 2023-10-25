@@ -1,0 +1,46 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+    ### BASE ###########################################################################################
+
+    config.vm.box = "esm-v3"
+    config.vm.box_url = "file://builds/esm-v3.box"
+    config.vm.boot_timeout = 1200
+
+    config.vm.provider :virtualbox do |vb|
+        vb.gui = false
+        vb.customize ["modifyvm", :id, "--memory", "2046"]
+        vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+#         vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/var/www/esm-v3", "1"]
+    end
+
+    ### NETWORK ###########################################################################################
+
+    config.ssh.username = "vagrant"
+    config.ssh.password = "vagrant"
+
+    config.vm.network "private_network", ip:'85.85.85.100', netmask:"255.255.0.0"
+
+    ### VBGUESTS ###########################################################################################
+
+    if Vagrant.has_plugin?("vagrant-vbguest")
+        config.vbguest.auto_update = false
+    end
+
+    # To avoid install and uninstall VBoxGuessAdditions during vagrant provisioning.
+    # config.vbguest.auto_update = false
+
+    ### SYNC ###########################################################################################
+
+    config.vm.synced_folder '.', '/vagrant', disabled: true
+
+    ### TRICKS ###########################################################################################
+
+    # Permit anyone to start the GUI
+    config.vm.provision "shell", inline: "sudo sed -i 's/allowed_users=.*$/allowed_users=anybody/' /etc/X11/Xwrapper.config"
+
+end

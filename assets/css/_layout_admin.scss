@@ -1,0 +1,43 @@
+
+.admin-block{
+  border: 2px solid $c-blue_light;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+
+  .btn-primary{
+    color: white;
+  }
+
+}
+
+.show-form-admin {
+
+
+
+  .admin-champ-normal{
+    margin-bottom: 20px;
+    display: flex;
+  }
+
+  .admin-champ-protocle{
+    margin-top: -10px;
+  }
+
+  .button{
+    width: 120px !important;
+  }
+
+
+}
+
+#used-space{
+  width: 100px;
+  display: inline-flex;
+}
+
+label.required::after,
+legend.required::after {
+  content: " *";
+  color: #c30000;
+}

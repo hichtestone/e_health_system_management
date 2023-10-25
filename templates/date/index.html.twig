@@ -1,0 +1,281 @@
+{% set activeMenu = 'project' %}
+{% set subMenu = 'project' %}
+{% set activeMenu2 = 'dates' %}
+
+{% extends 'layout/app.html.twig' %}
+
+
+
+{% block body %}<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('project.home.index', { 'id' : project.id }) }}" title="{{ project.acronyme }}">{{ project.acronyme }}</a></li>
+        <li class="breadcrumb-item active">{{ 'menu.project.statutory'|trans}} > {{ 'menu.reglementaire.dates_chiffres'|trans }}</li>
+    </ol>
+    </nav>
+
+    {# Onglets dates et chiffres / Soumissions / rgpd #}
+    {% include 'menu/reglementaire.html.twig' with {'activetab': 'date_chiffres'} %}
+
+    <h1>{{ 'entity.Date.action.list'|trans }}
+    </h1>
+
+    {% if date is not null %}
+        <div class="admin-block">
+            <div class="sf-read">
+                <h5>{{ 'entity.Date.section.date'|trans }}</h5>
+                <dl class="row">
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.submissionAt'|trans }} :</dt>
+                        <dd>{{ date.submissionAt is empty ? '' : date.submissionAt|date('d/m/Y') }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.feasibilityCommitteeAt'|trans }} :</dt>
+                        <dd>{{ date.submissionAt is empty ? '' : date.submissionAt|date('d/m/Y') }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.reviewCommitteeAt'|trans }} :</dt>
+                        <dd>{{ date.submissionAt is empty ? '' : date.submissionAt|date('d/m/Y') }}</dd>
+                    </div>
+                </dl>
+                <dl class="row">
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.registrationAt'|trans }} :</dt>
+                        <dd>{{ date.registrationAt is empty ? '' : date.submissionAt|date('d/m/Y') }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.subscriptionStartedAt'|trans }} :</dt>
+                        <dd>{{ date.subscriptionStartedAt is empty ? '' : date.submissionAt|date('d/m/Y') }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.subscriptionEndedAt'|trans }} :</dt>
+                        <dd>{{ date.subscriptionEndedAt is empty ? '' : date.submissionAt|date('d/m/Y') }}</dd>
+                    </div>
+                </dl>
+                <dl class="row">
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.certificationAt'|trans }} :</dt>
+                        <dd>{{ date.certificationAt is empty ? '' : date.certificationAt|date('d/m/Y') }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.kiffOfMeetingAt'|trans }} :</dt>
+                        <dd>{{ date.kiffOfMeetingAt is empty ? '' : date.kiffOfMeetingAt|date('d/m/Y') }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.mepForecastAt'|trans }} :</dt>
+                        <dd>{{ date.mepForecastAt is empty ? '' : date.mepForecastAt|date('d/m/Y') }}</dd>
+                    </div>
+                </dl>
+                <dl class="row">
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.mepAt'|trans }} :</dt>
+                        <dd>{{ date.mepAt is empty ? '' : date.mepAt|date('d/m/Y') }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.forecastInclusionStartedAt'|trans }} :</dt>
+                        <dd>{{ date.forecastInclusionStartedAt is empty ? '' : date.kiffOfMeetingAt|date('d/m/Y') }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.firstConsentAt'|trans }} :</dt>
+                        <dd>{{ date.firstConsentAt is empty ? '' : date.firstConsentAt|date('d/m/Y') }}</dd>
+                    </div>
+                </dl>
+
+                <dl class="row">
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.inclusionPatientStartedAt'|trans }} :</dt>
+                        <dd>{{ date.inclusionPatientStartedAt is empty ? '' : date.inclusionPatientStartedAt|date('d/m/Y') }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.forecastInclusionEndedAt'|trans }} :</dt>
+                        <dd>{{ date.forecastInclusionEndedAt is empty ? '' : date.forecastInclusionEndedAt|date('d/m/Y') }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.inclusionPatientEndedAt'|trans }} :</dt>
+                        <dd>{{ date.inclusionPatientEndedAt is empty ? '' : date.inclusionPatientEndedAt|date('d/m/Y') }}</dd>
+                    </div>
+                </dl>
+
+                <dl class="row">
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.studyDeclarationEndedAt'|trans }} :</dt>
+                        <dd>{{ date.studyDeclarationEndedAt is empty ? '' : date.studyDeclarationEndedAt|date('d/m/Y') }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.validationCommmitteeReviewEndedAt'|trans }} :</dt>
+                        <dd>{{ date.validationCommmitteeReviewEndedAt is empty ? '' : date.validationCommmitteeReviewEndedAt|date('d/m/Y') }}</dd>
+                    </div>
+                </dl>
+            </div>
+        </div>
+
+        <div class="admin-block">
+            <div class="sf-read">
+                <h5>{{ 'entity.Date.section.patient'|trans }}</h5>
+                <dl class="row">
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.amendmentsBeforFirstInclusion'|trans }} :</dt>
+                        <dd>{% if date.amendmentsBeforFirstInclusion == 1 %} Oui {% else %} Non {% endif %}</dd>
+                    </div>
+                </dl>
+                <dl class="row">
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.numberExpectedPatients'|trans }} :</dt>
+                        <dd>{{ date.numberExpectedPatients }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.numberScreenedPatients'|trans }} :</dt>
+                        <dd>{{ date.numberScreenedPatients }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.numberPatientsIncluded'|trans }} :</dt>
+                        <dd>{{ date.numberPatientsIncluded }}</dd>
+                    </div>
+                </dl>
+                <dl class="row">
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.numberRandomizedPatients'|trans }} :</dt>
+                        <dd>{{ date.numberRandomizedPatients }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.expectedDurationInclusionAt'|trans }} :</dt>
+                        <dd>{{ date.expectedDurationInclusionAt is empty ? '' : date.expectedDurationInclusionAt }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.expectedDurationFollowUpAfterInclusionAt'|trans }} :</dt>
+                        <dd>{{ date.expectedDurationFollowUpAfterInclusionAt is empty ? '' : date.expectedDurationFollowUpAfterInclusionAt }}</dd>
+                    </div>
+                </dl>
+            </div>
+        </div>
+
+        <div class="admin-block">
+            <h5>{{ 'entity.Date.section.report_intermediary'|trans }}
+                {% if is_granted('DATE_EDIT', date) and is_granted('PROJECT_WRITE', project) %}
+                    <a class="btn btn-primary" id="databasefreeze-new" href="{{ path('project.dates.databasefreeze.new', {id: date.id}) }}" ><i class="fa fa-plus"></i></a>
+                {% endif %}
+            </h5>
+            <div class="table-responsive">
+                <table class="w-100" id="project-database-freeze" data-project-date-id="{{ date.id }}">
+                    <tr>
+                        <th>{{ 'entity.Date.field.freezedAt'|trans }}</th>
+                        <th>{{ 'entity.Date.field.reason'|trans }}</th>
+                        <th>{{ 'entity.Date.field.actualReportedAt'|trans }}</th>
+                        {% if is_granted('DATE_EDIT', date) %}
+                            <th>{{ 'form.action.action'|trans }}</th>
+                        {% endif %}
+                    </tr>
+                    {% for databaseFreeze in date.databaseFreezes %}
+                        {% if databaseFreeze.deletedAt is null or is_granted('DATABASEFREEZE_RESTORE', databaseFreeze) %}
+                            <tr>
+                                <td>{{ databaseFreeze.frozenAt|date('d/m/Y') }}</td>
+                                <td> {{ databaseFreeze.reason.label }}
+                                </td>
+                                <td>{{ databaseFreeze.reportDate is empty ? '' : databaseFreeze.reportDate|date('d/m/Y') }}</td>
+                                <td>
+                                    {% if is_granted('DATABASEFREEZE_EDIT', databaseFreeze) and is_granted('PROJECT_WRITE', project) %}
+                                        <a title="{{ 'form.action.edit'|trans }}" href="{{ path('project.dates.databasefreeze.edit', {id: date.id, idDatabasefreeze: databaseFreeze.id}) }}" class="databasefreeze-edit"><i class="fa fa-edit"></i></a>
+                                    {% endif %}
+                                    {% if is_granted('DATABASEFREEZE_ARCHIVE', databaseFreeze) and is_granted('PROJECT_WRITE', project) %}
+                                        <a title="{{ 'form.action.archive'|trans }}" href="{{ path('project.dates.databasefreeze.archive', {id: date.id, idDatabasefreeze: databaseFreeze.id}) }}"><i class="fa fa-archive"></i></a>
+                                    {% endif %}
+                                    {% if is_granted('DATABASEFREEZE_RESTORE', databaseFreeze) and is_granted('PROJECT_WRITE', project) %}
+                                        <a title="{{ 'form.action.restore'|trans }}" href="{{ path('project.dates.databasefreeze.restore', {id: date.id, idDatabasefreeze: databaseFreeze.id}) }}"><i class="fa fa-box-open"></i></a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+
+        <div class="admin-block">
+            <div class="sf-read">
+                <h5>{{ 'entity.Date.section.report'|trans }}</h5>
+
+                <dl class="row">
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.expectedLPLVAt'|trans }} :</dt>
+                        <dd>{{ date.expectedLPLVAt is empty ? '' : date.expectedLPLVAt|date('d/m/Y') }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.actualLPLVAt'|trans }} :</dt>
+                        <dd>{{ date.actualLPLVAt is empty ? '' : date.actualLPLVAt|date('d/m/Y') }}</dd>
+                    </div>
+                </dl>
+
+                <dl class="row">
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.expectedReportAnalysedAt'|trans }} :</dt>
+                        <dd>{{ date.expectedReportAnalysedAt is empty ? '' : date.expectedReportAnalysedAt|date('d/m/Y') }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.actualReportAnalysedtAt'|trans }} :</dt>
+                        <dd>{{ date.actualReportAnalysedtAt is empty ? '' : date.actualReportAnalysedtAt|date('d/m/Y') }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.finalReportAnalysedAt'|trans }} :</dt>
+                        <dd>{{ date.finalReportAnalysedAt is empty ? '' : date.finalReportAnalysedAt|date('d/m/Y') }}</dd>
+                        {% if warnings.finalReportAnalysedAt is defined %}
+                            <dd class="alert alert-warning" role="alert">{{ warnings.finalReportAnalysedAt }}</dd>
+                        {% endif %}
+                    </div>
+                </dl>
+
+                <dl class="row">
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.finalExpectedLPLVAt'|trans }} :</dt>
+                        <dd>{{ date.finalExpectedLPLVAt is empty ? '' : date.finalExpectedLPLVAt|date('d/m/Y') }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.finalActualLPLVAt'|trans }} :</dt>
+                        <dd>{{ date.finalActualLPLVAt is empty ? '' : date.finalActualLPLVAt|date('d/m/Y') }}</dd>
+                    </div>
+                </dl>
+
+                <dl class="row">
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.finalExpectedReportAt'|trans }} :</dt>
+                        <dd>{{ date.finalExpectedReportAt is empty ? '' : date.finalExpectedReportAt|date('d/m/Y') }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.finalActualReportAt'|trans }} :</dt>
+                        <dd>{{ date.finalActualReportAt is empty ? '' : date.finalActualReportAt|date('d/m/Y') }}</dd>
+                        {% if warnings.finalActualReportAt is defined %}
+                            <dd class="alert alert-warning" role="alert">{{ warnings.finalActualReportAt }}</dd>
+                        {% endif %}
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.finalActualReportClinicalAt'|trans }} :</dt>
+                        <dd>{{ date.finalActualReportClinicalAt is empty ? '' : date.finalActualReportClinicalAt|date('d/m/Y') }}</dd>
+                    </div>
+                </dl>
+
+                <dl class="row">
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.depotClinicalTrialsAt'|trans }} :</dt>
+                        <dd>{{ date.depotClinicalTrialsAt is empty ? '' : date.depotClinicalTrialsAt|date('d/m/Y') }}</dd>
+                        {% if warnings.depotClinicalTrialsAt is defined %}
+                            <dd class="alert alert-warning" role="alert">{{ warnings.depotClinicalTrialsAt }}</dd>
+                        {% endif %}
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Date.field.depotEudraCtAt'|trans }} :</dt>
+                        <dd>{{ date.depotEudraCtAt is empty ? '' : date.depotEudraCtAt|date('d/m/Y') }}</dd>
+                        {% if warnings.depotEudraCtAt is defined %}
+                            <dd class="alert alert-warning" role="alert">{{ warnings.depotEudraCtAt }}</dd>
+                        {% endif %}
+                    </div>
+                </dl>
+
+            </div>
+        </div>
+
+        {% if is_granted('PROJECT_WRITE', date.project) and is_granted('DATE_EDIT', date) %}
+            <a class="btn btn-primary" href="{{ path('project.date.edit', {
+                'id': project.id, 'idDate': date.id}) }}">{{ 'entity.Date.action.modify'|trans }}</a>
+        {% endif %}
+    {% endif %}
+
+{% endblock %}

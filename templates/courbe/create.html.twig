@@ -1,0 +1,79 @@
+{% set activeMenu = 'settings' %}
+{% set subMenu = 'settings' %}
+{% set activeMenu2 = 'courbe' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="Accueil">Accueil</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.home.index', { 'id' : project.id }) }}" title="{{ project.acronyme }}">{{ project.acronyme }}</a></li>
+            <li class="breadcrumb-item active"><a href="{{ path('project.list.courbe.setting', { 'id' : project.id }) }}" title="patient-tracking">{{ 'entity.CourbeSetting.action.list'|trans }}</a></li>
+            <li class="breadcrumb-item active">{{ 'entity.CourbeSetting.action.new_edit'|trans }}</li>
+        </ol>
+    </nav>
+
+    <h1>{{ 'entity.CourbeSetting.action.list'|trans }}</h1>
+
+    <div class="admin-block" id="new-phase-setting">
+
+        {{ form_start(form) }}
+
+        <div class="row">
+            <div class="col-6">
+                {{ form_row(form.startAt) }}
+                {{ form_row(form.unit) }}
+            </div>
+        </div>
+
+        <div class="row" id="containpoint">
+            <ul class="points" id="points"
+                data-prototype="{{ form_widget(form.points.vars.prototype)|e('html_attr') }}">
+                {% for point in form.points %}
+                    <li class="item">
+                        <div class="row">
+                            <div class="col-5">
+                                {{ form_row(point.x, {'attr' : {'min' : 1}}) }}
+                            </div>
+                            <div class="col-5">
+                                {{ form_row(point.y, {'attr' : {'min' : 0}}) }}
+                            </div>
+                            <div class="col-2">
+                                <button type="button" class="btn btn-primary removeDrug" data-collection-holder-class="points"><i class="fa fa-minus-circle"></i></button>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+
+        </div>
+        <button type="button" class="btn btn-primary add_item_link" data-collection-holder-class="points"><i class="fa fa-plus-circle"></i></button>
+
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            <button type="submit" class="btn btn-primary" type="submit">{{ ('entity.CourbeSetting.action.save')|trans }}</button>
+            <br>
+            <br>
+            <span style="color: #c30000">* {{ ('general.star.mandatory')|trans }}</span>
+        </div>
+    </div>
+
+    <div id="new">
+
+    </div>
+
+        {{ form_end(form) }}
+
+    </div>
+
+    <div class="d-none" data-project-id="{{ project.id }}"></div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

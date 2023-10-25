@@ -1,0 +1,24 @@
+{% set activeMenu = 'audit_trail' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="sidebar col-lg-3 ml-auto">
+            {# Mobile device dropdown Menu #}
+            {{ include('menu/sub/audit_trail_dropdown.html.twig') }}
+
+            {# Other device sidebar Menu #}
+            <div id="auditTrail" class="d-none d-lg-block">
+                <h4>Audit Trail</h4>
+                {{ include('menu/sub/audit_trail.html.twig') }}
+            </div>
+        </div>
+
+        <div class="col-lg-9 content-page--text">
+            <h1>{{ ('audit_trail.header.'~activeMenu2)|trans }}</h1>
+            {{ list.render|raw }}
+        </div>
+    </div>
+
+{% endblock %}

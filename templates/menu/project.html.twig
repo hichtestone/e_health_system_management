@@ -1,0 +1,20 @@
+{# Accueil  #}
+<a href="{{ path('home') }}" {{ activeMenu == 'home' ? ' class="active"' : '' }}>{{ 'menu.project.home'|trans }}</a>
+
+{# Admin #}
+{% if is_granted('MENU_ADMIN') %}
+    <a href="{{ path('admin.index') }}">{{ 'menu.admin.label' | trans }}</a>
+{% endif %}
+
+{# Paramétrage #}
+{% if is_granted('ROLE_PROJECT_SETTINGS_READ') %}
+    <a class="nav-link{{ activeMenu == 'settings' ? ' active' : ''}}" href="{{ path('project.show.file', {'id' : project_id }) }}">{{ 'menu.project.parameter'|trans }}</a>
+{% endif %}
+
+{# Gestion de projet #}
+<a class="nav-link{{ activeMenu == 'project' ? ' active' : ''}}" href="{{ path('project.home.index', {'id' : project.id }) }}">{{ 'menu.project.manage'|trans }}</a>
+
+{# Sélection #}
+{% if is_granted('MENU_CENTER') %}
+    <a class="nav-link{{ activeMenu == 'center' ? ' active' : ''}}" href="{{ path('project.center.index', {'id' : project_id }) }}">{{ 'menu.project.center.site'|trans }}</a>
+{% endif %}

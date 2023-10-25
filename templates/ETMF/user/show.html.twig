@@ -1,0 +1,45 @@
+{% extends 'ETMF/layout/app.html.twig' %}
+
+{% block content %}
+
+    <h1>{{ user.displayName }}</h1>
+
+    <div class="admin-block">
+        <h5>{{ 'show.main'|trans }}</h5>
+        <dl class="row">
+            <div class="col-6">
+                <dt>{{ 'Last Name : ' }}</dt><dd>{{ user.lastName }}</dd>
+            </div>
+            <div class="col-6">
+                <dt>{{ 'First Name : ' }}</dt><dd>{{ user.firstName }}</dd>
+            </div>
+            <div class="col-6">
+                <dt>{{ 'E-Mail :' }}</dt><dd>{{ user.email }}</dd>
+            </div>
+        </dl>
+        <p>
+            {{ 'terms_of_service.date_signature'|trans }} <a href="{{ path('app.tos.show') }}" title="{{ 'terms_of_service.label'|trans }}"><strong>{{ 'terms_of_service.tos'|trans }}</strong></a>: {{ signature.signatureDate is defined ? signature.signatureDate|date('Y-m-d') : '' }}
+        </p>
+    </div>
+
+    <div class="admin-block switchable-form-wrap">
+        <h5>{{ 'entity.Profile.label'|trans({'%count%':1}) }}</h5>
+        <div class="sf-read{{ action == 'edit' ? ' d-none' : '' }}">
+            {%  if action == 'show' %}
+                <dl>
+                    <dt>{{ 'entity.Profile.general'|trans }}: </dt>
+                    <dd>
+                        {{ user.profile is null ? '' : user.profile.label }}
+                        {% if user.isSuperAdmin %}
+                            <span class="badge badge-info">super admin</span>
+                        {% endif %}
+                    </dd>
+                </dl>
+                {% if is_granted('USER_EDIT', user) %}
+                    <button class="btn btn-primary sf-button">{{ 'entity.User.edit'|trans }}</button>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

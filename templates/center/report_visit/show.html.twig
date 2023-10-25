@@ -1,0 +1,40 @@
+{% set activeMenu = 'center' %}
+{% set subMenu = 'center' %}
+
+{% extends 'layout/app.html.twig' %}
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.home.index', { 'id' : project.id }) }}"
+                                           title="{{ project.acronyme }}">{{ project.acronyme }}</a></li>
+            {% if activeMenu2 == 'center' %}
+                <li class="breadcrumb-item">
+                    <a href="{{ path('project.center.index', { 'id' : project.id }) }}" title="Suivi centres">{{ 'entity.Center.suite.list'|trans }}</a>
+                </li>
+            {% endif %}
+            <li class="breadcrumb-item active">
+                <a href="{{ path('project.center.monitoring.model.index', { 'id' : project.id, 'idCenter' : center.id }) }}" title="{{ 'entity.monitoring_visit.title' | trans }}">{{ 'entity.Center.action.list'|trans }}</a>
+            </li>
+            <li class="breadcrumb-item active">{{ 'general.file'|trans}}</li>
+        </ol>
+    </nav>
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('project.center.show', { 'id' : project.id, 'idCenter' : center.id }) }}">Fiche centre</a>
+        </li>
+        {% if activeMenu2 == 'center' %}
+            <li class="nav-item">
+                <a class="nav-link active" href="{{ path('project.center.monitoring.model.index', { 'id' : project.id, 'idCenter' : center.id }) }}">Visites de monitoring</a>
+            </li>
+        {% endif %}
+    </ul>
+
+    <h1>Fiche visite</h1>
+
+{% endblock %}
+

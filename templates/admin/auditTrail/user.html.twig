@@ -1,0 +1,11 @@
+{% set activeMenu = 'audit_trail' %}
+{% set subMenu = 'audit_trail' %}
+{% set activeMenu2 = 'user' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+        <h1>{{ 'entity.User.audit.list.header'|trans }}</h1>
+    {{ list.render|raw }}
+
+{% endblock %}

@@ -1,0 +1,31 @@
+{% set activeMenu = 'etmf-artefact' %}
+{% set subMenu = 'etmf-artefact' %}
+{% set activeMenu2 = 'zone' %}
+
+{% extends 'ETMF/layout/app.html.twig' %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ path('app.etmf.home') }}" title="Accueil">Accueil</a>
+            </li>
+            <li class="breadcrumb-item active">
+                {{ 'etmf.zone.label'|trans }}
+            </li>
+        </ol>
+    </nav>
+
+    <h1>
+        {{ 'etmf.zone.action.list'|trans }}
+        {% if is_granted('ZONE_CREATE') %}
+            <a class="btn btn-primary" href="{{ path('app.etmf.zone.new') }}">
+                <i class="fa fa-plus"></i>
+            </a>
+        {% endif %}
+    </h1>
+
+    {{ list.render|raw }}
+
+{% endblock %}

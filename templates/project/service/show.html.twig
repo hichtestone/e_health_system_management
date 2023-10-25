@@ -1,0 +1,36 @@
+{% block content %}
+<dl class="row">
+    <div class="col-6">
+        <dt>{{ 'entity.Institution.field.name'|trans }} : </dt>
+        <dd>{{ service.institution.name }}</dd>
+    </div>
+    <div class="col-6">
+        <dt>{{ 'entity.Institution.field.country'|trans }} : </dt>
+        <dd>{{ service.institution.country.name }}</dd>
+    </div>
+    <div class="col-6">
+        <dt>{{ 'entity.Institution.field.address1'|trans }} : </dt>
+        <dd>{{ service.address ?? service.institution.address1 }}</dd>
+    </div>
+
+    <div class="col-6">
+        <dt>{{ 'entity.Institution.field.address2'|trans }} : </dt>
+        <dd>{{ service.address2 ?? service.institution.address2 }}</dd>
+    </div>
+    <div class="col-6">
+        <dt>{{ 'entity.Institution.field.postalCode'|trans }} : </dt>
+        <dd>{{ service.postalCode ?? service.institution.postalCode }}</dd>
+    </div>
+
+    <div class="col-6">
+        <dt>{{ 'entity.Institution.field.city'|trans }} : </dt>
+        <dd>{{ service.city ?? service.institution.city }}</dd>
+    </div>
+
+</dl>
+    {% if service.addressInherited %}
+        <div class="alert alert-info">
+            {{ 'entity.Service.field.address_inherited'|trans }}
+        </div>
+    {% endif %}
+{% endblock %}

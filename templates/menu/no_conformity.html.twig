@@ -1,0 +1,16 @@
+{% set activetab = activetab is defined ? activetab : '' %}
+
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link {{ 'system' == activetab ? ' active' : ''}}" href="{{ path('deviation.system.list') }}">{{ 'entity.NoConformity.menu.system'|trans }}</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ 'sample' == activetab ? ' active' : ''}}" href="{{ path('no_conformity.deviation.sample.index') }}">{{ 'entity.NoConformity.menu.sample'|trans }}</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ 'system_crex' == activetab ? ' active' : ''}}" href="{{ path('no_conformity.system_crex') }}">{{ 'entity.NoConformity.menu.system_crex'|trans }}</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ 'deviation_crex' == activetab ? ' active' : ''}}" href="{{ path('no_conformity.protocol_deviation_crex') }}">{{ 'entity.NoConformity.menu.deviation_crex'|trans }}</a>
+    </li>
+</ul>

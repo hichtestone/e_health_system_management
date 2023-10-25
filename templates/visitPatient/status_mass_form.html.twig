@@ -1,0 +1,11 @@
+{% block content %}
+
+    <div class="admin-block">
+        {{ form_start(form) }}
+        {{ form_row(form.status) }}
+        <button type="submit" class="btn btn-primary" type="submit">{{ ('form.select')|trans }}</button>
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}
+

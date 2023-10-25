@@ -1,0 +1,48 @@
+{% set activeMenu = 'settings' %}
+{% set subMenu = 'settings' %}
+{% set activeMenu2 = 'diagram-study' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('project.home.index', { 'id' : project.id }) }}" title="{{ project.acronyme }}">{{ project.acronyme }}</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('project.list.phase.setting', { 'id' : project.id }) }}" title="phase-setting">{{ 'entity.PhaseSetting.label'|trans }}</a>
+            </li>
+            <li class="breadcrumb-item active">{% if edit %} Modification {% else %} Création {% endif %}</li>
+        </ol>
+    </nav>
+
+    {# Onglets Dans Schema d'etudes #}
+    {% include 'menu/schema_etude.html.twig' with {'activetab': 'phase_settings'} %}
+
+    <h1>{% if edit %} {{ 'entity.PhaseSetting.action.edit'|trans }} {%  else %} {{ 'entity.PhaseSetting.action.new-title'|trans }} {% endif %}</h1>
+
+    <div class="admin-block" id="new-phase-setting">
+        <div class="row">
+            <div class="col-6">
+                {{ form_start(form) }}
+                    {{ form_row(form.ordre) }}
+                    {{ form_row(form.label) }}
+                    {{ form_row(form.phaseSettingStatus) }}
+                    <button type="submit" class="btn btn-primary" type="submit">
+                        {% if edit %} {{ 'entity.PhaseSetting.action.edit'|trans }} {%  else %} {{ 'entity.PhaseSetting.action.create'|trans }} {% endif %}
+                    </button>
+                    <br>
+                    <br>
+                    <span style="color: #c30000">* {{ ('general.star.mandatory')|trans }}</span>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

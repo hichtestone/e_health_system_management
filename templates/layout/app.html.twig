@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% set mode_admin = app.request.server.get('REQUEST_URI') matches '{^/admin/}' %}
+{% set studyID = (app.request.attributes.get('_route_params').studyID is defined) ? app.request.attributes.get('_route_params').studyID : 0  %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block menu %}
+    {{ include('menu/main.html.twig') }}
+{% endblock %}
+
+{% block prebody %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+    {% block content %}
+    {% endblock %}
+
+{% endblock %}
+
+{% block postbody %}
+    {{ parent() }}
+{% endblock %}
+
+{% block footer %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

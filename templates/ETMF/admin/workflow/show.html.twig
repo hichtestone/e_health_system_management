@@ -1,0 +1,33 @@
+{% set activeMenu = 'artefact' %}
+
+{% extends 'ETMF/layout/app.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <h1>{{ (row.id is null) ? 'entity.Country.show.header'|trans : row.name }}</h1>
+
+    <div class="admin-block switchable-form-wrap">
+
+        <div class="sf-read{{ action == 'edit' ? ' d-none' : '' }}">
+            <dl>
+                <dt>{{ 'entity.Country.show.code'|trans }}</dt><dd>{{ row.code }}</dd>
+                <dt>{{ 'entity.Country.show.name'|trans }}</dt><dd>{{ row.name }}</dd>
+            </dl>
+
+            {#                {% if is_granted('COUNTRY_EDIT', row) %}#}
+            <button class="btn btn-primary sf-button">{{ 'form.btn.edit'|trans }}</button>
+            {#                {% endif %}#}
+        </div>
+
+        <div class="sf-write{{ action == 'show' ? ' d-none' : '' }}">
+            {% if not form is null %}
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <button type="submit" class="btn btn-primary" type="submit">{{ ('form.btn.'~(row.id is same as(null) ? 'create' : 'edit'))|trans }}</button>
+                {{ form_end(form) }}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% set activeMenu = 'settings' %}
+{% set subMenu = 'settings' %}
+{% set activeMenu2 = 'diagram-study' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="Accueil">Accueil</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.home.index', { 'id' : project.id }) }}"
+                                           title="{{ project.acronyme }}">{{ project.acronyme }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.list.exam.setting', { 'id' : project.id }) }}"
+                                                  title="phase-setting">{{ 'entity.ExamSetting.label'|trans }}</a></li>
+            <li class="breadcrumb-item active">{% if edit %} Modification {% else %} Création {% endif %}</li>
+        </ol>
+    </nav>
+
+    {# Onglets Dans Schema d'etudes #}
+    {% include 'menu/schema_etude.html.twig' with {'activetab': 'exam_settings'} %}
+
+    <h1>{% if edit %} {{ 'entity.ExamSetting.action.edit'|trans }} {%  else %} {{ 'entity.ExamSetting.action.new-title'|trans }} {% endif %}</h1>
+
+    <div class="admin-block" id="new-phase-setting">
+        {{ form_start(form) }}
+            <div class="row">
+                <div class="col-6">
+                    {{ form_row(form.ordre) }}
+                    {{ form_row(form.type) }}
+                    {{ form_row(form.typeReason) }}
+                    {{ form_row(form.name) }}
+                    {{ form_row(form.price) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                        <button type="submit" class="btn btn-primary" type="submit">
+                            {% if edit %} {{ ('entity.ExamSetting.action.edit')|trans }} {%  else %} {{ 'entity.ExamSetting.action.create'|trans }} {% endif %}
+                        </button>
+                        <br>
+                        <br>
+                        <span style="color: #c30000">* {{ ('general.star.mandatory')|trans }}</span>
+                </div>
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+

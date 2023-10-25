@@ -1,0 +1,2274 @@
+general:
+    back_to_list: Back
+    archive : Archive
+    unarchive : Unarchive
+    default : You can't archive a medicine exisiting in a project
+    star:
+        mandatory: Mandatory field(s)
+    archiver: Archive
+    impossible: This action is impossible without the associated role
+    error:
+        warning_empty_relation: No relation found.
+    file: File
+    model: Model
+    no: No
+    yes: Yes
+    confirm: Confirm
+    cancel: Cancel
+    draft: In drafting
+    close: Close
+    status:
+        draft: Draft
+        in_progress: In progress
+        done: Done
+    grade:
+        mineur: Minor
+        majeur: Major
+        critique: Critical
+    causality:
+        human: Human
+        equipment: Equipment
+        other: Other
+    efficiency_measure:
+        efficient: Efficient
+        inefficient: Inefficient
+        not_efficient: Not efficient
+    status_review_system:
+        status:
+            edition: In writing
+            finish: Done
+        type:
+            operational: Operational
+            quality_control: Quality control
+            crex: CREX
+app:
+    home: Home
+    maintenance:
+        h1: Application in maintenance
+        h2: The site will be available again in a few minutes*
+    error:
+        403: Not authorized, contact your administrator.
+        404: Page not found.
+        500: An error has occurred, the development team has been notified.
+
+audit_trail:
+    details: Details
+    reason:
+        label: Reason
+    type:
+        1: Creation
+        2: Modification
+        3: Suppression
+        label: Type
+    updated_at: Modified on
+    updated_by: Modified by
+    header:
+        connexion: Audit trail logins
+        connexion_error: Audit trail login errors
+        funding: Audit trail fundings
+        profile: Audit trail profiles
+        project: Audit trail projects
+        publication: Audit trail publications
+        service: Audit trail services
+        user: Audit trail users
+        user_project: Audit trail users/projects
+        institution: Audit trail institutions
+        interlocutor: Audit trail interlocutors
+        center: Audit trail site
+        interlocutor_center: Audit trail interlocutors/site
+        date: Audit trail dates and numbers
+        rule: Audit GDPR
+        submission: Audit trail regulatory submissions
+        project_database_freeze: Audit trail database lock
+        document_tracking: Audit trail document tracking
+        document_tracking_center: Audit trail site documents tracking
+        document_tracking_interlocutor: Audit trail interlocutor document tracking
+        patient: Audit trail patient
+        patient_data: Audit trail patient data
+        visit_patient: Audit trail patient visits
+        drug: Audit trail drugs
+        document_transverse:  Audit trail cross-cutting document
+        version_document_transverse:  Audit trail cross-cutting document version
+        deviation_correction: Audit trail immediate correction
+        deviation_review_crex: Audit trail protocol deviations REXC reviews
+        deviation: Audit trail protocol deviations
+        deviation_review: Audit trail protocol deviations review
+        deviation_action: Audit trail Protocol deviation actions
+        courbe_setting: Audit trail curve setting
+        report_visit: Audit trail monitoring visit
+        deviation_sample: Audit trail sample deviation
+        deviation_sample_action: Audit trail sample deviation Actions
+        deviation_sample_correction: Audit trail sample immediate correction
+        deviation_system: Audit trail NC system deviation
+        deviation_system_correction: Audit trail NC system immediate correction
+        deviation_system_action: Audit trail NC system deviation actions
+        deviation_system_review: Audit trail NC system deviation REXC reviews
+        zone: Audit trail Zone (ETMF)
+        section: Audit trail Section (ETMF)
+        artefact: Audit trail Artefact (ETMF)
+        mailgroup: Audit trail mailing list (ETMF)
+        tag: Audit trail Tag (ETMF)
+        document: Audit trail Document (ETMF)
+        document_version: Audit trail Document Version (ETMF)
+
+show:
+    label: Label
+    main: General Information
+
+txt:
+    home:
+        header: ESM by Clinfile
+    date:
+        day: '{1}jour|]1,Inf]jours'
+        month: '{1}mois|]1,Inf]mois'
+        year: '{1}année|]1,Inf]années'
+    language:
+        label: Langue
+        en: English
+        fr: French
+    logout: Logout
+    profile:
+        label: My account
+    audit_trail:
+        list:
+            header: Audit trail
+    help:
+        header: Help
+        list:
+            header: Help 2
+    login:
+        header: Login
+    logged_as: Logged as
+
+menu:
+    my_studies: My studies
+    help: Help
+    reporting: Report
+    DocumentTransverse:
+        label: Cross-cutting documents
+    NonConformity:
+        label: Non-Compliance
+    admin:
+        home: Home
+        label: Admin
+        studies: Projects
+        users: Users
+        profiles: Profiles
+        auditTrail: Audit Trail
+        institutions: Institutions
+        interlocutors: Intelocutors
+        drugs: Drugs
+        countries: Countries
+        report_model: Monitoring Visit Report
+    header:
+        drug: Drug
+        funding: Fundings
+        profile: Profiles
+        project: Projects
+        patient: Patients
+        patient_data: Patient data
+        publication: Publications
+        service: Services
+        user: Users
+        user_project: Users/Projets
+        institution: Institutions
+        interlocutor: Interlocutors
+        center: Sites
+        interlocutor_center: Interlocutors/Centers
+        date: Date and numbers
+        rule: GDPR
+        submission: Regulatory submissions
+        project_database_freeze: Audit trail database lock
+        document_tracking: Document tracking
+        document_tracking_center: Site documents tracking
+        document_tracking_interlocutor: Interlocutor documents tracking
+        courbe_setting: Curve setting
+        visit_patient: Patient visits
+        document_transverse: Cross-cutting documents
+        version_document_transverse: cross-cutting document version
+        version: Add version
+        deviation_correction: Protocol deviation imediate correction
+        deviation_review_crex: Protocol deviation REXC reviews
+        deviation: Protocol deviation
+        deviation_review: Protocol deviation reviews
+        deviation_action: Protocol deviation actions
+        report_visit: Monitoring visit
+        deviation_sample: Sample deviation
+        deviation_sample_action: Sample deviation actions
+        deviation_sample_correction: Sample deviation immediate correction
+        deviation_system: System non compliance
+        deviation_system_correction: System NC immediate correction
+        deviation_system_action: System NC action
+        deviation_system_review: System NC REXC review
+        zone: Zone (ETMF)
+        section: Section (ETMF)
+        artefact: Artefact (ETMF)
+        mailgroup: Mailing list (ETMF)
+        tag: Tag (ETMF)
+        document: Document (ETMF)
+        document_version: Document Version (ETMF)
+    reglementaire:
+        dates_chiffres: Dates and numbers
+        submission: Regulatory submissions
+        rgpd: GDPR
+    esm: ESM
+    project:
+        home: Home
+        user: Project users
+        dashboard: Dashboard
+        project_intervener: Project participants
+        communications: Communications
+        publication: Publications
+        financial: Financials
+        statutory: Regulatory
+        protocol_deviation:
+            protocol_deviation: Protocol deviation
+            list: List of protocol deviation
+            all_clos: Bulk close out
+            declaration: Protocol deviation declaration
+            section:
+                identification: Identification
+                description: Description
+                cause: Causes
+                correction: IMMEDIATE CORRECTIONS
+                action: ACTION PLAN
+            DeviationCorrection:
+                field:
+                    description: Description of immediate correction
+                    applicationPlannedAt: Planned implementation date
+                    realizedAt: Completion date
+                    efficiencyMeasure: Effectiveness measurement
+                    notEfficiencyMeasureReason: If not effective why?
+                    comment: Reason for deletion
+            action:
+                efficiencyMeasure: Efficiency measure
+                efficiencyJustify: Efficiency evidence
+                notEfficiencyMeasureReason: If not, why?
+            cause:
+                causality: Causality
+                causality_reason: Causality description
+                grade: Grade
+            description:
+                deviation_type: Deviation type
+                deviation_type_code: Type code
+                deviation_sub_type: Deviation sub-type
+                deviation_sub_type_code: Sub-type code
+                project: Projects concerned
+                center: Centers concerned
+                institution: Institution
+                patient: Patient
+                resume: Resume
+                potentialImpact: Impact potentiel
+                potentialImpactDescription: Clarify
+                reason: Declaration
+            identification:
+                observedAt: Date of finding
+                declaredBy: Name of the registrant
+                occurenceAt: Occurrence Date
+                declaredJob: Registrant function
+                declaredAt: Declaration Date
+            review:
+                status: Deviation status
+                closedAt: Date of resolution of the deviation
+                project: Projects concerned
+                center: Centers concerned
+                institution: Institutions concerned
+                patient: Patient concerned
+                ref: Reference Protocol Deviation
+                resume: Summary deviation
+                description: Description deviation
+        manage: Project management
+        parameter: Parameter
+        center:
+            site: Sites
+            creation: Creation
+            tracking: Centers Tracking
+            interlocutor: Interlocutors Center
+            doc: Documentation
+            patient: Patients Tracking
+            report: Monitoring Report
+        setting:
+            file: Project sheet
+            curbe: Theoretical curve
+            study: Study diagrams
+            monitoring: Monitoring visit reports
+    etmf: ETMF
+
+form:
+    action:
+        action: Action
+        archive: Archive
+        back: Previous
+        cancel: Cancel
+        create: Create
+        creation: Creation
+        delete: Delete
+        disable: Disable
+        edit: Edit
+        modification: Modification
+        enable: Enable
+        next: Next
+        restore: Restore
+        select: Select
+        send: Send
+        submit: Submit
+        reset: Reset
+        rename: Rename
+        valid: Validate
+    field:
+        name: Name
+        placeholder:
+            search: search
+    btn:
+        submit: Submit
+        login: Login
+        logout: Logout
+        create: Create
+    delete: Delete
+    edit: Edit
+    disable: Disable
+    enable: Enable
+    select: Select
+    message:
+        empty_center_choice: "Site not found for this country "
+        empty_interlocutor_choice: "Interlocutor not found for this country "
+
+email:
+    autosend: This email has been sent automatically, please do not reply
+    greetings: Regards
+    hello: Hello
+    signature: The Clinfile team
+    subject:
+        expired_password_soon: Your password will soon expire
+        welcome: Welcome to Unicancer ESM
+    welcome:
+        part1: "Your Unicancer ESM account has just been created. "
+        part2: 'Click on the following link to access your application : '
+    forgottenpassword:
+        part1: 'Forgot password ? '
+        part2: 'Click on the following link to generate a new password:'
+        part3: "If you did not generate this message, please ignore it."
+    passwordexpiresoon:
+        part1: "Your password will expire in "
+        part2: 'Go to this link  :'
+        part3: 'Then click on "change my password ".'
+
+entity:
+    general:
+        interlocutors: Interlocutor(s)
+        users: User(s)
+    PatientData:
+        label: Patient mumber
+    user:
+        action:
+            expired_password: Expired password
+    UserProject:
+        label: User/Project
+        field:
+            project: Project
+    status:
+        archived: archived
+        unarchive: No
+        closed: Closed
+        disabled: Disabled
+        enabled: Activated
+        label: Status
+        opened: Open
+    interlocutor:
+        action:
+            archiver: Archive
+    field:
+        comment: Comment
+        created_at: Created on
+        created_by: Created by
+        closed_at: Closed on
+        ended_at: Ended on
+        started_at: Started on
+        updated_at: Updated on
+        updated_by: Updated by
+    InterlocutorCenter:
+        label: Site interlocutor
+    DocumentTransverse:
+        label: Cross-cutting document
+        title: Cross-cutting documents list
+        field:
+            name: Name of the document
+            TypeDocument: Document type
+            isValid: Document validity
+            validStartAt: Validity start date
+            porteeDocument: Document scope
+            interlocutor: Entity of affiliation
+            institution: Entity of affiliation
+            validEndAt: Calculated expiry date
+            Document: Document
+            drug: Entity of affiliation
+            versionDocumentTransverses: Version No
+            create: Add the document
+        error:
+            empty_file: No file associated with this document
+            ask_overrite_delete_file: Are you sure you want to overwrite the currently attached file ?
+        validation:
+            name: This name is already in use
+        action:
+            label: Action
+            valid: Valid
+            invalid: Invalid
+            download: download
+            create: Add the cross-cutting document
+            edit: Edit the cross-cutting document
+            add: Add
+            liste: Cross-cutting document sheet
+            createDocInterlocutor: Add the document
+            editDocInterlocutor: Edit the cross-cutting document
+            createDocInstitution: Add the document
+            editDocInstitution: Edit the cross-cutting document
+        search:
+            myProjects : My projects
+            global: Global
+            action: Search
+
+        filter:
+            option:
+                global: Global
+                myproject: My projects
+            status:
+                1: Valid
+                2: Invalid
+    VersionDocumentTransverse:
+        label: Version
+        field:
+            label: Create a new version
+            label_edit: Edit a version
+            version: Version
+            validStartAt: Validity start date
+            validEndAt:  Calculated expiry date
+            isValid: Version validity
+            create : Create the version for this document
+            Document: Document
+        validation:
+            name: The name of the version is already in use
+        action:
+            label: action
+            liste: Version list
+            save : Save
+    Institution:
+        label: Institution
+        field:
+            search: Search
+            notBlank:
+                name: The name of the institution must not be empty
+            name: Name of institution
+            edit: Edit institution
+            create: Create institution
+            city: City
+            country: Country
+            finess: Finess No
+            siret: Siret No
+            type: Type of institution
+            address1: Address 1
+            address2: Address 2
+            phone: Telephone
+            fax: Fax
+            postalCode: Zip Code
+            department: Department
+            canceropole: Cancer pole
+            email: E-mail
+        action:
+            servicetitle: Service present in at least one active site
+            title: Institution present in at least one active site or non-archived contact person linked to this institution.
+            list: List of institution
+            edit: Edit institution
+            create: Create institution
+    Publication:
+        label: Type of publication
+        action:
+            create: New publication
+            update: Update publication
+        modify: Modify publication
+        new: Create a new publication
+        add: Add a publication
+    Patient:
+        label: Patient No
+        list:
+            header: List of patients
+            number: Patient number
+    Date:
+        label: Amendments before 1st inclusion
+        action:
+            modify: Modify dates and numbers
+            create: Create dates and numbers
+            list: Dates and numbers
+        section:
+            patient: Patient follow-up
+            date: Key dates
+            report: Analysis report
+            report_intermediary: Interim analysis reports
+        field:
+            submissionAt: Date of submission of the call for projects Letter of Intent
+            feasibilityCommitteeAt: Date Protocol Feasibility Committee
+            reviewCommitteeAt: Date Internal Review Committee
+            registrationAt: Date of public directory listing - NCT
+            subscriptionStartedAt: sponsor insurance subscription Date
+            subscriptionEndedAt: Subscription end date - validity period
+            certificationAt: Date of 1st final 'pharmaceutical' certification for investigational drugs
+            kiffOfMeetingAt: kick-off meeting date
+            mepForecastAt: Estimated date of 1st SIV
+            mepAt: Date of 1st SIV
+            forecastInclusionStartedAt: Estimated date of 1st inclusion
+            firstConsentAt: Date of 1st consent
+            inclusionPatientStartedAt: Inclusion date of 1st patient
+            forecastInclusionEndedAt: Estimated end date of inclusions
+            inclusionPatientEndedAt: end date of inclusions (last inclusion)
+            studyDeclarationEndedAt: Study end date
+            validationCommmitteeReviewEndedAt: Date validation Committee Review Protocol to be modified
+            amendmentsBeforFirstInclusion: Amendments before 1st inclusion
+            numberExpectedPatients: Expected number of patients
+            numberScreenedPatients: Number of screened patients
+            numberPatientsIncluded: Number of enrolled patients
+            numberRandomizedPatients: Number of randomized patients
+            expectedDurationInclusionAt: Expected duration of inclusions (in Months)
+            expectedDurationFollowUpAfterInclusionAt : Expected duration of follow-up after inclusion
+            freezedAt: Date of database lock
+            freeze_reason: Reason for analysis
+            precision: Precision
+            reason: Reason for analysis
+            actualReportedAt: Actual date of interim analysis reports
+            expectedLPLVAt: Estimated date of LPLV for the primary endpoint
+            actualLPLVAt: Actual date of LPLV for the primary endpoint
+            expectedReportAnalysedAt: Estimated date of the analysis report for the primary endpoint
+            actualReportAnalysedtAt: Actual date of the analysis report for the primary endpoint
+            finalReportAnalysedAt: Actual date of clinical report of the primary endpoint
+            finalExpectedLPLVAt:  Estimated date of final LPLV
+            finalActualLPLVAt:  Actual date of final LPLV
+            finalExpectedReportAt:  Estimated date of the final analysis report
+            finalActualReportAt: Actual date of the final analysis report
+            finalActualReportClinicalAt: Actual date of final clinical report
+            depotClinicalTrialsAt: Date of submission of results to ClinicalTrials.gov
+            depotEudraCtAt: Date of submission of results on EudraCT
+            project: Project
+    Training:
+        action:
+            edit: Edit training
+            create: Create training
+            list: List of trainings
+            action: action
+        field:
+            name: Training
+            edit: Edit training
+            create: Create training
+            title: Name of training
+            duration: Duration
+            startedAt: start date
+            endedAt: End date
+            certificate: Certificate
+            details: details
+            material: material
+            former: Instructor
+            users: Participants
+    Contact:
+        action:
+            list: List of contacts
+            create: Create a contact
+            edit: Edit contact
+            modify: Modify contact
+        field:
+            name: Contact
+            object: Contact object
+            date: Date
+            hour: Time
+            detail: Details of the contact
+            type: Type of contact
+            transmitter: Sender
+            intervenants: Recipient(s) User
+            interlocutors: Recipient(s) Interlocutor
+            recipient: Recipient
+            recipientsTwo: CC
+            completed: Contact Completed
+            type_recipient: Type of recipient(s)
+            phase: Stage
+            cc: Cc
+            reason: Clarify
+    Submission:
+        label: Country
+        action:
+            list: List of regulatory submissions
+            create: Create regulatory submission
+            edit: Edit regulatory submission
+            modify: Modify regulatory submission
+        field:
+            amendment_number: Amendment number
+            country: Country
+            edit: Modification of regulatory submission
+            create: Creation of regulatory submission
+            estimatedSubmissionAt: Estimated date of submission
+            submissionAt: Date of submission
+            admissibilityAt: Date of application admissibility
+            authorizationDeadlineAt: Deadline for authorization
+            authorizationAt: Authorization date /Favorable Opinion
+            details: Details
+            comment: Comment
+            question: Question
+            fileNumber:  Application No
+            authorityName: Name of authority
+            authorityType: Type of authority
+            typeSubmission: Type of submission
+            typeDeclaration: Type of declaration
+            project: Project
+    DocumentTracking:
+        label: Document tracking
+        action:
+            list: Liste of document trackings
+            new: Add a new document
+            create: Add document
+            edit: Edit document
+            modify: Edit document tracking
+        field:
+            name: Name of document
+            version: Version
+            country: Country
+            document: Document
+            scope: Management level
+            toBeSent: To be sent
+            toBeReceived: to be received
+            sentAt: Sent on
+            receivedAt: Received on
+            project: Project
+    DocumentTrackingCenter:
+        label: Document
+        center: Site
+        project: Project
+    DocumentTrackingInterlocutor:
+        label: Document
+        interlocutor: Interlocutor
+        project: Project
+    PatientTracking:
+        label: Patient follow up
+        sub_menu:
+            list_patient: List of patients
+            list_statuts: Visit status
+        action:
+            new: Add a patient
+            export: Export,
+            reset: Reset
+            list:
+                patient: Patient follow-up
+                visit: Visit status
+            modify: Modify the patient
+            modal:
+                new: Add a new patient
+                edit: Modify the patient
+                add: Register
+                cancel: Close
+
+        field:
+            project: Project
+            patient_number: N° Patient
+            center_number: N° Center
+            consentAt: Date of signature of consent
+            inclusionAt: Date of inclusion'
+            consentAtFilter: Date of consent
+            randoAt: Date of randomisation
+            randoAtFilter: Randomisation date
+            enrolledAt: Date of MRI at screening
+            endOfStudyAt: Date of inclusion
+    EcrfSetting:
+        label: Identification of eCRF data
+        section:
+            variable: Identification of follow-up variables
+            visit: Identification of visit dates
+            exam: Identification of exam dates
+        field:
+            order: Order
+            archived: Variable already used, not possible to delete
+            name: Name of the variable
+            type: Type/Format
+            source: eCRF identification
+            hasPatient: Display in the patient list
+            hasVisit: Display in the visit status
+    PhaseSetting:
+        label: Project phases
+        messageArchived: Impossible to archive this phase because it contains data
+        messageUpdated: Edit phase
+        action:
+            list: Phases list
+            new: Add a new phase
+            new-title: Add a new phase
+            edit: Modify the phase
+            create: Add the phase
+        field:
+            label: Name of the phase
+            order: Order
+            modal-order:
+                title: Reorder the phases
+                add: Register
+                cancel: Close
+            status: status
+    PhaseSettingStatus:
+        planned: planned
+        screened: screnned
+        screeningFailure: screening failure
+        signedICF: signed consent
+        ongoing: ongoing
+        followUp: followed patient
+        completed: completed
+        withdrawals: consent withdrawal
+        lostFollowUp: lost to follow-up
+        eos: end of study
+    CourbeSetting:
+        label: Curve setting
+        sub_menu:
+            list_courbe: List of curves
+        action:
+            new: Set up a theoretical curve
+            list: Theoretical curve
+            create: Set up a new theoretical curve
+            new_edit: Set up the curve
+            save: Register
+            downlaod: Download the curve
+        curbe:
+            inclusion: Inclusion curve
+            real: Real curve
+            theoretical: Theoretical curve
+        field:
+            project: Project
+            courbe_number: N° Curve
+            label:
+            unit: unit
+            Nbrepoint: number of points
+            position: order
+            courbe: curve
+            inclusionAt: Start date of the curve
+        choice:
+            semaine: week
+            mois: month
+    VisitSetting:
+        label: List of visits
+        messageArchived: Impossible to archive this visit because it contains data
+        messageDuplicated: Duplicate visit
+        messageUpdated: Edit visit
+        action:
+            list: List of visits
+            new: Add a visit
+            new-title: Add a new visit
+            edit: Modify the visit
+            create: Add the visit
+        field:
+            order: Order
+            phase: Phase
+            label: Label
+            source: eCRF Identifiant
+            short: Short name
+            price: Price
+            delay: Delay
+            delayApprox: +/- in day(s)
+            refAt: Reference date
+            patientVariable:  Reference date
+            modal-order:
+                title: Reorder visits
+                add: Register
+                cancel: Close
+    ExamSetting:
+        label: List of exams
+        messageArchived: Impossible to archive this exam because it contains data
+        messageUpdated: Edit exam
+        action:
+            list: List of exams
+            new: Add an exam
+            new-title: Add a new examen
+            edit: Modify the exam
+            create: Add the exam
+        field:
+            ordre: Order
+            price: Price
+            name: Name
+            source: eCRF Identifiant
+            type: Type
+            typeEcrf: Type/Format
+            hasPatient: Display in the patient list
+            hasVisit: Display in visit status
+            modal-order:
+                title: Reorder the exams
+                add: Register
+                cancel: Close
+    SchemaCondition:
+        label: Arrangement of the phases/visits
+        action:
+            create: Add an arrangement
+            edit: Edit an arrangement
+            list: List of conditions
+        create: Create the condition
+        edit: Edit the condition
+        field:
+            label: Name
+            condition: Condition
+            phases_visits_list: Unplanned visits / End of phase
+            visits: Visit
+            phases: Phase
+            enable_disabled: Enabled/Disabled
+            modal:
+                name: Condition for end of phase iteration
+                add: Register
+                cancel: Close
+    VisitPatient:
+        label: Patient number
+        action:
+            list: List of visit status
+        field:
+            project: Project
+            patient: N° Patient
+            phase: Phase
+            center: N° Center
+            visit: Visit
+            occuredAt: True Date
+            monitoredAt: Provisional Date
+            status: Status
+            reset: Rsset
+            export: Export
+            modal:
+                title: Change status
+                cancel: Close
+                add: Add
+    Meeting:
+        action:
+            edit: Edit meeting
+            create: Create meeting
+            list: List of meetings
+            action: Action
+        field:
+            name: Meeting
+            type: Type
+            object: Object
+            edit: Edit the meeting
+            create: Create the meeting
+            title: Meeting
+            duration: Duration
+            startedAtShort: Date
+            startedAt: Start date
+            report: Report
+    Drug:
+        label: Drug
+        field:
+            name: Drug  Name
+            create: Creation of a Drug
+            TreatmentType: Type of treatment
+            isValid: Status
+            edit: Edit drug
+            list: List of drugs
+            version_bi: IB version
+            version_rcp: SmPC version
+        labels:
+            isValid: Status
+        action:
+            create: Add the drug
+            edit: Edit the drug
+            list: Transversal documents
+        status:
+            valid: Valid
+            invalid: Invalid
+        error:
+            warning_add_project: you must complete the fields in the row before adding a new one
+            warning_add_rows: The addition of drugs is limited to 5 lines when creating a project
+    Interlocutor:
+        label: Interlocutor
+        documenttransverse:
+            list: List of documents
+            name: Name of the document
+        institution:
+            list: List of facilities
+            name: Name of the facility
+        action:
+            list: List of interlocutors
+            edit: Edit the interlocutor
+            create: Add the interlocutor
+            title: Interlocutor present in at least one active centre
+            archiver: Archive
+        field:
+            participation_start: Start date of participation
+            participation_end: End date of participation
+            search: Search
+            edit: Edit interlocutor
+            create: Create interlocutor
+            validation:
+                email: The contact person's email is already in use, please choose another email
+                rppsNumber: The professional number of the contact person is already in use, please choose another number
+            notBlank:
+                civility: Please fill in the civility of the interlocutor
+                firstName: Please enter the first name of the interlocutor
+                lastName: Please enter the last name of the interlocutor
+                job:  Please fill in the occupation of the interlocutor
+                rppsNumber: Please enter the professional number (rpps) of the interlocutor
+                specialtyOne: Please fill in the first speciality of the interlocutor
+            interlocutor: Interlocutor
+            civility: Civility
+            firstName: First Name
+            lastName: Last Name
+            phone: Phone number
+            fax: Fax number
+            email: E-mail
+            job: Occupation
+            sites: Facilities
+            rppsNumber: N°RPPS
+            cooperator: Cooperator Group
+            specialtyOne: Spéciality 1
+            specialtyTwo: Spéciality 2
+            createdAt: Start date of participation
+            deletedAt: Date of Deactivation
+            project: Project
+        audit:
+            list:
+                header: List of interlocutors
+        site:
+            site_list: List of facilities
+            institution: Facility
+            finess_number: finess number
+        project:
+            project_list: List of projects
+            name: Name
+            enabled_at: Activation date
+            disabled_at: Deactivation Date
+            site_number: Facility number
+        name: Participant
+        phone: Phone number
+        email: E-mail
+        job: Occupation
+        date: Date of creation
+        create: Create a participant
+        new: New participant
+        modify: Edit the participant
+        edit: Edit the participant
+        management_center: Management of center
+        list:
+            header: Interlocutors
+        register:
+            labels:
+                civility: Civility
+                firstName: First Name
+                lastName: Last Name
+                phone: Phone number
+                fax: Fax number
+                email: e-mail address
+                job: Occupation
+                sites: Facilities
+                rpps_number: N°RPPS
+                cooperator: Cooperator group(s)
+                specialty_one: Specialty 1
+                specialty_two: Specialty 2
+            placeholders:
+                firstName: First Name
+                lastName: Last Name
+                rpps_number: n°RPPS
+                phone: Phone number
+                fax: fax number
+                email: e-mail address
+
+        form:
+            fist_name:
+                not_blank: The participant's first name is mandatory
+                length:
+                    min_message: The participant's first name must be between 3 and 100 characters long
+                    max_message: The participant's first name must be between 3 and 100 characters long
+            last_name:
+                not_blank: The participant's last name is mandatorye
+                length:
+                    min_message: The participant's last name must be between 3 and 100 characters long
+                    max_message: The participant's last name must be between 3 and 100 characters long
+            email:
+                not_blank: The participant's e-mail address is mandatory
+                validation: The format of the email address must be valid
+            job:
+                not_blank: The participant's occupation is mandatory
+    fields:
+        archived_at: Archiving date
+        deleted_at: Date de suppression
+        disabled_at: Deletion Date
+        enabled_at: Activation Date
+        restaured_at: Date of restoration
+    Study:
+        list:
+            header: Studies
+            error:
+                empty: None study
+        new:
+            header: Create a study
+        edit:
+            header: Edit a study
+        form:
+            field:
+                name: Name
+                ctms_api_url: URL API CTMS
+                storage: Storage
+                protocol: Protocol
+                color: Color
+                logo: Logo
+            btn:
+                submit: Submit
+        label: '{1}Étude|]1,Inf]Études'
+        show:
+            header: Study details
+            back_to_list: Back to the list of studies
+            edit: Edit
+    Service:
+        action:
+            archive: Archive the service
+            edit: Edit the service
+            list: List of services
+            create: Create the service
+            restore: Restore the service
+        field:
+            address_inherited: Same address as facility
+            address: Address
+            address2: Address 2
+            country: Country
+            city: City
+            institution: Facility
+            name: Name
+            postal_code: Postcode
+            address_special: Specific address
+        label: Service
+    Site:
+        address: Address
+        country: Country
+        audit:
+            list:
+                header: List of centres
+        project:
+            project_list: List of projects
+            name: Name
+            enabled_at: Activation Date
+            disabled_at: Disable Date
+        participant:
+            participant_list: List of interlocutors
+            full_name: Participant
+            email: e-mail address
+            job: Occupation
+        name: Centre
+        modify: Edit the centre
+        department: Department
+        address1: Address
+        city: City
+        postalCode: Postcode
+        list:
+            header: Centres
+            thead:
+                institution: Facilities
+                department: Department
+                address: Address
+                city: City
+                postal_code: Postcode
+                number: Number
+
+        new:
+            name: New centre
+            header: Create a centre
+
+        form:
+            search_placeholder: Search
+
+        show:
+            header: Centre
+            institution: Facility
+            department: Department
+            address: Address
+            city: City
+            postalCode: Postcode
+            number: Number
+        create: Create the centre
+
+        btn:
+            create: Create
+            edit: Edit
+        register:
+            labels:
+                institution: Centre
+                department: Department
+                address1: Your address n°1
+                address2: Your address n°2
+                city: City
+                postalCode: Postcode
+            placeholders:
+                institution: Enter the name of the centre
+                department: Enter your department
+                address1: Enter your address 1
+                address2: Enter your address 2
+                city: City
+                postalCode: Postcode
+    User:
+        action:
+            create: Create the participant
+            edit: Edit the participant
+        field:
+            email: Email
+            function: Occupation
+            has_access_esm: ESM Access
+            has_access_etmf: eTMF Access
+            name: Name
+            password: Password
+            profile: Profile
+
+        name: User
+        audit:
+            list:
+                header: List of participants
+        list:
+            header: List of participants
+
+        form:
+            password_label: Your password
+            btn:
+                logout: Disconnection
+
+        active: Active
+        civility: Civility
+        create: Create the user
+        edit: Edit the user
+        modify: Change the user
+        modifiedTo: Modify at
+        editedBy: Modify by
+        reason: Reason
+        details: Details
+        user: User
+        type:
+            name: Type
+            insert: Creation
+            update: Update
+            delete: Archiving
+        email: Email
+        first_name: First Name
+        label: '{1}Utilisateur|]1,Inf]Utilisateurs'
+        last_name: Last Name
+        locale: Langage
+        nb_failed_connexion: Number of Failed Connections
+        new: New user
+        username: Username
+        profile: Profile
+        email_search: email address
+        search: Search user
+        job: Occupation
+        society: Company
+        hasAccesEsm: ESM Access
+        project: Projects
+        register:
+            labels:
+                civility: Civility
+                email: e-mail address
+                firstName: First Name
+                lastName: Last Name
+                phone: Phone number
+                note: Note
+                society: Company
+                hasAccessEsm: ESM Access
+                hasAccessEtmf: eTMF Access
+                department: Department
+                job: Occupation
+                profile: Profile
+            placeholders:
+                email: e-mail address
+                firstName: First Name
+                lastName: Last Name
+                phone: 06 10 00 00 00
+                note: Note
+    Profile:
+        audit:
+            list:
+                header: List of profiles
+        list:
+            header: Profiles list
+        name: Profile Name
+        modify: Edit the profile
+        acronyme: Acronym
+        typeProfil: Type
+        register:
+            labels:
+                name: Profile Name
+                acronyme: Acronym
+            placeholders:
+                name: Enter the name of the profile
+                acronyme: Enter the acronym
+        form:
+            search_placeholder: Search
+        create: Create profile
+        edit: Edit profile
+        general: General profile
+        label: '{1}Profile|]1,Inf]Profiles'
+        new: New profile
+        role:
+            label: Profile role
+        modifiedTo: Modified at
+        editedBy: Modified by
+        reason: Reason
+        details: Details
+        profile: Profile
+        type:
+            name: Type
+            insert: Creation
+            update: Modification
+            delete: Closure
+    Role:
+        label: '{1}Role|]1,Inf]Roles'
+    Project:
+        action:
+            create: Create project
+            update: Edit projet
+            new_treatment: Add a treatment type
+        field:
+            drugs: Name of experimental medication, auxiliary or concomittant(INN)
+            name: Name
+            responsible_cra: CRA in charge
+            responsible_pm: Project manager
+            sponsor: Sponsor
+            acronyme: Acronyme
+        header:
+            sites_management: Management of investigator sites
+            characteristic_management: Project characteristics
+            trail_management: Study characteristics
+            crf_management: CRF
+            responsibility_management: Project responsibilities
+            delegation_management: Delegation of responsibilities
+        label: Project
+        list:
+            my_project: My projects
+            header: List of projects
+        acronym: Acronyme
+        modifiedTo: Modified at
+        editedBy: Modified by
+        reason: Reason
+        details: Details
+        project: Project
+        type:
+            name: Type
+            insert: Creation
+            update: Modification
+            delete: Closure
+            closeDemandAt: Closure request
+            closedAt: Closure
+        contact:
+            action:
+                list: List of contacts
+            field:
+                title: Purpose of contact
+        training:
+            training_list: List of tranings
+        meeting:
+            meeting_list: List of meetings
+        audit:
+            list:
+                header: List of projects
+        management_center: Centre management
+
+        publication:
+            new: Create a new publication
+            create: Create publication
+            register:
+                labels:
+                    communicationType: Type of communication
+                    isCongress: If conference
+                    journals: Journal name
+                    congress: Conference name
+                    postType: Subtype
+                    comment: Comment
+                    postNumber: PMID number or DOI
+                    postAt: Date of publication
+                    reference: Reference
+                    name: Name
+                placeholders:
+                    comment: Comment
+                    postNumber: PMID number or DOI
+                    postAt: Date of publication
+        participant:
+            contact:
+                list:
+                    header: List of contacts
+                select: List of contacts
+            participant_list: List of participants
+            full_name: Participant
+            job: Role
+            email: E-mail
+            list:
+                header: List of participants
+
+        user:
+            intervenant: User
+            project: Project
+            enabledAt: Date of activation
+            deletedAt: Date of deactivation
+            disabledAt: Date of deactivation
+            job: Role
+            user_list: List of users
+            training_list: List of trainings
+            meeting_list: List of meetings
+            firstName: First name
+            lastName: Surname
+            society: Society
+            phone: Telephone 1
+            department: Department
+            profile: Profile
+            email: E-mail
+            civility: Civility
+            rate: Allocation rate
+            date_started_project: Start date
+            date_ended_project: End date
+            date_enter_project: Project entry date
+            date_out_project: Project release date
+            list:
+                header: List of Users
+            training:
+                select: Create a new training
+                title: Name of training
+                startedAt: Start date
+                endedAt: End date
+                former: Instructor
+                action: Action
+                start_hour: Time of start
+                ended_hour: Time of end
+            meeting:
+                select: Create new meeting
+                type: Type
+                startedAt: Date
+                object: Object
+                action: Action
+            contact:
+                select: Create new contact
+            attach_projects: Connect to a project
+
+        modify: Modify project
+        logo: Logo
+        name: Project
+        sponsor: Sponsor
+        responsible:
+            pm: Responsible project manager
+            cra: Responsible CRA
+        select: Selection of projects
+        new: New project
+        create: Create project
+        register:
+            hasETMF:
+                yes: Yes
+                no: No
+            labels:
+                title: Title
+                name_french: Complete French title
+                name_english: Complete English title
+                acronym: Acronym
+                protocole: Protocol
+                etmf: eTMF
+                urlEtmf: URL of eTMF
+                ref: Internal refernce number
+                territory: Territory
+                createdAt: Creation date
+                closeDemandAt: Closure request at
+                closedAt: Date of closure
+                sponsor: Sponsor
+                responsiblePM: Responsible project manager
+                responsibleCRA: Responsible coordinating CRA
+                closeDemandBy: Closture request by
+                promoter: Sponsor
+                studyPopulation: Studied population
+                drug: Name of experimental drug, auxiliary or concomittant(INN)
+                countries: List of countries
+                trail_treatment: Type of study treatment
+                crfType: CRF type
+                url: URL of eCRF
+                trail_status: Study statut
+                trl_indice: TRL Index
+                trail_type: Study type
+                trail_phase: Clinical study phase
+                membership_group: Membership group
+                call_project: Name of project call (AAP)
+                payment_unit: Payment unit
+                post_type: Type of post
+                eudractNumber: EudraCT no. (European Clinical Trails Database)
+                nctNumber: National Clinical Trials registration no. (NCT)
+                post_number: PMID number or DOI
+                postAt: Date of publication
+                coordinating_investigators: Coordinating investigators
+                add_intervenants: Sponsor users
+                add_investigateurs: Investigator users
+                patient_number: Unique patient number
+                call_project_demandAt: Project call request date
+                call_project_obtainedAt: Date of obtaining project call
+                rep_sponsor: Sponsor legal representative
+                regulatory: Regulatory
+                manitoring: Monitoring
+                pharmacovigilance: Pharmacovigilance
+                logo: Logo (JPG or PNG file)
+                backgroundColor: Bachground colour
+                fontColor: Font colour
+                user:
+                    meeting:
+                        type: Type
+                        date: Date
+                        hour: Time
+                        object: Object
+                        duration: 'Duration (format : HH:mm)'
+                        report: Report
+                        started_at: Date
+                    training:
+                        title: Name of training
+                        start_date: Start date
+                        ended_date: End date
+                        duration: Duration
+                        start_hour: Start time
+                        ended_hour: End time
+                        certificate: Certificate
+                        material: Material
+                        type: Type of training
+                        trainer: Instructor
+            placeholders:
+                name_french: French title
+                name_english: English title
+                protocole: Enter protocol
+                url: Enter Url
+                ref: Internal reference
+                acronym: Project acronyme
+                drug: Drug name
+                eudractNumber: EudraCT no.
+                nctNumber: NCT no.
+                post_number: PMID number or DOI
+                postAt: Publication date
+                coordinating_investigators: Coordinating investigators
+                call_project_demandAt: dd/mm/yyyy
+                call_project_obtainedAt: dd/mm/yyyy
+                rep_sponsor: Sponsor legal representative
+                user:
+                    meeting:
+                        type: type *
+                        date: date *
+                        hour: time *
+                        object: object *
+                        duration: duration
+                        report: report
+                    training:
+                        title: training name *
+                        start_date: start date *
+                        start_hour: start time *
+                        ended_date: end date *
+                        ended_hour: end time *
+                        duration: duration *
+                        certificate: certificate *
+                        material: material *
+                    contact:
+                        title: contact title
+                        start_date: start-up date *
+                        details: details *
+            action:
+                closeDemand: Request of project colse-out
+                closeDemandAt: Close-out done on
+                closeDemandedAt: Request of close-out done at
+                cancelDemand: Cancelation of close-out
+                closeAccept: Project close-out
+                closeRefus: Refusal of close-out request
+                edit: Modification of project
+                create: Creation of project
+    Funding:
+        label: Funder
+        action:
+            list: Funding
+            new: New funder
+            modify: Modify funder
+            add: Create funder
+        name: Name of project call
+        field:
+            project: Project
+            amountDevice: Amount
+            obtainedAtShort: Date of obtention
+            demandedAtShort: Date of request
+            publicFundingShort: Public funding
+            publicFunding: Public funding
+            comment: Comment
+            obtainedAt: Date of funding obtention
+            demandedAt: Date of project-call request
+            callProject: Name of project call
+            devise: Currency
+            funder: Funder
+            amount: Funding amount
+        placeholders:
+            comment: Comment
+            obtainedAt: dd/mm/yyyy
+            demandedAt: dd/mm/yyyy
+            amount: 999.99
+    Center:
+        label: Site
+        DocumentTransverse:
+            list: Liste of documents
+            name: Name of document
+        action:
+            message: Please select an institution to be attached to this center.
+            list: Selection of sites
+            new: Add an investigator site
+            create: Create site
+            edit: Edit site
+            add: Add site
+            modify: Modify site
+            center:
+                list: List of sites
+            interlocutor:
+                list: Contact persons at the site
+                project: Contact persons of the project
+                center: Sites
+            institution:
+                list: Site institution
+            history:
+                list: History of status
+                statut: Status
+                date: Date of status change
+            doc_transverse:
+                list: List of cross-cutting institutional documents
+
+        field:
+            title_tab: Site file
+            visit_tab: Monitoring visits
+            number: Site number
+            name: Site name
+            centerStatus: Site status
+            address1: Address 1
+            address2: Address 2
+            country: Country
+            city: City
+            postalCode: Post code
+            finess: Buisness number
+            email: E-mail
+            phone: Telephone
+            fax: Fax
+            institution: Institution(s)
+            interlocutor: Contact persons
+            investigator: Investigators
+            principal_investigator: Principal Investigator
+            service: Services
+            createdAt: Start date
+            deletedAt: End date
+            project: Project
+        suite:
+            list: Site follow-up
+    Rule:
+        label: Rule
+        action:
+            list: GDPR
+            modify: Modify GDPR file
+        section:
+            section1: Status of GDPR conformity
+            section2: Data transfer
+            section3: Mapping
+        field:
+            formality: Rule
+            studyTransfer: Data transfer for the study
+            study_transfer_territory: Territory of transfer
+            mapping:  Mapping done
+            conformity: Status of GDPR conformity
+            outStudyTransfer: Data transfer as part of the reuse of data outside the study
+            out_transfer_territory: Territory of transfer
+            validateMapping: Validation of mapping file
+            post: Posted on the website
+            dataProtection: "PIS CE : Patient information sheet including the data protection component "
+            dataAccess: "PIS CE : Patient information sheet including the website for data access "
+            eTmf: Link to the eTMF Mapping file
+            reference: File reference number
+            partner: Partner name
+            project: Project
+    Participant:
+        project:
+            project_list: List of projetcs
+            name: Project
+            enabled_at: Activation date
+            disabled_at: Deactivation date
+    ProjectDatabaseFreeze:
+        field:
+            project: Project
+        label: Reason for analysis
+    DeviationCorrection:
+        label: Deviation
+    DeviationReviewCrex:
+        label: Project
+    DeviationReview:
+        label: Review
+    DeviationAction:
+        label: Deviation
+    Deviation:
+        label: Code
+        field:
+            label: Project
+            code: Code
+            reference: Deviation reference
+            code_deviation: Deviation code
+            name: Name
+            observed_at: Date of observation
+            center: Site
+            resume: Summary
+            grade: Grade
+            status: Status
+            closable: Closable
+            is_crex_submission: Submission to REXC
+            closed_at: Closure date
+            action: Plan of action
+            crex: REXC
+
+        action:
+            closeMultiple: Close deviation
+
+        DeviationAction:
+            action:
+                new: AAdd action
+                modify: Modify action
+                edit: Edit
+                create: Add
+
+        DeviationReview:
+            label: Deviation
+            review: Reviews
+            reviewCrex: Soumissions CREX
+            multiple: List of deviations under review
+            type:
+                operational: Operational
+                qualityControl: Quality control
+                crex: REXC
+            status:
+                edition: In drafting
+                finish: Finished
+            file:
+                review: Review
+                deviation: Deviation information
+                deviationCrex: Information REXC
+                action: Additional recommended actions
+            action:
+                title: System Non Conformity Reviews
+                title_little: Submit REXC
+                createMultiple: Multiple review form
+                createMultipleForm: Multiple review
+                create: Add review
+                modify: Modify review
+                delete: Delete review
+                close: End review
+                submitCrex: Submit to REXC
+                edit: Save modification
+                reset: Cancel
+                deviationDraft: Review of deviation draft forbidden
+                deviationClosed: Review of deviation closure forbidden
+                deviationDraftCrex: A draft of the deviation cannot be submitted to REXC
+                deviationClosedCrex: A closure of the deviation cannot be submitted to REXC
+            field:
+                number: Review no.
+                number_crex: REXC no.
+                doneAt: Done at
+                type: Type
+                typeReview: Type of review
+                reader: Reviewer
+                status: Status
+                validatedAt: Validated on
+                comment: Review comments
+                readerName: Name of reviewer
+                readerNameCrex: Submitted to REXC by
+                doneAtReview: Review date
+                createdAt: REXC submission date
+                reference: Reference DP
+                resume: Summary
+                project: Project
+                observedAt: Date of observation
+                status_conformity: REview status
+                grade: Grade
+                code: Reference DP
+                observed_at: Observation date
+                review:
+                    status: Status of the deviation
+                    closedAt: Date of resolution of the deviation
+                    ref: Reference deviation
+                    resume: Resume déviation
+                    description: Description deviation
+
+        DeviationReviewAction:
+            status:
+                provide: To do
+                edition: Ongoing
+                finish: Done
+            typeManager:
+                project: Project
+                center: Site
+            typeAction:
+                corrective: Corrective
+                preventive: Preventive
+            action:
+                new: Add an action (corrective or preventive)
+                modify: Modify an action (corrective or preventive)
+                edit: Edit
+                create: Add
+            field:
+                type: Action type
+                description: Description of action
+                comment: Reason for deletion
+                applicationAt: Implementation date
+                doneAt: Completion date
+                interlocutor: Responsible contact person
+                intervenant: Responsible user
+                interlocutor_intervenant: Responsible contact person/user
+                status: Status
+                typeManager: Manager type
+
+        DeviationSample:
+            label: Sample deviation
+            field:
+                project: Projects concerned
+                detectedAt: Date of observation
+                description: Process
+                criticality: Criticality
+                status: Status
+                validatedAt: Closure date
+                deviation:
+                    project: Project
+                    number: Protocol deviation no.
+                    sampleNumber: Biological sample deviation no.
+                    description: Description
+    DeviationSample:
+        label: Code
+        DeviationCorrection:
+            field:
+                description: Description of immediate correction
+                applicationPlannedAt: Planned implementation date
+                realizedAt: Completion date
+                efficiencyMeasure: Effectiveness measurement
+                notEfficiencyMeasureReason: If not effective why?
+                comment: Reason for deletion
+    report_model:
+        popup:
+            publication:
+                title: Publication of templates
+        title: Monitoring report templates
+        add: Add template
+        publish: Publication
+        publish_message: Only one template at a time can be published
+        obsolete: Make Oobsolete
+        obsolete_message: Only one template at a time can be made obsolete
+        section:
+            model: Template identity
+            bloc: Content management
+            version: Version history
+        field:
+            status: Status
+            version: Version no.
+            name: Report name
+            type: Report type
+            typevisite: Visit type
+            publishedAt: Publication date
+            activated: Activated
+            published_version: Published version
+            config_version: Config version
+            visit_type:
+                name: Visit type
+                on_site: On site
+                off_site: Off site
+            report_type:
+                name: Report type
+                in_follow_up: Monitoring
+                prod: Start
+                clos: Closure
+            publish:
+                label: Publish templates
+            create:
+                label: Create from a published templates
+            declare:
+                label: Declare obsolete
+        action:
+            new: Add a template
+            edit: Edit
+            create: Create the template
+            file: Add the version file
+            new_version: Add a new version
+            edit_message: Modification is only possible if the template has no published version
+            delete_message: Deletion is only possible if the template has no published version
+            new_message: Impossible to create a new version for this template because it already exists in creation status
+            obsolete_message: You cannot activate this configuration because this template version is obsolete
+    report_model_version:
+        field:
+            number: Version no.
+            createdBy: Created by
+            createdAt: Created at
+            publishedBy: Published by
+            publishedAt: Published at
+            obsoletedBy: Obsoleted by
+            obsoletedAt: Obsoleted at
+            status:
+                name: Statut
+                create: Create
+                publish: Published
+                publishedAt: Published at
+                obsolete: Obsoleted
+    report_block:
+        action:
+            create: Add a block
+            edit: Block edition
+            position: Blocks reposition
+            rename: Block rename
+            delete: Block delete
+            delete_message: Are you sure you want to delete this block? The block data and its items will be deleted and will no longer appear in the content management table
+            new_message: Impossible to create because the template version is published
+            order_message_version_published: Reposition is impossible because the template version is published
+            order_message_version_obsolete: Reposition is impossible because the template version is obsoleted
+        field:
+            name: Block name
+    ReportVisit:
+        label: Visit no.
+    report_visit:
+        title: Monitoring visits list
+        list: Central list of project monitoring reports
+        action:
+            create: Monitoring visit creation
+            modify: Monitoring visit modification
+            add: Add a visit
+            edit: Edit the visit
+            report_create: Monitoring report creation
+            report_modify: Monitoring report modification
+            report_add: Add the report .docx
+        field:
+            center: Site
+            model: Report template
+            report_model: Report template
+            number: Visit No.
+            expectedAt: Expected at
+            createdBy: Create by
+            createdAt: Visit date
+            code: Report code
+            validatedBy: Validated by
+            validatedAt: Validated at
+            visit_type:
+                name: Visit type
+                on_site: On site
+                off_site: Off site
+            report_type:
+                name: Report type
+                in_follow_up: Monitoring
+                prod: Start
+                clos: Closure
+            visit_status:
+                name: Visit status
+                done: Done
+                no_done: Not done
+            report_status:
+                name: Report status
+                in_progress: In progress
+                validate: Validated
+            report:
+                center: Site
+                reader: Report writer
+                expectedAt: Expected date of the visit
+                visit_type: Visit type
+                monitoring: Monitoring report
+    report_config:
+        title: Report templates configuration
+        action:
+            active_not_available: Entry not available
+            active_available: Entry available
+            active_impossible: Not available. Obsoleted template without new published version at entry
+    deviationSample:
+        label: Code
+        field:
+            project: Projects concerned
+            observedAt: Observed at
+            processInvolves: Processus
+            resume: Summary
+            grade: Grade
+            status: Status
+            closedAt: Closed at
+    NoConformity:
+        field:
+            system:
+                clos_all: Bulk close out
+                code: Deviation code
+                observedAt: Observed at
+                process: Process
+                resume: Summary
+                grade: Grade
+                closedAt: Closed at
+                isCrexSubmission: REXC submission
+                action:
+                    add_or_update: System non-compliance creation/correction
+                    declaration: Declaration of System non-compliance
+                    update: Modify the declaration
+                declaration:
+                    section:
+                        identification: Identification
+                        identificationQA: Identification QUALITY ASSURANCE
+                        description: Description
+                        cause: Causes
+                        correction: IMMEDIATE CORRECTIONS
+                        action: ACTION PLAN
+                        validataionQa: VALIDATION QUALITY ASSURANCE
+                    statut: Status
+                    observedAt: Observed at
+                    declaredBy: Declared by
+                    declaredAt: Declared at
+                    process: Process
+                    activity: Activity
+                    refQA: QA specialist
+                    refIso: ISO 9001 Reference
+                    document: Document
+                    resume: Summary
+                    description: Description
+                    causality: Causality
+                    causality_reason: Causality
+                    grade: Grade
+                    potentiel_impact: Potential impact
+                    potentiel_impact_reason: Clarify
+                    visaPilotProcessChiefQA: Pilot processus and QA specialist visa
+                    visaAt: Visa date
+                    officialQA: QA specialist
+                    efficiencyMeasure: Efficiency measure
+                    efficiencyJustify: Efficiency evidence
+                    notEfficiencyMeasureReason: If not, why?
+                    institutions: Institution(s)
+                review:
+                    file: Review file
+                    numberCrex: Review REXC N°
+                    code: NC reference
+                    resume: Summary
+                    grade: Grade
+                    statut: Rewiew status
+                    deviation:
+                        statut: Deviation status
+                        statutShort: Status
+                        closedAt: Closed at
+                        declaredBy: Declared by
+                        refISO9001: ISO 9001 reference
+                        process: Process
+                        referentQA: QA specialist
+                        nc_system_code: NC system deviation reference
+                        description: Deviation description
+                        resume: Deviation summary
+                    crex:
+                        title: REXC information
+                        reader: REXC submission writer
+                        createdAt: REXC submission date
+                        doneAt: REXC review date
+                        comment: Review comment
+                        delete:
+                            title: Cancel additional action
+                            description: Are you sure you want to remove this additional action? The action data will be deleted and will no longer appear in the additional recommended actions table
+
+            sample:
+                declaration:
+                    section:
+                        identification: Identification
+                        description: Description
+                        cause: Causes
+                        decision: DECISION
+                        deviation_protocol: Associated protocol deviations
+                        correction: Immediate corrections
+                        action: ACTION PLAN
+                    statut: Status
+                    draft: Delete the draft
+                    title: Deviation declaration
+                    userWriter: User writer name
+                    declaredAt: Declaration date
+                    declaredFunction: Declared function
+                    observedAt: Observation date
+                    occurrenceAt: Occurrence date
+                    declaredBy: Declared by
+                    projects: Concerned project(s)
+                    detectionContext: Detection context
+                    detectionContextReason: Clarify
+                    detectionCenter: Site that detected the deviation
+                    detectionCenterReason: Clarify
+                    processInvolves: Process involved
+                    processInvolvedReason: Clarify
+                    natureType: Deviation type (nature)
+                    natureTypeReason: Clarify
+                    resume: Summary
+                    description: Description
+                    causality: Causality
+                    causalityDescription: Causality description
+                    causalityReason: Clarify
+                    potentialImpactSample: Potential impact
+                    potentialImpactSampleReason: Clarify
+                    grade: Grade
+                    decisionTaken: Decision taken
+                    decisionFileVich: involved samples and types
+                    efficiencyMeasure: Efficiency measure
+                    efficiencyJustify: Efficiency evidence
+                    notEfficiencyMeasureReason: If not efficient, why?
+                    institutions: Institution(s)
+
+        menu:
+            system: NC system deviation
+            sample: Biological sample deviation
+            system_crex: NC system REXC
+            deviation_crex: REXC protocol deviation
+    DeviationSampleAction:
+        label: Biological sample deviation
+    DeviationSampleCorrection:
+        label: Biological sample deviation
+    DeviationSystem:
+        label: NC system deviation
+    DeviationSystemCorrection:
+        label: NC system immediate correction deviation
+    DeviationSystemAction:
+        label: NC system action deviation
+    DeviationSystemReview:
+        label: NC system REXC deviation review
+    mailgroup:
+        name: Name
+        users: Users
+    Zone:
+        label: Zone
+    Section:
+        label: Section
+    Artefact:
+        label: Artefact
+    Mailgroup:
+        label: Mailing list
+    Tag:
+        label: Tag
+    Document:
+        label: Document
+    DocumentVersion:
+        label: Document Version
+
+popup:
+    expired_session:
+        title: Expired session
+        body: Your session has expired. If you don't want to lose your work, you can login in a new tab or click
+        try: Reconnection
+    close: Close
+    try_again: Try again
+
+security:
+    connexion:
+        err:
+            already_logged_in: A session is already open on another device.
+            bad_credentials: Incorrect ID
+            csrf_token: Expired form
+            inactive_account: Your account is not activated, please contact you administrator.
+            locked_account: Your account is locked, please contact you administrator.
+            unexpected_error: Error
+            unhautorised_application: Unauthorized access
+        info:
+            expired_session: Your session expired
+            connexion_confirm: You are now connected
+            deconnected: Your session expired
+    expired: Expired
+    login: Connexion
+    logout: Log out
+    password:
+        change: Change the password
+        confirm: Confirm the password
+        create: Create a password
+        current: Current password
+        expired: Passeword expired
+        forgotten:
+            err:
+                missing_email: Your email address is required to send you a password reset link.
+            label: Forgotten password
+        generate: Generate a new password
+        label: Password
+        new: New password
+        reset: Password reset
+        reset_token:
+            err:
+                expired: This link has expired, please regenerate one or contact your administrator.
+                account_not_found: Account not found or inactive, please contact your administrator.
+            success: A password reset link has been sent to you.
+    profile:
+        label: My account
+        modify: Show or edit my acount
+        settings: Settings
+    remember_me: Remember me
+    two_factor:
+        enable: Enable two-factors authentification
+        disable: Disable two-factors authentification
+        label: Two-factors authentification
+        otp_code: OTP code
+        reset: Reset two-factors authentification
+
+support:
+    email: "For technical support questions, please contact the following address :"
+    ending: For questions about the study, please contact the sponsor or its representatives.
+    intro: "To answer questions about ESM © application and its features.<br />A technical service is available. "
+    label: Support
+    phone: "Or by phone at :"
+
+terms_of_service:
+    agree: I agree
+    date_signature: Signature date
+    disagree: I disagree
+    label: Terms of use
+    version: Version
+    understood: I have read and accept the Terms of Use
+
+word:
+    all: All
+    no: Non archived
+    yes: Archived
+    text_copy: Copie
+    save: Save
+
+role:
+    ROLE_PROJECT_READ: Display Project
+    ROLE_PROJECT_WRITE: Project Creation/Edition
+    ROLE_PROJECT_CLOSE_DEMAND: Request for project closure
+    ROLE_PROJECT_CLOSE: Project closure
+    ROLE_PROJECT_READ_CLOSED: Display closed project
+    ROLE_USER_READ: Display sponsor user (admin)
+    ROLE_USER_WRITE: Creation/editing sponsor user (admin)
+    ROLE_USER_ARCHIVE: Display sponsor user (admin)
+    ROLE_USER_ACCESS: Access activation ESM
+    ROLE_PROFILE_READ: Display profil
+    ROLE_PROFILE_WRITE: Profil creation/editing
+    ROLE_INTERLOCUTOR_READ: Display interlocutor (admin)
+    ROLE_INTERLOCUTOR_WRITE: Interlocutor creation/editing (admin)
+    ROLE_INTERLOCUTOR_ARCHIVE: Interlocutor archive (admin)
+    ROLE_INTERLOCUTOR_READ_WRITE_ARCHIVE_DOCUMENTTRANSVERSE: Interlocutor cross-cutting document creation/editing/archiving (admin)
+    ROLE_SHOW_AUDIT_TRAIL: Display audit trail
+    ROLE_PROJECT_SETTINGS_READ: Display project settings
+    ROLE_PROJECT_SETTINGS_WRITE: Curve setting
+    ROLE_PROJECT_INTERLOCUTOR_READ: Display project interlocutor
+    ROLE_PROJECT_INTERLOCUTOR_WRITE: Creation/editing project interlocutor documentary follow-up
+    ROLE_PROJECT_INTERVENANT_READ: Display user project
+    ROLE_COMMUNICATION_READ: Display communication
+    ROLE_COMMUNICATION_WRITE: Creation/editing communication
+    ROLE_COMMUNICATION_DELETE: Communication delete
+    ROLE_PUBLICATION_READ: Display publication
+    ROLE_PUBLICATION_WRITE: Publication creation/editing
+    ROLE_PUBLICATION_ARCHIVE: Publication archive
+    ROLE_FUNDING_READ: Display funding
+    ROLE_FUNDING_WRITE: Creation/editing funding
+    ROLE_FUNDING_ARCHIVE: Funding archive
+    ROLE_DATE_READ: Display key dates and numbers
+    ROLE_DATE_WRITE: Editing key dates and numbers
+    ROLE_INSTITUTION_READ: Display institution (admin)
+    ROLE_INSTITUTION_WRITE: Creation/editing institution (admin)
+    ROLE_INSTITUTION_ARCHIVE: Institution archive(admin)
+    ROLE_INSTITUTION_READ_WRITE_ARCHIVE_DOCUMENTTRANSVERSE: Institution cross-cutting document creation/editing/archiving (admin)
+    ROLE_SUBMISSION_READ: Display regulatory submission
+    ROLE_SUBMISSION_WRITE: Creation/editing regulatory submission
+    ROLE_SUBMISSION_ARCHIVE: Regulatory submission archive
+    ROLE_CENTER_READ: Display site
+    ROLE_CENTER_WRITE: Creation/editing site
+    ROLE_CENTER_ARCHIVE: Site archive
+    ROLE_PROJECT_RULE_READ: Display GDPR
+    ROLE_PROJECT_RULE_WRITE: Edit GDPR
+    ROLE_DOCUMENTTRACKING_READ: Display documentary follow-up
+    ROLE_DOCUMENTTRACKING_WRITE: Creation/editing documentary follow-up
+    ROLE_DOCUMENTTRACKING_ARCHIVE: Documentary follow-up archive
+    ROLE_PATIENTTRACKING_READ: Display patient follow-up
+    ROLE_PATIENTTRACKING_WRITE: Creation/editing patient
+    ROLE_PATIENT_ARCHIVE: Patient archive
+    ROLE_DIAGRAMVISIT_READ: Display visit diagram
+    ROLE_DIAGRAMVISIT_WRITE: Creation/editing visit diagram
+    ROLE_DIAGRAMVISIT_ARCHIVE: Visit diagram archive
+    ROLE_ECRF_READ: Display identify eCRF data
+    ROLE_DOCUMENTTRANSVERSE_READ: Display/download cross-cutting documents
+    ROLE_DRUG_READ: Display drug (admin)
+    ROLE_DRUG_WRITE: Creation/editing drug (admin)
+    ROLE_DRUG_ARCHIVE: Drug archive (admin)
+    ROLE_DOCUMENTTRANSVERSE_WRITE: Creation/editing cross-cutting documents
+    ROLE_DOCUMENTTRANSVERSE_ARCHIVE: Cross-cutting documents archive
+    ROLE_DRUG_READ_WRITE_ARCHIVE_DOCUMENTTRANSVERSE: Creation/editing/archiving drug cross-cutting (admin)
+    ROLE_DEVIATION_READ: Display protocol deviations
+    ROLE_DEVIATION_WRITE: Creation/editing protocol deviation
+    ROLE_DEVIATION_ACTION_DELETE: Delete protocol deviation action
+    ROLE_DEVIATION_CORRECTION_DELETE: Delete instant correction protocol deviation
+    ROLE_DEVIATION_REVIEW: Protocol deviation review
+    ROLE_DEVIATION_CLOSE: Protocol deviation closure
+    ROLE_DEVIATION_ASSOCIATE_SAMPLE: Associate a biological sample deviation
+    ROLE_DEVIATION_REVIEW_CREX_READ: Display protocol deviation REXC review
+    ROLE_DEVIATION_REVIEW_CREX: Protocol deviation REXC review
+    ROLE_MONITORING_MODEL_READ: Display monitoring templates
+    ROLE_MONITORING_MODEL_WRITE: Monitoring template creation/edition
+    ROLE_CONFIGURATION_MONITORING_MODEL: Monitoring templates configuration
+    ROLE_MONITORING_REPORT_READ: Display/download monitor reports
+    ROLE_MONITORING_REPORT_LIST: Centralized list of project monitoring reports
+    ROLE_MONITORING_REPORT_WRITE: Monitoring report creation/deletion
+    ROLE_MONITORING_REPORT_UPLOAD: Monitoring report Upload/Validation
+    ROLE_NO_CONFORMITY_SYSTEM_READ: Display non-conformity system
+    ROLE_NO_CONFORMITY_SYSTEM_WRITE: Création/editing non-conformity system
+    ROLE_NO_CONFORMITY_SYSTEM_QA_WRITE: NC system QA validation
+    ROLE_NO_CONFORMITY_SYSTEM_ACTION_DELETE: NC system action deletion
+    ROLE_NO_CONFORMITY_SYSTEM_CORRECTION_DELETE: NC system immediate correction deletion
+    ROLE_NO_CONFORMITY_SYSTEM_CLOSE: NC system closure
+    ROLE_NO_CONFORMITY_SYSTEM_CREX_READ: Display REXC non-conformity system
+    ROLE_NO_CONFORMITY_SYSTEM_REVIEW_CREX: Review REXC non-conformity system
+    ROLE_DEVIATION_SAMPLE_READ: Display biological sample deviation
+    ROLE_DEVIATION_SAMPLE_WRITE: Creation/editing biological sample deviation
+    ROLE_DEVIATION_SAMPLE_ACTION_DELETE: Delete biological sample deviation action
+    ROLE_DEVIATION_SAMPLE_CORRECTION_DELETE: Delete instant correction biological sample deviation
+    ROLE_DEVIATION_SAMPLE_ASSOCIATE_DEVIATION: Associate a protocol deviation
+    ROLE_DEVIATION_SAMPLE_CLOSE: Closure biological sample deviation
+
+deviation:
+    titre:
+        declaration: Declaration
+        review: Review
+        associateSample: Associated samples
+        corrections: Corrections
+        actions: Actions
+
+
+etmf:
+
+    menu:
+        projects: Projects
+        structure: Structure
+        tag: Tag
+        mailgroup: Mailing list
+        ESM: ESM
+
+    artefact:
+        label: Artefact
+        field:
+            name: Artefact name
+            number: Artefact number
+            section: Section
+            level: Level
+            extension: Extension(s) (pdf, excel, csv,...)
+            mailgroups:  Mailing list
+            expired: Alert period(s) in days
+        action:
+            list: Artefacts list
+            add: New artefact
+            new: Create an artefact
+            edit: Edit artefact
+    zone:
+        label: Zone
+        field:
+            name: Zone name
+            number: Zone number
+        action:
+            list: Zones list
+            add: New zone
+            new: Create a zone
+            edit: Edit zone
+    tag:
+        label: Tag
+        field:
+            name: Tag name
+        action:
+            list: Tags list
+            add: New tag
+            new: Create a tag
+            edit: Edit tag
+
+    section:
+        label: Section
+        field:
+            name: Section name
+            number: Section number
+            zone: Parent zone
+        action:
+            list: Sections list
+            add: New section
+            new: Create a section
+            edit: Edit section
+
+    document:
+        label: Document
+        field:
+            name: Document name
+            description: Document description
+            artefact: Artefact
+            project: Project
+            zone: Zone
+            section: Section
+        action:
+            list: Documents list
+            add: New document
+            new: Create a document
+            edit: Edit document
+
+    broadcastList:
+        label: Broadcasting list
+

@@ -1,0 +1,23 @@
+{% set activeMenu = 'audit_trail' %}
+{% set subMenu = 'audit_trail' %}
+{% set activeMenu2 = 'participant' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block menu %}
+    {{ include('menu/main.html.twig') }}
+    <header>
+        {% include 'menu/sub/audit_trail.html.twig' %}
+    </header>
+{% endblock %}
+
+{% block content %}
+
+    {% if list is defined  %}
+        <h1>{{ 'entity.Participant.audit.list.header'|trans }}</h1>
+        {{ list.render|raw }}
+    {% else %}
+        <p>Liste vide!</p>
+    {% endif %}
+
+{% endblock %}

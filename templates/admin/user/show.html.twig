@@ -1,0 +1,144 @@
+{% set activeMenu = 'user' %}
+{% set allowCreate = is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_USER_ARCHIVE_DESARCHIVE') or is_granted('ROLE_USER_SHOW_INTERVENANT_PROJECT')  %}
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('admin.projects.index') }}" title="Accueil">Accueil</a></li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('admin.user.index') }}" title="{{ 'menu.admin.users' | trans }}">
+                    {{ 'menu.admin.users' | trans }}
+                </a>
+            </li>
+            <li class="breadcrumb-item active">
+                Fiche - {{ user.displayName|capitalize }}
+            </li>
+        </ol>
+    </nav>
+
+    {%  if action == 'show' %}
+        <h1>{{ user.civility.label }} {{ user.displayName }} {{ user.deletedAt is empty ? '' : user.deletedAt|date('d/m/Y') }}</h1>
+        <div class="admin-block {{ action == 'edit' ? ' d-none' : '' }}">
+            <h5>{{ 'show.main'|trans }}</h5>
+            <dl class="row">
+                <div class="col-12">
+                    {% if is_granted('USER_ARCHIVE', user) %}
+                        <a class="btn btn-info float-right" href="{{ path('admin.user.archive', {'id' : user.id }) }}">Archiver</a>
+                    {% endif %}
+                    {% if is_granted('USER_RESTORE', user) %}
+                        <a class="btn btn-info float-right" href="{{ path('admin.user.desarchive', {'id' : user.id }) }}">Désarchiver</a>
+                    {%  endif %}
+                </div>
+            </dl>
+            <dl class="row">
+                <div class="col-3">
+                    <dt>{{ 'entity.User.register.labels.civility' | trans }} &colon;</dt><dd>{{ user.civility.label }}</dd>
+                </div>
+                <div class="col-3">
+                    <dt>{{ 'entity.User.register.labels.lastName' | trans }} &colon;</dt><dd>{{ user.lastName }}</dd>
+                </div>
+                <div class="col-3">
+                    <dt>{{ 'entity.User.register.labels.firstName' | trans }} &colon;</dt><dd>{{ user.firstName }}</dd>
+                </div>
+                <div class="col-3">
+                    <dt>{{ 'entity.User.register.labels.email' | trans }} &colon;</dt><dd>{{ user.email }}</dd>
+                </div>
+            </dl>
+            <dl class="row">
+                <div class="col-3">
+                    <dt>{{ 'entity.User.register.labels.phone' | trans }} &colon;</dt><dd>{{ user.phone }}</dd>
+                </div>
+                <div class="col-3">
+                    <dt>{{ 'entity.User.register.labels.society' | trans }} &colon;</dt><dd>{{ user.society }}</dd>
+                </div>
+                <div class="col-3">
+                    <dt>{{ 'entity.User.register.labels.profile' | trans }} &colon;</dt><dd>{{ user.profile }}</dd>
+                </div>
+                <div class="col-3">
+                    <dt>{{ 'entity.User.register.labels.job' | trans }} &colon;</dt><dd>{{ user.job }}</dd>
+                </div>
+            </dl>
+
+            <dl class="row">
+                <div class="col-3">
+                    <dt>{{ 'entity.User.register.labels.department' | trans }} &colon;</dt><dd>{{ user.department }}</dd>
+                </div>
+                <div class="col-3">
+                    <dt>{{ 'entity.User.register.labels.hasAccessEsm' | trans }} &colon;</dt><dd>
+                        {% if user.hasAccessEsm %}
+                            <i class="fa fa-check c-green"></i>
+                        {% else %}
+                            <i class="fa fa-times c-red"></i>
+                        {% endif %}
+                    </dd>
+                </div>
+                <div class="col-3">
+                    <dt>{{ 'entity.User.register.labels.hasAccessEtmf' | trans }} &colon;</dt><dd>
+                        {% if user.hasAccessEtmf %}
+                            <i class="fa fa-check c-green"></i>
+                        {% else %}
+                            <i class="fa fa-times c-red"></i>
+                        {% endif %}
+                    </dd>
+                </div>
+            </dl>
+            {% if is_granted('USER_EDIT', user) %}
+                <a class="btn btn-primary" href="{{ path('admin.user.edit', {'id' : user.id}) }}">{{ 'entity.User.modify'|trans }}</a>
+            {% endif %}
+        </div>
+
+        <div class="admin-block">
+            <h5>{{ 'entity.Participant.project.project_list'|trans }}</h5>
+            <div class="table-responsive">
+                <table class="w-100" id="user-projects">
+                    <tr>
+                        <th>{{ 'entity.Participant.project.name'|trans}}</th>
+                        <th>{{ 'entity.Participant.project.enabled_at'|trans }}</th>
+                        <th>{{ 'entity.Participant.project.disabled_at'|trans }}</th>
+                        <th>{{ 'Taux d\'allocation'|trans }}</th>
+                        {% if is_granted('USER_EDIT', user) %}
+                            <th>Action</th>
+                        {% endif %}
+                    </tr>
+
+                    {% for userProject in user.userProjects %}
+                    <tr class="{{ userProject.project.closedAt is null ? '' : 'greyline' }}">
+                            <td>{{ userProject.project.acronyme }}</td>
+                            <td>{{ userProject.project.createdAt|date('d/m/Y') }}</td>
+                            <td>{{ userProject.disabledAt is empty ? '' : userProject.disabledAt|date('d/m/Y') }}</td>
+                            <td>
+                                <span>{{ userProject.rate is null ? '' : userProject.rate~'%' }}</span>
+                                {% if userProject.project.closedAt is null %}
+                                    {% if is_granted('USER_EDIT', user) %}
+                                        <i class="fa fa-edit"></i>
+                                        <input class="form-control" style="display: none;" value="{{ userProject.rate }}" type="number" min="0" max="100" data-url="{{ path('admin.userproject.rate.update', {id: userProject.id}) }}" />
+                                    {% endif %}
+                                {% endif %}
+                            </td>
+                        {% if is_granted('USER_EDIT', user) %}
+                            <td>
+                                {% if userProject.project.closedAt is null %}
+                                    {% if userProject.disabledAt %}
+                                        <a class="user-project-associate" href="{{ path('admin.user.project.associate', { 'id' : userProject.user.id, 'idProject' : userProject.project.id }) }}">
+                                            <i class="fa fa-times c-red"></i>
+                                        </a>
+                                    {% else %}
+                                        <a class="user-project-dissociate" href="{{ path('admin.user.project.dissociate', { 'id' : userProject.user.id, 'idProject' : userProject.project.id }) }}">
+                                            <i class="fa fa-check c-green"></i>
+                                        </a>
+                                    {% endif %}
+                                {% endif %}
+                            </td>
+                        {% endif %}
+                    </tr>
+
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+
+    {% endif %}
+
+{% endblock %}

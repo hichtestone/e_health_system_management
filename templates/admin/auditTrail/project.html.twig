@@ -1,0 +1,11 @@
+{% set activeMenu = 'audit_trail' %}
+{% set subMenu = 'audit_trail' %}
+{% set activeMenu2 = 'project' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+
+    {{ list.render|raw }}
+
+{% endblock %}

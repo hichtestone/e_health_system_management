@@ -1,0 +1,111 @@
+{% set activeMenu = 'no_conformity' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('deviation-system') }}
+{% endblock %}
+
+{% block title %}Deviations Systèmes - création revue{% endblock %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ path('no_conformity.protocol_deviation_crex') }}" title="Accueil">Non-Conformités</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <a href="{{ path('deviation.system.list')}}">{{ 'entity.NoConformity.menu.system'|trans }}</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <a href="{{ path('deviation.system.review.list', {'deviationSystemID': deviationSystem.id })}}">{{ 'deviation.titre.review'|trans }}</a>
+            </li>
+        </ol>
+    </nav>
+
+    {% include 'menu/deviation_system.html.twig' with {'activetab': 'reviewCREX' } %}
+
+    <h1>{% if action == 'edit' %} {{ 'entity.Deviation.DeviationReview.action.modify'|trans }} {% else %} {{ 'entity.Deviation.DeviationReview.action.create'|trans }} {% endif %}</h1>
+
+    <div class="admin-block">
+
+        <div class="sf-read">
+            <h5>{{ 'entity.Deviation.DeviationReview.file.deviation'|trans }}</h5>
+        </div>
+
+        <dl class="row">
+            <div class="col-4">
+                <dt>Statut de la déviation :</dt>
+                <dd>{{ constant('App\\ESM\\Entity\\Deviation::STATUS')[deviationSystem.status]  | trans }}</dd>
+            </div>
+            <div class="col-4">
+                <dt>Date de résolution de la déviation :</dt>
+                <dd>{{ deviationSystem.closedAt is empty ? '' : deviationSystem.closedAt|date('d/m/Y') }}</dd>
+            </div>
+        </dl>
+
+        <dl class="row">
+
+            <div class="col-4">
+                <dt>Référence Déviation Protocolaire :</dt>
+                <dd>{{ deviationSystem.code }}</dd>
+            </div>
+
+            <div class="col-4">
+                <dt>Résumé déviation :</dt>
+                <dd>{{ deviationSystem.resume }}</dd>
+            </div>
+
+            <div class="col-4">
+                <dt>Description déviation :</dt>
+                <dd style="overflow-wrap:break-word;">{{ deviationSystem.description}}</dd>
+            </div>
+
+        </dl>
+
+    </div>
+
+    <div class="admin-block">
+
+        {{ form_start(form) }}
+
+            <div class="row mb-3">
+                <div class="col-4">
+                    {{ form_label(form.reader, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.reader) }}
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-4">
+                    {{ form_label(form.doneAt, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.doneAt) }}
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-4">
+                    {{ form_label(form.comment, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.comment) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <button type="submit" class="btn btn-primary">{{ ('entity.Deviation.DeviationReview.action.'~action)|trans }}</button>
+                </div>
+            </div>
+
+        {{ form_end(form) }}
+
+    </div>
+
+{% endblock %}

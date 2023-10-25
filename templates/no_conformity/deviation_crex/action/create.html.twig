@@ -1,0 +1,100 @@
+{% set activeMenu = 'non_conformity' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <h1>{% if action == 'edit' %} {{ 'entity.Deviation.DeviationReviewAction.action.modify'|trans }} {% else %} {{ 'entity.Deviation.DeviationReviewAction.action.new'|trans }} {% endif %}</h1>
+
+    <div class="admin-block">
+        {{ form_start(form) }}
+        <div class="row mb-3">
+            <div class="col-4">
+                {{ form_label(form.typeAction, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-4">
+                {{ form_widget(form.typeAction) }}
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-4">
+                {{ form_label(form.description, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-4">
+                {{ form_widget(form.description) }}
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-4">
+                {{ form_label(form.applicationAt, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-4">
+                {{ form_widget(form.applicationAt) }}
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-4">
+                {{ form_label(form.doneAt, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-4">
+                {{ form_widget(form.doneAt) }}
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-4">
+                {{ form_label(form.status, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-4">
+                {{ form_widget(form.status) }}
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-4">
+                {{ form_label(form.typeManager, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-4">
+                {{ form_widget(form.typeManager) }}
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-4">
+                {{ form_label(form.user, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-4">
+                {{ form_widget(form.user) }}
+            </div>
+        </div>
+
+
+        <div class="row mb-3">
+            <div class="col-4">
+                {{ form_label(form.interlocutor, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-4">
+                {{ form_widget(form.interlocutor) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <a class="btn btn-secondary" href="{{ path('no_conformity.protocol_crex.show', { 'reviewCrexID': review.id }) }}">{{ ('form.action.cancel')|trans }}</a>
+                <button class="btn btn-primary" type="submit">{{ ('entity.Deviation.DeviationReviewAction.action.'~action)|trans }}</button>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('deviation') }}
+{% endblock %}

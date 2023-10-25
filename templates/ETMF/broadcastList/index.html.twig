@@ -1,0 +1,22 @@
+{% set activeMenu = 'artefact' %}
+{% set subMenu = 'etmf_structure' %}
+{% set activeMenu2 = 'broadcastList' %}
+
+{% extends 'ETMF/layout/app.html.twig' %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ path('app.etmf.home') }}" title="Accueil">Accueil</a>
+            </li>
+            <li class="breadcrumb-item active">
+                Liste de diffusion
+            </li>
+        </ol>
+    </nav>
+
+    <h1>Liste de diffusion</h1>
+
+{% endblock %}

@@ -1,0 +1,89 @@
+
+
+
+
+
+
+{% extends 'layout/app.html.twig' %}
+
+
+
+
+
+
+
+
+{% block body %}
+
+
+
+
+
+    <div>
+        <table class="bnj" >
+            <tr>
+                <td style="width: 33%">
+                    <table  class="table table-bordered table-striped mb-0" >
+                        <tr>
+                            <th >Version</th>
+
+
+
+                        </tr>
+                        {% for version in versions %}
+                            <tr>
+                                <td style="width: 40%;height:400px "><br> Nom de version : {{version.name}} <br> <br> <br>{{ version.documentDate|date("F jS \\a\\t g:ia")}}</td>
+
+
+
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </td>
+
+     
+
+
+
+            <td style="width: 33%">
+                <table class="table table-bordered table-striped mb-0" >
+                    <tr>
+                        <th >Document</th>
+
+                    </tr>
+                    {% for document in documents %}
+                        <tr>
+                            <td style="width: 60% ;height: 400px"><figure tabindex="0"><img  src={{asset('documents/'~document.logo)}}></figure></td>
+
+                        </tr>
+                    {% endfor %}
+                </table>
+            </td>
+
+            <td style="width: 33%">
+                <table class="table table-bordered table-striped mb-0" >
+                    <tr>
+                        <th >Tags</th>
+
+                    </tr>
+                    {% for tag in tags %}
+                        <tr>
+                            <td style="width: 40%;height:400px" >{{tag.name}}</td>
+
+                        </tr>
+                    {% endfor %}
+                </table>
+            </td>
+
+        </tr>
+
+
+        </table>
+
+    </div>
+
+
+
+
+
+{% endblock %}

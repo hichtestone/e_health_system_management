@@ -1,0 +1,32 @@
+{% set activeMenu = 'settings' %}
+{% set subMenu = 'settings' %}
+{% set activeMenu2 = 'diagram-study' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block body %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.home.index', { 'id' : project.id }) }}"
+                                           title="{{ project.acronyme }}">{{ project.acronyme }}</a></li>
+            <li class="breadcrumb-item active"><a href="{{ path('project.list.visit.setting', { 'id' : project.id }) }}"
+                                                  title="phase-setting">{{ 'entity.VisitSetting.label'|trans }}</a></li>
+        </ol>
+    </nav>
+
+    {# Onglets Dans Schema d'etudes #}
+    {% include 'menu/schema_etude.html.twig' with {'activetab': 'conditionnement_settings'} %}
+
+    <h1>{{ 'entity.SchemaCondition.action.list'|trans }} <br>
+        {% if is_granted('PROJECT_ACCESS_AND_OPEN', project) and is_granted('IDENTIFICATIONVARIABLE_WRITE') %}
+            <a class="btn btn-primary" href="{{ path('project.conditionnement.new', {'id' : project.id}) }}">
+                {{ 'entity.SchemaCondition.action.create'|trans }}
+            </a>
+        {% endif %}
+    </h1>
+
+    {{ list.render|raw }}
+
+
+{% endblock %}

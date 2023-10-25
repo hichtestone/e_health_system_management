@@ -1,0 +1,30 @@
+{% set activeMenu = 'center' %}
+{% set subMenu = 'center' %}
+{% set activeMenu2 = 'reportVisit' %}
+
+{% extends 'layout/app.html.twig' %}
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('project.home.index', { 'id' : project.id }) }}" title="{{ project.acronyme }}">{{ project.acronyme }}</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('project.center.report.visit.index', { 'projectID' : project.id }) }}" title="Suivi centres">{{ 'entity.report_visit.field.report.monitoring'|trans }}</a>
+            </li>
+        </ol>
+    </nav>
+
+    <h1>
+        {{ 'entity.report_visit.list' | trans }}
+    </h1>
+
+    {{ list.render|raw }}
+
+{% endblock %}

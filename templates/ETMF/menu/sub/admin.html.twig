@@ -1,0 +1,79 @@
+{# Allow view Studies #}
+{% set allowViewStudies = is_granted('ROLE_STUDY_READ') %}
+
+{# Allow view Sites #}
+{% set allowViewSites = is_granted('ROLE_SITE_READ') %}
+
+{# Allow view Countries #}
+{% set allowViewCountries = is_granted('ROLE_COUNTRY_READ') %}
+
+{# Allow view Zones #}
+{% set allowViewZones = is_granted('ROLE_ZONE_READ') %}
+
+{# Allow view Sections #}
+{% set allowViewSections = is_granted('ROLE_SECTION_READ') %}
+
+{# Allow view Structure #}
+{% set allowViewStructure = is_granted('ROLE_ARTEFACT_READ') %}
+
+{# Allow view Audittrail #}
+{% set allowViewAudittrail = is_granted('ROLE_AUDITTRAIL_READ') %}
+
+{# Allow view Sponsor #}
+{% set allowViewSponsor = is_granted('ROLE_SPONSOR_READ') %}
+
+{# Users #}
+{% if is_granted('USER_LIST') %}
+    <a href="{{ path('admin.user.index') }}"
+            {{ activeMenu == 'user' ? ' class="active"' : '' }}
+    >{{ 'menu.admin.users' | trans }}</a>
+{% endif %}
+
+{# Profils #}
+{% if is_granted('PROFILE_LIST') %}
+    <a href="{{ path('admin.profiles.index') }}"
+            {{ activeMenu == 'profile' ? ' class="active"' : '' }}
+    >{{ 'menu.admin.profiles' | trans }}</a>
+{% endif %}
+
+{# Etudes #}
+{% if allowViewStudies %}
+    <a href="{{ path('admin.studies.index') }}"
+            class="{{ activeMenu is defined and 'studies' == activeMenu ? cssActive : cssInactive  }}"
+    >{{ 'menu.admin.studies' | trans }}</a>
+{% endif %}
+
+{# Sponsor #}
+{% if allowViewSponsor %}
+    <a href="{{ path('admin.sponsor.index') }}"
+       class="{{ activeMenu is defined and 'sponsor' == activeMenu ? cssActive : cssInactive  }}"
+    >{{ 'menu.admin.sponsor' | trans }}</a>
+{% endif %}
+
+{# Centres/Sites #}
+{% if allowViewSites %}
+    <a href="{{ path('admin.sites.index') }}"
+       class="{{ activeMenu is defined and 'sites' == activeMenu ? cssActive : cssInactive  }}"
+    >{{ 'menu.admin.sites' | trans }}</a>
+{% endif %}
+
+{# Pays #}
+{% if allowViewCountries %}
+    <a href="{{ path('admin.countries.index') }}"
+       class="{{ activeMenu is defined and 'countries' == activeMenu ? cssActive : cssInactive  }}"
+    >{{ 'menu.admin.countries' | trans }}</a>
+{% endif %}
+
+{# Structure #}
+{% if allowViewStructure %}
+    <a href="{{ path('admin.artefact.index') }}"
+       class="{{ activeMenu is defined and 'artefact' == activeMenu ? cssActive : cssInactive  }}"
+    >{{ 'menu.admin.structure' | trans }}</a>
+{% endif %}
+
+{# Audit Trail #}
+{% if allowViewAudittrail %}
+    <a href="{{ path('admin.audit_trail.generic.index', {category: 'study'}) }}"
+            {{ activeMenu == 'audit_trail' ? ' class="active"' : '' }}
+    >{{ 'menu.admin.audittrail' | trans }}</a>
+{% endif %}

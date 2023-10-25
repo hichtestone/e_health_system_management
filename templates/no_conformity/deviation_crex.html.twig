@@ -1,0 +1,31 @@
+{% set activeMenu = 'no_conformity' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ path('no_conformity.protocol_deviation_crex') }}" title="{{ 'menu.NonConformity.label' | trans }}">{{ 'menu.NonConformity.label' | trans }}</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <a href="{{ path('no_conformity.protocol_deviation_crex')}}">{{ 'entity.NoConformity.menu.deviation_crex'|trans }}</a>
+            </li>
+        </ol>
+    </nav>
+
+    <h1>{{ 'entity.NoConformity.menu.deviation_crex'|trans }}</h1>
+
+    {% include 'menu/no_conformity.html.twig' with {'activetab': 'deviation_crex'} %}
+
+    {{ list.render|raw }}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('deviation-system') }}
+{% endblock %}
+

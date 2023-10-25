@@ -1,0 +1,19 @@
+{% extends 'layout/security.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-4 col-md-3 col-sm-2"></div>
+        <div class="col-lg-4 col-md-6 col-sm-8">
+            <h2 class="my-5">{{ 'security.login'|trans }}</h2>
+            {{ form_start(form, {'action': path("login.check")}) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="float-right btn btn-primary">
+                {{ 'security.login'|trans }} <i class="fa fa-sign-in"></i>
+            </button>
+            {{ form_end(form) }}
+            <a href="{{ path('forgotten_password') }}">{{ 'security.password.forgotten.label'|trans }}</a>
+        </div>
+    </div>
+{% endblock %}

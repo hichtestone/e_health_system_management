@@ -1,0 +1,195 @@
+{% set activeMenu = 'no_conformity' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('deviation-system') }}
+{% endblock %}
+
+{% block title %}Deviations Systèmes - Revue{% endblock %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ path('no_conformity.protocol_deviation_crex') }}" title="{{ 'menu.NonConformity.label' | trans }}">{{ 'menu.NonConformity.label'| trans }}</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <a href="{{ path('deviation.system.list')}}">{{ 'entity.NoConformity.menu.system'|trans }}</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <a href="{{ path('deviation.system.review.list', {'deviationSystemID': deviationSystem.id })}}">{{ 'deviation.titre.review'|trans }}</a>
+            </li>
+        </ol>
+    </nav>
+
+    {% include 'menu/deviation_system.html.twig' with {'activetab': 'reviewCREX' } %}
+
+    <h1> {{ 'entity.Deviation.DeviationReview.field.number'|trans }} {{ deviationSystemReview.number }}</h1>
+    <h2>
+        {{ 'entity.Deviation.DeviationReview.field.status'|trans }}: {{ constant('App\\ESM\\Entity\\DeviationReview::STATUS')[deviationSystemReview.status]|trans }}
+    </h2>
+
+    <div class="admin-block">
+
+        <div class="sf-read">
+            <h5>{{ 'entity.Deviation.DeviationReview.file.deviation'|trans }}</h5>
+        </div>
+
+        <dl class="row">
+            <div class="col-4">
+                <dt>{{ 'entity.Deviation.DeviationReview.field.review.status'|trans }} :</dt>
+                <dd>{{ constant('App\\ESM\\Entity\\Deviation::STATUS')[deviationSystemReview.deviationSystem.status]  | trans }}</dd>
+            </div>
+            <div class="col-4">
+                <dt>{{ 'entity.Deviation.DeviationReview.field.review.closedAt'|trans }} :</dt>
+                <dd>{{ deviationSystemReview.deviationSystem.closedAt is empty ? '' : deviationSystemReview.deviationSystem.closedAt|date('d/m/Y') }}</dd>
+            </div>
+        </dl>
+
+        <dl class="row">
+            <div class="col-4">
+                <dt>{{ 'entity.Deviation.DeviationReview.field.review.ref'|trans }} :</dt>
+                <dd>{{ deviationSystemReview.deviationSystem.code }}</dd>
+            </div>
+            <div class="col-4">
+                <dt>{{ 'entity.Deviation.DeviationReview.field.review.resume'|trans }} :</dt>
+                <dd>{{ deviationSystemReview.deviationSystem.resume }}</dd>
+            </div>
+            <div class="col-4">
+                <dt>{{ 'entity.Deviation.DeviationReview.field.review.description'|trans }} :</dt>
+                <dd style="overflow-wrap:break-word;">{{ deviationSystemReview.deviationSystem.description}}</dd>
+            </div>
+        </dl>
+
+        <div class="sf-read mt-5">
+            <h5>{{ 'entity.Deviation.field.action'|trans }}</h5>
+        </div>
+
+        <div class="table-responsive">
+            <table class="w-100" id="review-actions">
+                <tr>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.type'|trans }}</th>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.description'|trans }}</th>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.applicationAt'|trans }}</th>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.doneAt'|trans }}</th>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.status'|trans }}</th>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.interlocutor_intervenant'|trans }}</th>
+                </tr>
+
+                {% for deviationSystemAction in deviationSystemActions %}
+                    <tr>
+                        <td>{{ constant('App\\ESM\\Entity\\DeviationAction::TYPE_ACTION')[deviationSystemAction.typeAction]|trans }}</td>
+                        <td>{{ deviationSystemAction.description }}</td>
+                        <td>{{ deviationSystemAction.applicationAt is empty ? '' : deviationSystemAction.applicationAt|date('d/m/Y') }}</td>
+                        <td>{{ deviationSystemAction.doneAt is empty ? '' : deviationSystemAction.doneAt|date('d/m/Y') }}</td>
+                        <td>{{ constant('App\\ESM\\Entity\\DeviationAction::STATUS')[deviationSystemAction.status] | trans }}</td>
+                        <td>{% if deviationSystemAction.intervener %} {{ deviationSystemAction.intervener.displayName }} {% else %} {{ deviationSystemAction.intervener.displayName }} {% endif %}</td>
+                    </tr>
+                {% endfor %}
+
+                {% for reviewAction in reviewActions %}
+                    <tr>
+                        <td>{{ constant('App\\ESM\\Entity\\DeviationReviewAction::TYPE_ACTION')[reviewAction.typeAction]|trans }}</td>
+                        <td>{{ reviewAction.description }}</td>
+                        <td>{{ reviewAction.applicationAt is empty ? '' : reviewAction.applicationAt|date('d/m/Y') }}</td>
+                        <td>{{ reviewAction.doneAt is empty ? '' : reviewAction.doneAt|date('d/m/Y') }}</td>
+                        <td>{{ constant('App\\ESM\\Entity\\DeviationReviewAction::STATUS')[reviewAction.status] | trans }}</td>
+                        <td>{% if reviewAction.intervener %} {{ reviewAction.intervener.displayName }} {% endif %}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+    </div>
+
+    <div class="admin-block">
+
+        <div class="sf-read">
+            <h5>{{ 'entity.Deviation.DeviationReview.file.review'|trans }}</h5>
+        </div>
+
+        <dl class="row">
+            <div class="col-4">
+                <dt>{{ 'entity.Deviation.DeviationReview.field.typeReview'|trans }}:</dt>
+                <dd>{{ constant('App\\ESM\\Entity\\DeviationReview::TYPE')[deviationSystemReview.type]|trans }}</dd>
+            </div>
+        </dl>
+
+        <dl class="row">
+            <div class="col-4">
+                <dt>{{ 'entity.Deviation.DeviationReview.field.readerName'|trans }} :</dt>
+                <dd>{{ deviationSystemReview.reader }}</dd>
+            </div>
+        </dl>
+
+        <dl class="row">
+            <div class="col-4">
+                <dt>{{ 'entity.Deviation.DeviationReview.field.doneAtReview'|trans }} :</dt>
+                <dd>{{ deviationSystemReview.doneAt is empty ? '' : deviationSystemReview.doneAt|date('d/m/Y') }}</dd>
+            </div>
+            <div class="col-4">
+                <dt>{{ 'entity.Deviation.DeviationReview.field.comment'|trans }} :</dt>
+                <dd>{{ deviationSystemReview.comment }}</dd>
+            </div>
+        </dl>
+
+        <div class="sf-read mt-5">
+            <h5>{{ 'entity.Deviation.DeviationReview.file.action'|trans }}
+                {% if is_granted('DEVIATION_REVIEW_ACTION_CREATE', deviationSystemReview) %}
+                    <a href="{{ path('deviation.review.show.action.new', { 'deviationSystemID': deviationSystem.id ,'deviationSystemReviewID' : deviationSystemReview.id }) }}" class="btn btn-primary ml-2"><i class="fa fa-plus"></i></a>
+                {% endif %}
+            </h5>
+        </div>
+
+        <div class="table-responsive">
+            <table class="w-100" id="review-actions">
+                <tr>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.type'|trans }}</th>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.description'|trans }}</th>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.applicationAt'|trans }}</th>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.doneAt'|trans }}</th>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.status'|trans }}</th>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.interlocutor_intervenant'|trans }}</th>
+                    <th>Action</th>
+                </tr>
+
+                {% for action in actions %}
+                    <tr>
+                        <td>{{ constant('App\\ESM\\Entity\\DeviationReviewAction::TYPE_ACTION')[action.typeAction]  | trans }}</td>
+                        <td>{{ action.description }}</td>
+                        <td>{{ action.applicationAt is empty ? '' : action.applicationAt|date('d/m/Y') }}</td>
+                        <td>{{ action.doneAt is empty ? '' : action.doneAt|date('d/m/Y') }}</td>
+                        <td>{{ constant('App\\ESM\\Entity\\DeviationReviewAction::STATUS')[action.status] | trans }}</td>
+                        <td>{% if action.intervener %} {{ action.intervener.fullName }} {% endif %}</td>
+                        <td>
+                            {% if is_granted('DEVIATION_REVIEW_ACTION_EDIT', action.deviationSystemReview) %}
+                                <a href="{{ path('deviation.review.show.action.edit', {'deviationSystemID': deviation.id, 'deviationSystemReviewID' : action.deviationSystemReview.id, 'actionID' : action.id}) }}">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                            {% endif %}
+                            {% if is_granted('DEVIATION_REVIEW_ACTION_DELETE', action.deviationSystemReview) %}
+                                <a class="deleteReviewActionBtn" href="{{ path('deviation.review.show.action.delete', {'deviationSystemID': deviation.id, 'deviationSystemReviewID' : action.deviationSystemReview.id, 'actionID' : action.id }) }}">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+
+    </div>
+
+    <input id="deviation-system-id" type="hidden" value="{{ deviationSystem.id }}" />
+    <input id="deviation-system-review-id" type="hidden" value="{{ deviationSystemReview.id }}" />
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('deviation-system') }}
+{% endblock %}

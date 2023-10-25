@@ -1,0 +1,144 @@
+<div class="admin-block">
+    {{ form_start(form) }}
+
+    {# Nom du doc #}
+    <div class="row mb-2">
+        <div class="col-4">
+            {{ form_label(form.name, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+        </div>
+        <div class="col-6">
+            {{ form_widget(form.name) }}
+        </div>
+    </div>
+
+    {% if form.validStartAt is defined %}
+    {# Date de debut de validite #}
+    <div id="validStartAt" >
+        <div class="row mb-2 required">
+            <div class="col-4">
+                {{ form_label(form.validStartAt, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-6">
+                {{ form_widget(form.validStartAt) }}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+
+
+    {# Type du doc #}
+    <div class="row mb-2">
+        <div class="col-4">
+            {{ form_label(form.TypeDocument, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+        </div>
+        <div class="col-6">
+            {{ form_widget(form.TypeDocument) }}
+        </div>
+    </div>
+
+    {% if form.drugFirstVersion is defined %}
+    {# Version - doc transverse attache a un medicament #}
+    <div class="row mb-2">
+        <div class="col-4">
+            {{ form_label(form.drugFirstVersion, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+        </div>
+        <div class="col-6">
+            {{ form_widget(form.drugFirstVersion) }}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if form.filenameVich is defined %}
+    {# Fichier #}
+    <div class="row mb-2">
+        <div class="col-4">
+            {{ form_label(form.filenameVich, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+        </div>
+        <div class="col-6">
+            {{ form_widget(form.filenameVich) }}
+
+            {% if document is defined and document.filename is not empty %}
+                <p>
+                    <a href="{{ vich_uploader_asset(document, 'filenameVich') }}" data-download title="{{ 'entity.DocumentTransverse.action.download'|trans}}">
+                        <i class="fa fa-download" aria-hidden="true"></i> {{ document.filename }}
+                    </a>
+                </p>
+            {% endif %}
+
+        </div>
+    </div>
+    {% endif %}
+
+    {# Medicaments - depuis generales #}
+    {% if form.drug is defined %}
+        <div class="row mb-2 required">
+            <div class="col-4">
+                {{ form_label(form.drug, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-6">
+                {{ form_widget(form.drug) }}
+            </div>
+        </div>
+    {% endif %}
+
+    {# Etablissements - depuis generales #}
+    {% if form.institution is defined %}
+        <div class="row mb-2 required">
+            <div class="col-4">
+                {{ form_label(form.institution, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-6">
+                {{ form_widget(form.institution) }}
+            </div>
+        </div>
+    {% endif %}
+
+    {# Interlocuteurs - depuis generales #}
+    {% if form.interlocutor is defined %}
+        <div class="row mb-2 required">
+            <div class="col-4">
+                {{ form_label(form.interlocutor, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-6">
+                {{ form_widget(form.interlocutor) }}
+            </div>
+        </div>
+    {% endif %}
+
+    {# Portee - depuis generales #}
+    {% if form.porteeDocument is defined %}
+        <div class="row mb-2 required">
+            <div class="col-4">
+                {{ form_label(form.porteeDocument, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-6">
+                {{ form_widget(form.porteeDocument) }}
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-6">
+            <button type="submit" class="btn btn-primary" type="submit">
+                {% if edit %} {{ ('entity.DocumentTransverse.action.edit')|trans }} {%  else %} {{ 'entity.DocumentTransverse.action.create'|trans }} {% endif %}
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <span style="color: #c30000">* {{ ('general.star.mandatory')|trans }}</span>
+        </div>
+    </div>
+
+
+    {{ form_end(form) }}
+</div>
+
+<div class="hidden data_translate"
+     data-dialog-confirm="{{ 'entity.DocumentTransverse.error.ask_overrite_delete_file' | trans }}"
+     data-dialog-btn-yes="{{ 'word.yes' | trans }}"
+     data-dialog-btn-no="{{ 'word.no' | trans }}"
+></div>

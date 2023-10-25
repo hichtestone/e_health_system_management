@@ -1,0 +1,146 @@
+{% set activeMenu = 'user' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('admin.projects.index') }}" title="Accueil">Accueil</a></li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('admin.user.index') }}" title="{{ 'menu.admin.users' | trans }}">
+                    {{ 'menu.admin.users' | trans }}
+                </a>
+            </li>
+            <li class="breadcrumb-item active">{{ ('form.action.'~action)|trans }}</li>
+        </ol>
+    </nav>
+
+    <h1>{{ ('entity.User.action.'~action)|trans }}</h1>
+
+    <div class="admin-block" id="new-add">
+
+        {{ form_start(form) }}
+
+         <div class="row mb-2">
+            <div class="col-2">
+                {{ form_label(form.civility, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-2">
+                {{ form_widget(form.civility) }}
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-2">
+                {{ form_label(form.firstName, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-3">
+                {{ form_widget(form.firstName) }}
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-2">
+                {{ form_label(form.lastName, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-3">
+                {{ form_widget(form.lastName) }}
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-2">
+                {{ form_label(form.phone, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-3">
+                {{ form_widget(form.phone) }}
+            </div>
+        </div>
+
+
+        <div class="row mb-2">
+            <div class="col-2">
+                {{ form_label(form.email, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-3">
+                {{ form_widget(form.email) }}
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-2">
+                {{ form_label(form.note, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-3">
+                {{ form_widget(form.note) }}
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-2">
+                {{ form_label(form.society, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-3">
+                {{ form_widget(form.society) }}
+            </div>
+        </div>
+        {% if is_granted('ROLE_USER_ACCESS') %}
+            <div class="row mb-2">
+                <div class="col-2">
+                    {{ form_label(form.hasAccessEsm, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-3">
+                    {{ form_widget(form.hasAccessEsm) }}
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-2">
+                    {{ form_label(form.hasAccessEtmf, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-3">
+                    {{ form_widget(form.hasAccessEtmf) }}
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="row mb-2">
+            <div class="col-2">
+                {{ form_label(form.department, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-3">
+                {{ form_widget(form.department) }}
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-2">
+                {{ form_label(form.job, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-3">
+                {{ form_widget(form.job) }}
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-2">
+                {{ form_label(form.profile, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-3">
+                {{ form_widget(form.profile) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <button type="submit" class="btn btn-primary" type="submit">{{ ('entity.User.action.'~action)|trans }}</button>
+                <br>
+                <br>
+                <span style="color: #c30000">* {{ ('general.star.mandatory')|trans }}</span>
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

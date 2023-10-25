@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <title>{{ 'app.maintenance.title'|trans }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="icon" type="image/png" href="/img/app/favicon.png">
+    <style type="text/css">
+        html, body{
+            margin: 0;
+            padding: 0;
+            background-color: #004085;
+        }
+        header{
+            margin-top: 40px;
+            padding-top: 100px;
+            padding-bottom: 20px;
+            background-color: white;
+            color: #004085;
+        }
+        .tar{
+            margin-top: 40px;
+            text-align: right;
+            padding-right: 200px;
+        }
+        img{
+            width: 200px;
+        }
+        h1{
+            text-align: center;
+            font-size: 300%;
+        }
+        p{
+            text-align: center;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body id="top">
+<header>
+    <div id="ccc">
+        <h1>{{ 'app.maintenance.h1'|trans }}</h1>
+        <p>{{ 'app.maintenance.h2'|trans }}</p>
+    </div>
+    <div id="fr" style="display: none;">
+        <h1>Votre site est en maintenance</h1>
+        <p>L'équipe Clinfile travaille actuelement pour le rendre disponible au plus vite.</p>
+    </div>
+    <div class="tar">
+        <a href="https://clinfile.com"><img alt="clinfile" src="/img/clinfile.png"></a>
+    </div>
+</header>
+<div id="footer-phantom"></div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+{% set etmf_pages = ['etmf', 'etmf-artefact', 'etmf-tag', 'etmf-project', 'etmf-mailgroup'] %}
+
+{% if activeMenu in etmf_pages  %}
+
+    <a href="{{ path('app.etmf.project.index') }}" {{ activeMenu == 'etmf-project' ? ' class="active"' : '' }}>{{ 'etmf.menu.projects' | trans }}</a>
+    <a href="{{ path('app.etmf.artefact') }}" {{ activeMenu == 'etmf-artefact' ? ' class="active"' : '' }}>{{ 'etmf.menu.structure' | trans }}</a>
+    <a href="{{ path('app.etmf.tag.list') }}" {{ activeMenu == 'etmf-tag' ? ' class="active"' : '' }}>{{ 'etmf.menu.tag' | trans }}</a>
+    <a href="{{ path('app.etmf.mailgroup.list') }}" {{ activeMenu == 'etmf-mailgroup' ? ' class="active"' : '' }}>{{ 'etmf.menu.mailgroup' | trans }}</a>
+
+    <a href="{{ path('home') }}" {{ activeMenu == 'home' ? ' class="active"' : '' }} style="padding-left: 80px">
+        <img alt="ESM" height="30" width="60" src="{{  asset('build/images/esm-clinfile.svg') }}" >
+    </a>
+
+{% else %}
+
+    {# Accueil  #}
+    <a href="{{ path('home') }}" {{ activeMenu == 'home' ? ' class="active"' : '' }}>{{ 'menu.admin.home' | trans }}</a>
+
+    {# Admin #}
+    {% if is_granted('MENU_ADMIN') %}
+        <a href="{{ path('admin.index') }}">
+            {{ 'menu.admin.label' | trans }}
+        </a>
+    {% endif %}
+
+    {# Document transverse #}
+    {% if is_granted('ROLE_DOCUMENTTRANSVERSE_READ') %}
+        <a href="{{ path('document_transverse.index', {'filter[option]': 'myproject'}) }}" {{ activeMenu == 'documentTransverse' ? ' class="active"' : '' }}>
+            {{ 'menu.DocumentTransverse.label' | trans }}
+        </a>
+    {% endif %}
+
+    {# deviation system #}
+    {% if is_granted('ROLE_NO_CONFORMITY_SYSTEM_READ') %}
+        <a href="{{ path('deviation.system.list') }}" {{ activeMenu == 'no_conformity' ? ' class="active"' : '' }}>
+            {{ 'menu.NonConformity.label' | trans }}
+        </a>
+    {% endif %}
+
+    {# ETMF #}
+    {% if is_granted('ROLE_ETMF_READ') or is_granted('ROLE_ETMF_WRITE') or app.user.profile.type == 'ETMF'  %}
+        <a href="{{ path('app.etmf.home') }}" {{ activeMenu == 'etmf' ? ' class="active"' : '' }} style="padding-left: 80px">
+            <img alt="ETMF" height="30" width="70" src="{{  asset('build/images/etmf-clinfile.svg') }}" >
+        </a>
+    {% endif %}
+
+{% endif %}
+
+
+

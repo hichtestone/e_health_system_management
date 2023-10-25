@@ -1,0 +1,17 @@
+{% block title %}
+    <title>Associer </title>
+{% endblock %}
+
+{% block content %}
+
+    <div class="admin-block">
+        {{ form_start(form, {'action': url}) }}
+        {{ form_row(form.id) }}
+        <button type="reset" class="btn btn-danger" disabled onclick="history.go(0)" value="Annuler"
+                style="margin-right: 3em">Annuler
+        </button>
+        <button class="btn btn-primary" type="submit" disabled>Ajouter</button>
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

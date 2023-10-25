@@ -1,0 +1,40 @@
+{% block content %}
+    <div class="admin-block">
+        <div>
+            <p>
+                <span class="text-primary">Êtes-vous sûr de vouloir clôturer les déviations NC Système suivantes ?</span>
+            </p>
+
+            <div>
+                {% if deviationSystemsNotClosed is not empty %}
+                    {% for deviationSystemNotClosed in deviationSystemsNotClosed %}
+                        <li class="text-primary">{{ deviationSystemNotClosed.code }}</li>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <br>
+
+            <div>
+                {% if deviationSystemsDraft is not empty %}
+                    <p class="text-danger">Attention les déviations NC Système suivantes sont en mode brouillon</p>
+                    {% for deviationSystemDraft in deviationSystemsDraft %}
+                        <li>{{ deviationSystemDraft.code }}</li>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <br>
+
+            <div>
+                {% if deviationSystemsAlreadyClosed is not empty %}
+                    <p class="text-danger">Attention les déviations NC Système suivantes sont déjà clôturées</p>
+                    {% for deviationSystemAlreadyClosed in deviationSystemsAlreadyClosed %}
+                        <li>{{ deviationSystemAlreadyClosed.code }}</li>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

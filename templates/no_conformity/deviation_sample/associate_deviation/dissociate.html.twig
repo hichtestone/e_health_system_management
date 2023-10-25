@@ -1,0 +1,14 @@
+{% block content %}
+    <h1>Dissocier une déviation échantillon biologique</h1>
+
+    <div class="admin-block">
+        <p>Êtes-vous sûr de vouloir dissocier la déviation protocolaire ? <br>
+            Elle n'apparaitra plus dans le tableau des déviation protocolaires associées</p>
+        <a href type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</a>
+        <a class="btn btn-primary" href="{{ path('no_conformity.deviation.sample.declaration.deviation.delete.btn', { 'deviationSampleID' : deviationSampleID , 'deviationID': deviationID}) }}">Valider</a>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('deviation-sample') }}
+{% endblock %}

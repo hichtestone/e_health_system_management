@@ -1,0 +1,25 @@
+{% block content %}
+
+    <h1>{{ ('entity.DocumentTracking.action.'~action)|trans }}</h1>
+
+<div class="admin-block" id="new-doc">
+    {{ form_start(form, {'action': url}) }}
+
+    {{ form_row(form.documentTracking) }}
+
+    <div id="sentAt">
+        {{ form_row(form.sentAt) }}
+    </div>
+
+    <div id="receivedAt">
+        {{ form_row(form.receivedAt) }}
+    </div>
+
+    <button type="submit" class="btn btn-primary" type="submit">{{ ('form.action.'~action)|trans }}</button>
+    {{ form_end(form) }}
+
+    {% if formHelperUrl is defined %}
+        <div id="formHelperUrl" class="d-none">{{ formHelperUrl }}</div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,16 @@
+<div class="jstree-wrap">
+    <ul>
+        {% for choice in choices %}
+            <li data-jstree="{{ getJsTreeDataJson(choice, values) }}">
+                {{ ('role.'~choice.code)|trans }}
+                <ul>
+                    {% for child in choice.children %}
+                        <li data-jstree="{{ getJsTreeDataJson(child, values) }}">
+                            {{ ('role.'~child.code)|trans }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

@@ -1,0 +1,22 @@
+{% set activetab = activetab is defined ? activetab : '' %}
+
+<ul class="nav nav-tabs">
+    {% if is_granted('ROLE_DATE_READ') %}
+    <li class="nav-item">
+        <a class="nav-link {{ 'date_chiffres' == activetab ? ' active' : ''}} " href="{{ path('project.list.dates', { 'id' : project.id }) }}">{{ 'menu.reglementaire.dates_chiffres' | trans }}</a>
+    </li>
+    {% endif %}
+
+    {% if is_granted('ROLE_SUBMISSION_READ') %}
+    <li class="nav-item">
+        <a class="nav-link {{ 'submission' == activetab ? ' active' : ''}}" href="{{ path('project.list.submissions', { 'id' : project.id }) }}">{{ 'menu.reglementaire.submission' | trans }}</a>
+    </li>
+    {% endif %}
+
+    {% if is_granted('ROLE_PROJECT_RULE_READ') %}
+    <li class="nav-item">
+        <a class="nav-link {{ 'rgpd' == activetab ? ' active' : ''}}" href="{{ path('project.list.rule', { 'id' : project.id }) }}">{{ 'menu.reglementaire.rgpd' | trans }}</a>
+    </li>
+    {% endif %}
+
+</ul>

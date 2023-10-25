@@ -1,0 +1,128 @@
+{# set current menu #}
+{% set activeMenu = 'project' %}
+{% set subMenu = 'project' %}
+{% set activeMenu2 = 'protocol-deviation' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block title %} Review - Creation {% endblock %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="Accueil">{{ 'menu.project.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.show', { 'id' : project.id }) }}">{{ 'menu.project.manage'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('deviation.list', { 'projectID' : project.id }) }}">{{ 'menu.project.protocol_deviation.protocol_deviation'|trans }}</a></li>
+            <li class="breadcrumb-item active"><a href="{{ path('deviation.review', { 'projectID' : project.id, 'deviationID': deviation.id }) }}">{{ 'deviation.titre.review'|trans|capitalize }}</a></li>
+            <li class="breadcrumb-item active">{% if action == 'edit' %} {{ 'entity.Deviation.DeviationReview.action.modify'|trans }} {% else %} {{ 'entity.Deviation.DeviationReview.action.create'|trans }} {% endif %}</li>
+        </ol>
+    </nav>
+
+    {% include 'menu/deviation.html.twig' with {'activetab': 'review'} %}
+
+    <h1>{% if action == 'edit' %} {{ 'entity.Deviation.DeviationReview.action.modify'|trans }} {% else %} {{ 'entity.Deviation.DeviationReview.action.create'|trans }} {% endif %}</h1>
+
+
+    <div class="admin-block">
+        <div class="sf-read">
+            <h5>{{ 'entity.Deviation.DeviationReview.file.deviation'|trans }}</h5>
+        </div>
+
+        <dl class="row">
+            <div class="col-4">
+                <dt>{{ 'menu.project.protocol_deviation.review.status'|trans }} :</dt>
+                <dd>{{ constant('STATUS', deviation)[deviation.status]  | trans }}</dd>
+            </div>
+            <div class="col-4">
+                <dt>{{ 'menu.project.protocol_deviation.review.closedAt'|trans }} :</dt>
+                <dd>{{ deviation.closedAt is empty ? '' : deviation.closedAt|date('d/m/Y') }}</dd>
+            </div>
+        </dl>
+
+        <dl class="row">
+            <div class="col-4">
+                <dt>{{ 'menu.project.protocol_deviation.review.project'|trans }} :</dt>
+                <dd>{{ project.name }}</dd>
+            </div>
+        </dl>
+
+        <dl class="row">
+            <div class="col-4">
+                <dt>{{ 'menu.project.protocol_deviation.review.center'|trans }} :</dt>
+                <dd>{% if deviation.center %} {{ deviation.center.number }} {% endif %}</dd>
+            </div>
+            <div class="col-4">
+                <dt>{{ 'menu.project.protocol_deviation.review.institution'|trans }} :</dt>
+                {% if deviation.center %}
+                    {% for institution in deviation.center.institutions %}
+                        <dd>{{ institution.name }}</dd>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="col-4">
+                <dt>{{ 'menu.project.protocol_deviation.review.patient'|trans }} :</dt>
+                <dd>{% if deviation.patient %} {{ deviation.patient.number }} {% endif %}</dd>
+            </div>
+        </dl>
+
+        <dl class="row">
+            <div class="col-4">
+                <dt>{{ 'menu.project.protocol_deviation.review.ref'|trans }} :</dt>
+                <dd>{{ deviation.code }}</dd>
+            </div>
+            <div class="col-4">
+                <dt>{{ 'menu.project.protocol_deviation.review.resume'|trans }} :</dt>
+                <dd>{{ deviation.resume }}</dd>
+            </div>
+            <div class="col-4">
+                <dt>{{ 'menu.project.protocol_deviation.review.description'|trans }} :</dt>
+                <dd style="overflow-wrap:break-word;">{{ deviation.description}}</dd>
+            </div>
+        </dl>
+    </div>
+
+    <div class="admin-block">
+        {{ form_start(form) }}
+        <div class="row mb-3">
+            <div class="col-4">
+                {{ form_label(form.type, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-4">
+                {{ form_widget(form.type) }}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-4">
+                {{ form_label(form.reader, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-4">
+                {{ form_widget(form.reader) }}
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-4">
+                {{ form_label(form.doneAt, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-4">
+                {{ form_widget(form.doneAt) }}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-4">
+                {{ form_label(form.comment, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-4">
+                {{ form_widget(form.comment) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <button type="submit" class="btn btn-primary">{{ ('entity.Deviation.DeviationReview.action.'~action)|trans }}</button>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

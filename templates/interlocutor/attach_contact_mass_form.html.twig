@@ -1,0 +1,9 @@
+{% block content %}
+
+    <div class="admin-block" id="new-add-meeting">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button type="submit" class="btn btn-primary" type="submit">{{ ('form.select')|trans }}</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

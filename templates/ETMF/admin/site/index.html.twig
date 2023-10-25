@@ -1,0 +1,20 @@
+{% set activeMenu = 'sites' %}
+
+{% extends 'ETMF/layout/app.html.twig' %}
+
+{# Allow creation   #}
+{% set allowCreate = is_granted('ROLE_SITE_WRITE') %}
+
+{% block body %}
+    <h1>{{ 'entity.Site.list.header'|trans }}
+        {% if allowCreate %}
+            <a class="btn btn-primary" href="{{ path('admin.sites.new') }}" ><i class="fa fa-plus"></i></a>
+        {% endif %}
+        <a style =" margin-left:70%;margin-top:100px;" class="btn btn-primary" href="{{ path('admin.sites.export') }}" >Exporter  <i class="fa fa-download"></i></a>
+    </h1>
+
+    {% if list is defined %}
+        {{ list.render|raw }}
+    {% endif %}
+
+{% endblock %}

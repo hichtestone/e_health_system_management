@@ -1,0 +1,11 @@
+require('./list')
+require('./declaration');
+require('./action-delete');
+require('./correction');
+require('./review-draft-delete');
+require('./review-close');
+require('./action-create');
+require('./review-action-create');
+require('./review-action-delete');
+require('./sample')
+require('./associate-deviation-sample/disassociate')

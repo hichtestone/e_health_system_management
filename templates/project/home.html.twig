@@ -1,0 +1,31 @@
+{% set activeMenu = 'project' %}
+{% set subMenu = 'project' %}
+{% set activeMenu2 = 'home' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a></li>
+            <li class="breadcrumb-item active">Tableau de bord</li>
+        </ol>
+    </nav>
+    <h1>Tableau de bord</h1>
+
+    <h2 class="danger">Page en construction...</h2>
+
+    <div class="row">
+        {% if project.crfUrl is not null %}
+            <div class="col">
+                eCRF: <a href="{{ project.crfUrl }}">{{ project.crfUrl }}</a>
+            </div>
+        {% endif %}
+        {% if project.etmfUrl is not null and app.user.hasAccessEtmf %}
+            <div class="col">
+                eTMF: <a href="{{ project.etmfUrl }}">{{ project.etmfUrl }}</a>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

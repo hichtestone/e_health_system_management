@@ -1,0 +1,32 @@
+{% set activeMenu = 'settings' %}
+{% set subMenu = 'settings' %}
+{% set activeMenu2 = 'report-config' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="Accueil">Accueil</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.home.index', { 'id' : project.id }) }}" title="{{ project.acronyme }}">{{ project.acronyme }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.settings.report.config.version.index', { 'projectID' : project.id }) }}" title="{{ 'entity.report_config.title' | trans }}">{{ 'entity.report_config.title'|trans }}</a></li>
+            <li class="breadcrumb-item active"> Fiche Configuration modèle : {{ reportConfigVersion.modelName }}</li>
+        </ol>
+    </nav>
+
+    <h2>
+        Configuration du modèle {{ reportConfigVersion.modelName }} <br>
+        {% if is_granted('REPORT_MODEL_SHOW', reportConfigVersion.config.modelVersion.reportModel) %}
+            <a class="btn btn-primary" href="{{ path('admin.report.model.version.show', { 'reportModelVersionID' : reportConfigVersion.config.modelVersion.id }) }}">Voir la version du modèle</a>
+        {% endif %}
+    </h2>
+
+    <!-- Vue.JS ReportConfigBlock compoment -->
+    {% if is_granted('REPORT_CONFIG_EDIT', reportConfigVersion) and is_granted('PROJECT_WRITE', project) %}
+        <report-config-block :report-config-version-id="{{ reportConfigVersion.id }}" :project-id="{{ project.id }}" id="ReportConfigBlock" :can-edit="true"/>
+    {% else %}
+        <report-config-block :report-config-version-id="{{ reportConfigVersion.id }}" :project-id="{{ project.id }}" id="ReportConfigBlock" :can-edit="false"/>
+    {% endif %}
+
+{% endblock %}

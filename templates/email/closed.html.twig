@@ -1,0 +1,12 @@
+{% extends 'email/base.html.twig' %}
+
+{% set project_show = project is defined ? path('admin.project.show', {'id': project.id}) : '' %}
+
+{% block body %}
+    <p>
+        Votre demande de clôture du projet <b>{{ project.name }}</b> a été acceptée.
+        <br>
+        <br>
+        Le projet a été archivé.
+    </p>
+{% endblock %}

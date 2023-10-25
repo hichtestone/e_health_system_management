@@ -1,0 +1,57 @@
+{% set activeMenu = 'no_conformity' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('deviation-system') }}
+{% endblock %}
+
+{% block title %}Deviations Systèmes - Revues{% endblock %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ path('no_conformity.protocol_deviation_crex') }}" title="{{ 'menu.NonConformity.label' | trans }}">{{ 'menu.NonConformity.label' | trans }}</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <a href="{{ path('deviation.system.list')}}">{{ 'entity.NoConformity.menu.system'|trans }}</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <a href="{{ path('deviation.system.review.list', {'deviationSystemID': deviationSystem.id })}}">{{ 'deviation.titre.review'|trans }}</a>
+            </li>
+        </ol>
+    </nav>
+
+    {% include 'menu/deviation_system.html.twig' with {'activetab': 'reviewCREX' } %}
+
+    <h1>{{ 'entity.Deviation.DeviationReview.action.title'|trans }}</h1>
+
+    <div class="row">
+        <div class="offset-5 col-lg-2">
+            {% if is_granted('DEVIATION_SYSTEM_REVIEW_CREATE', deviationSystem) %}
+                {% if constant('App\\ESM\\Entity\\Deviation::STATUS_DRAFT') == deviationSystem.status %}
+                    <i class="btn btn-secondary disabled" href data-placement="right" data-toggle="tooltip" title="{{ 'entity.Deviation.DeviationReview.action.deviationDraftCrex'|trans }}">{{ 'entity.Deviation.DeviationReview.action.submitCrex'|trans }}</i>
+                {% endif %}
+                {% if constant('App\\ESM\\Entity\\Deviation::STATUS_IN_PROGRESS') == deviationSystem.status %}
+                    <a class="btn btn-primary" href="{{ path('deviation.system.review.send.crex', { 'deviationSystemID': deviationSystem.id }) }}">{{ 'entity.Deviation.DeviationReview.action.submitCrex'|trans }}</a>
+                {% endif %}
+                {% if constant('App\\ESM\\Entity\\Deviation::STATUS_DONE') == deviationSystem.status %}
+                    <i class="btn btn-secondary disabled" href data-placement="right" data-toggle="tooltip" title="{{ 'entity.Deviation.DeviationReview.action.deviationClosedCrex'|trans }}">{{ 'entity.Deviation.DeviationReview.action.create'|trans }}</i>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+
+    <h3>{{ 'entity.Deviation.DeviationReview.action.title_little'|trans }}</h3>
+
+    {{ listReviews.render|raw }}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('deviation-system') }}
+{% endblock %}

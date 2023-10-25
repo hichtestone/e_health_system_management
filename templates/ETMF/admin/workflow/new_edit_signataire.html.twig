@@ -1,0 +1,17 @@
+{% set activeMenu = 'artefact' %}
+
+{% extends 'ETMF/layout/app.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <div class="admin-block ">
+            {% if not form is null %}
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <button type="submit" class="btn btn-primary" type="submit">{{ ('form.btn.save')|trans }}</button>
+                {{ form_end(form) }}
+            {% endif %}
+    </div>
+{% endblock %}

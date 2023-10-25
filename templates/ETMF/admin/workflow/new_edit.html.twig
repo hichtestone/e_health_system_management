@@ -1,0 +1,31 @@
+{% set activeMenu = 'artefact' %}
+
+{% extends 'ETMF/layout/app.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <div class="admin-block ">
+            {% if not form is null %}
+                {{ form_start(form) }}
+                {{ form_row(form.name) }}
+                {{ form_row(form.responsable) }}
+                {{ form_row(form.dayCountImplementation) }}
+
+
+                {%  if row.id is not null %}
+                    <div class="form-group ">
+                        <label >{{ 'entity.Artefact.stepCountValidation' | trans }}: </label>
+                        {{ row.stepCountValidation }}
+                    </div>
+
+                {% else %}
+                    {{ form_row(form.stepCountValidation) }}
+                {% endif %}
+
+                <button type="submit" class="btn btn-primary" type="submit">{{ ('form.btn.save')|trans }}</button>
+                {{ form_end(form) }}
+            {% endif %}
+    </div>
+{% endblock %}

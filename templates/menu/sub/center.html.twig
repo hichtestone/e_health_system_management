@@ -1,0 +1,40 @@
+{% if is_granted('ROLE_CENTER_READ') %}
+{# Séléction #}
+<li class="nav-item">
+    <a class="nav-link{{ activeMenu2 == 'selection' ? ' active' : ''}}" href="{{ path('project.selection.index', {'id' : project.id }) }}">{{ 'menu.project.center.creation'|trans }}</a>
+</li>
+
+{# Suivi Centres #}
+    <li class="nav-item">
+        <a class="nav-link{{ activeMenu2 == 'center' ? ' active' : ''}}" href="{{ path('project.center.index', {'id' : project.id }) }}">{{ 'menu.project.center.tracking'|trans}}</a>
+    </li>
+{% endif %}
+
+{% if is_granted('PROJECTINTERLOCUTOR_LIST') %}
+    {# Interlocuteurs centre #}
+    <li class="nav-item">
+        <a class="nav-link{{ activeMenu2 == 'interlocutor' ? ' active' : ''}}" href="{{ path('project.list.interlocutors', {'id' : project.id }) }}">{{ 'menu.project.center.interlocutor'|trans }}</a>
+    </li>
+{% endif %}
+
+{% if is_granted('DOCUMENTTRACKING_LIST') %}
+    {# Documentation #}
+    <li class="nav-item">
+        <a class="nav-link{{ activeMenu2 == 'documentTracking' ? ' active' : ''}}" href="{{ path('project.list.documentTracking', {'id' : project.id }) }}">{{ 'menu.project.center.doc'|trans }}</a>
+    </li>
+{% endif %}
+
+{% if is_granted('PATIENTTRACKING_LIST') %}
+    {# Suivi patient #}
+    <li class="nav-item">
+        <a class="nav-link{{ activeMenu2 == 'patient' ? ' active' : ''}}" href="{{ path('project.patientTracking.patient.index', {'id' : project.id }) }}">{{ 'menu.project.center.patient'|trans }}</a>
+    </li>
+{% endif %}
+
+{% if is_granted('REPORT_VISIT_CENTER_LIST') %}
+    {# Rapport Monitoring #}
+    <li class="nav-item">
+        <a class="nav-link{{ activeMenu2 == 'reportVisit' ? ' active' : ''}}" href="{{ path('project.center.report.visit.index', {'projectID' : project.id }) }}">{{ 'menu.project.center.report'|trans | trans }}</a>
+    </li>
+{% endif %}
+

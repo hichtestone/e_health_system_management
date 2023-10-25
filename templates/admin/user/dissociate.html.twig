@@ -1,0 +1,9 @@
+{% block content %}
+    <h1>Désactiver</h1>
+
+    <div class="admin-block">
+        <p>Êtes-vous sûr de vouloir désactiver le projet ?</p>
+        <a href type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</a>
+        <a class="btn btn-primary" href="{{ path('admin.user.project.dissociate.btn', { 'id' : id , 'idProject': idProject}) }}">Valider</a>
+    </div>
+{% endblock %}

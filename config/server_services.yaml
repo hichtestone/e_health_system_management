@@ -1,0 +1,11 @@
+parameters:
+    database.host: localhost
+    database.password: secret
+    database.port: 3307
+    database.user: clinfile
+
+    email.url: smtp://mailhog_2:1025
+
+    redis.host: redis_2
+    redis.port: 6379
+    redis.auth: null

@@ -1,0 +1,14 @@
+{# set current menu #}
+{% set activeMenu = 'no_conformity' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <h1>{{ 'entity.NoConformity.menu.system'|trans }}</h1>
+
+    {% include 'menu/no_conformity.html.twig' with {'activetab': 'system'} %}
+
+{% endblock %}

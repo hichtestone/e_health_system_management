@@ -1,0 +1,62 @@
+<div class="admin-block">
+    {{ form_start(form) }}
+    <div class="row mb-2">
+        <div class="col-4">
+            {{ form_label(form.version, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+        </div>
+        <div class="col-6">
+            {{ form_widget(form.version) }}
+        </div>
+    </div>
+
+    <div id="validStartAt">
+        <div class="row mt-4 required">
+            <div class="col-4">
+                {{ form_label(form.validStartAt, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-6">
+                {{ form_widget(form.validStartAt) }}
+            </div>
+        </div>
+    </div>
+
+
+    <div>
+        <div class="row mt-5 required">
+            <div class="col-4">
+                {{ form_label(form.filename1Vich, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-6">
+                {{ form_widget(form.filename1Vich) }}
+
+
+                {% if version is defined and version.filename1 is not empty %}
+                    <a href="{{ vich_uploader_asset(version, 'filename1Vich') }}" data-download title="{{ 'entity.DocumentTransverse.action.download'|trans}}">
+                        <i class="fa fa-download" aria-hidden="true"></i> {{ version.filename1 }}
+                    </a>
+                {% endif %}
+
+            </div>
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <button type="submit"  class="btn btn-primary" type="submit" >
+                {{ 'entity.VersionDocumentTransverse.action.save'|trans }}
+            </button>
+            <br>
+            <br>
+            <span style="color: #c30000">* {{ ('general.star.mandatory')|trans }}</span>
+        </div>
+    </div>
+
+    {{ form_end(form) }}
+</div>
+
+<div class="hidden data_translate"
+     data-dialog-confirm="{{ 'entity.DocumentTransverse.error.ask_overrite_delete_file' | trans }}"
+     data-dialog-btn-yes="{{ 'word.yes' | trans }}"
+     data-dialog-btn-no="{{ 'word.no' | trans }}"
+></div>

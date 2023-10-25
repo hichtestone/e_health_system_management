@@ -1,0 +1,72 @@
+{% set activeMenu = 'center' %}
+{% set subMenu = 'center' %}
+{% set activeMenu2 = 'patient' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a></li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('project.home.index', { 'id' : project.id }) }}" title="{{ project.acronyme }}">{{ project.acronyme }}</a>
+            </li>
+            <li class="breadcrumb-item active">{{ 'entity.PatientTracking.action.list.patient'|trans }}</a></li>
+        </ol>
+    </nav>
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" href="{{ path('project.patientTracking.patient.index', { 'id' : project.id }) }}">{{ 'entity.PatientTracking.sub_menu.list_patient'|trans }}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('project.patientTracking.visit.index', { 'id' : project.id }) }}">{{ 'entity.PatientTracking.sub_menu.list_statuts'|trans }}</a>
+        </li>
+    </ul>
+
+    <h1>{{ 'entity.PatientTracking.action.list.patient'|trans }}</h1>
+
+    {% set isGrantedRead    = is_granted('ROLE_PATIENTTRACKING_READ') %}
+    {% set isGrantedWrite   = is_granted('PATIENTTRACKING_CREATE') %}
+    {% set isGrantedArchive = is_granted('ROLE_PATIENT_ARCHIVE') %}
+    {% set isGrantedProjectWrite = is_granted('PROJECT_WRITE', project) %}
+
+    {# Transfer role #}
+    <div class="d-none"
+         data-isGrantedRead= "{{ isGrantedRead }}"
+         data-isGrantedWrite= "{{ isGrantedWrite }}"
+         data-isGrantedArchive= "{{ isGrantedArchive }}"
+         data-isGrantedProjectWrite= "{{ isGrantedProjectWrite }}"
+         data-ecrf-type="{{ project.crfType }}"
+    ></div>
+
+    {# Translate text js #}
+    <div class="d-none data_translate"
+         data-entity-PatientTracking-action-new             = "{{ 'entity.PatientTracking.action.new' | trans }}"
+         data-entity-PatientTracking-action-export          = "{{ 'entity.PatientTracking.action.export' | trans }}"
+         data-entity-PatientTracking-action-reset           = "{{ 'entity.PatientTracking.action.reset' | trans }}"
+         data-entity-PatientTracking-action-modal-add       = "{{ 'entity.PatientTracking.action.modal.add' | trans }}"
+         data-entity-PatientTracking-action-modal-cancel    = "{{ 'entity.PatientTracking.action.modal.cancel' | trans }}"
+         data-entity-PatientTracking-action-modal-edit      = "{{ 'entity.PatientTracking.action.modal.edit' | trans }}"
+         data-entity-PatientTracking-action-modal-new       = "{{ 'entity.PatientTracking.action.modal.new' | trans }}"
+         data-entity-PatientTracking-field-patient          = "{{ 'entity.PatientTracking.field.patient_number' | trans }}"
+         data-entity-PatientTracking-field-center           = "{{ 'entity.PatientTracking.field.center_number' | trans }}"
+         data-entity-PatientTracking-field-consent          = "{{ 'entity.PatientTracking.field.consentAt' | trans }}"
+         data-entity-PatientTracking-field-inclusion        = "{{ 'entity.PatientTracking.field.inclusionAt' | trans }}"
+         data-entity-PhaseSettingStatus-planned             = "{{ 'entity.PhaseSettingStatus.planned' | trans }}"
+         data-entity-PhaseSettingStatus-screened            = "{{ 'entity.PhaseSettingStatus.screened' | trans }}"
+         data-entity-PhaseSettingStatus-screeningFailure    = "{{ 'entity.PhaseSettingStatus.screeningFailure' | trans }}"
+         data-entity-PhaseSettingStatus-signedICF           = "{{ 'entity.PhaseSettingStatus.signedICF' | trans }}"
+         data-entity-PhaseSettingStatus-ongoing             = "{{ 'entity.PhaseSettingStatus.ongoing' | trans }}"
+         data-entity-PhaseSettingStatus-followUp            = "{{ 'entity.PhaseSettingStatus.followUp' | trans }}"
+         data-entity-PhaseSettingStatus-completed           = "{{ 'entity.PhaseSettingStatus.completed' | trans }}"
+         data-entity-PhaseSettingStatus-withdrawals         = "{{ 'entity.PhaseSettingStatus.withdrawals' | trans }}"
+         data-entity-PhaseSettingStatus-lostFollowUp        = "{{ 'entity.PhaseSettingStatus.lostFollowUp' | trans }}"
+         data-entity-PhaseSettingStatus-eos                 = "{{ 'entity.PhaseSettingStatus.eos' | trans }}"
+         general-start-mandatory                            = "{{ 'general.star.mandatory.' | trans }}"
+    ></div>
+
+    <list-patient-table :project-id="{{ project.id }}" id="ListPatientTable" />
+
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'email/base.html.twig' %}
+
+{% set project_show = project is defined ? path('admin.project.show', {'id': project.id}) : '' %}
+
+{% block body %}
+    Le projet: {{ project.name }} vient d’être créé.
+
+    Vous pouvez consulter la fiche du projet en cliquant sur le lien suivant :
+
+    {{ app.request.schemeAndHttpHost  ~ project_show }}
+{% endblock %}

@@ -1,0 +1,204 @@
+{% set activeMenu = 'report_model' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ path('projects.index') }}" title="{{ 'menu.admin.home'|trans }}">{{ 'menu.admin.home'|trans }}</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('admin.report.model.index') }}" title="{{ 'entity.report_model.title' | trans }}">
+                    {{ 'entity.report_model.title' | trans }}
+                </a>
+            </li>
+            <li class="breadcrumb-item active">{{ 'general.file' | trans }} - {{ reportModelVersion.reportModel.name|capitalize }} (Version : {{ reportModelVersion.numberVersion }})</li>
+        </ol>
+    </nav>
+
+    <h1> Modèle {{ reportModelVersion.reportModel.name|capitalize }} (Version : {{ reportModelVersion.numberVersion }})</h1>
+
+    <div class="admin-block">
+
+        <div class="sf-read">
+
+            <dl class="row">
+                <div class="col-12">
+                    <h5>
+                        {{ 'entity.report_model.section.model'|trans|capitalize }}
+                    </h5>
+                    {% if is_granted('REPORT_MODEL_EDIT', reportModelVersion.reportModel) %}
+                        {% if canEdit %}
+                            <a class="btn btn-primary float-right" href="{{ path('admin.report.model.edit', {'reportModelID': reportModelVersion.reportModel.id, 'reportModelVersionID': reportModelVersion.id }) }}">
+                                {{ 'entity.report_model.action.edit'|trans }}
+                            </a>
+                        {% else %}
+                            <i class="btn btn-secondary disabled float-right" href data-placement="right" data-toggle="tooltip" title="{{ 'entity.report_model.action.edit_message'|trans }}">{{ 'entity.report_model.action.edit'|trans }}</i>
+                        {% endif %}
+                    {% else %}
+                        <i class="btn btn-secondary disabled float-right" href data-placement="right" data-toggle="tooltip" title="{{ 'general.impossible'|trans }}">{{ 'entity.report_model.action.edit'|trans }}</i>
+                    {% endif %}
+                </div>
+            </dl>
+
+            <dl class="row">
+                <div class="col-4">
+                    <dt>{{ 'entity.report_model.field.report_type.name'|trans }} :</dt> <dd>{{ constant('REPORT_TYPE', reportModelVersion.reportModel)[reportModelVersion.reportModel.reportType] | trans }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.report_model.field.visit_type.name'|trans }} :</dt> <dd>{{ constant('VISIT_TYPE', reportModelVersion.reportModel)[reportModelVersion.reportModel.visitType] | trans }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.report_model.field.name'|trans }} :</dt> <dd>{{ reportModelVersion.reportModel.name }}</dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+
+    {# Translate text js #}
+    <div class="d-none data_translate"
+            {# Translate text #}
+         data-entity-reportBlock-action-position = "{{ 'entity.report_block.action.position' | trans }}"
+         data-entity-reportBlock-action-valid = "{{ 'form.action.valid' | trans }}"
+         data-entity-reportBlock-action-cancel = "{{ 'form.action.cancel' | trans }}"
+    ></div>
+
+
+
+    <div class="admin-block">
+        <div class="sf-read">
+            <h5>
+                {{ 'entity.report_model.section.bloc'|trans|capitalize }}
+            </h5>
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-3">
+                    {% if is_granted('REPORT_BLOCK_CREATE') %}
+                        {% if  constant('STATUS_CREATE', reportModelVersion) == reportModelVersion.status %}
+                            <a class="btn btn-primary" href="{{ path('admin.report.model.version.block.new', { 'reportModelVersionID': reportModelVersion.id }) }}">{{ 'entity.report_block.action.create'|trans }}</a>
+                        {% elseif constant('STATUS_PUBLISH', reportModelVersion) == reportModelVersion.status %}
+                            <i class="btn btn-secondary disabled float-right" href data-placement="right" data-toggle="tooltip" title="{{ 'entity.report_block.action.new_message_version_published'|trans }}">{{ 'entity.report_block.action.create'|trans }}</i>
+                        {% else %}
+                            <i class="btn btn-secondary disabled float-right" href data-placement="right" data-toggle="tooltip" title="{{ 'entity.report_block.action.new_message_version_obsolete'|trans }}">{{ 'entity.report_block.action.create'|trans }}</i>
+                        {% endif %}
+                    {% else %}
+                        <i class="btn btn-secondary disabled float-right" href data-placement="right" data-toggle="tooltip" title="{{ 'general.impossible'|trans }}">{{ 'entity.report_block.action.create'|trans }}</i>
+                    {% endif %}
+                </div>
+                <div class="col-3">
+                    {% if is_granted('REPORT_BLOCK_ORDER') %}
+                        {% if  constant('STATUS_CREATE', reportModelVersion) == reportModelVersion.status %}
+                            <order-report-block :report-model-version-id="{{ reportModelVersion.id }}" id="OrderReportBlock"/>
+                        {% elseif constant('STATUS_PUBLISH', reportModelVersion) == reportModelVersion.status %}
+                            <i class="btn btn-secondary disabled float-right" href data-placement="right" data-toggle="tooltip" title="{{ 'entity.report_block.action.order_message_version_published'|trans }}">{{ 'entity.report_block.action.position'|trans }}</i>
+                        {% else %}
+                            <i class="btn btn-secondary disabled float-right" href data-placement="right" data-toggle="tooltip" title="{{ 'entity.report_block.action.order_message_version_obsolete'|trans }}">{{ 'entity.report_block.action.position'|trans }}</i>
+                        {% endif %}
+                    {% else %}
+                        <i class="btn btn-secondary disabled float-right" href data-placement="right" data-toggle="tooltip" title="{{ 'general.impossible'|trans }}">{{ 'entity.report_block.action.position'|trans }}</i>
+                    {% endif %}
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <div class="table table-bordered table-sm">
+                        <table class="w-100" id="review-actions">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">{{ 'entity.report_block.field.name'|trans }}</th>
+                                    <th scope="col" class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for versionBlock in versionBlocks %}
+                                <tr>
+                                    <td class="text-center">{{ versionBlock.block.name }}</td>
+                                    {% if constant('STATUS_CREATE', versionBlock.version) == versionBlock.version.status %}
+                                        <td class="text-center">
+                                            {% if is_granted('REPORT_BLOCK_RENAME', versionBlock.block) and versionBlock.block.isSys == false %}
+                                                <a class="mr-1" href="{{ path('admin.report.model.version.block.rename', { 'reportBlockID': versionBlock.block.id, 'reportModelVersionID': reportModelVersion.id }) }}">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                            {% endif %}
+
+                                            {% if is_granted('REPORT_BLOCK_EDIT', versionBlock.block) and versionBlock.block.isSys == false %}
+                                                <a class="mr-1" href="{{ path('admin.report.model.version.block.edit', { 'reportBlockID': versionBlock.block.id, 'reportModelVersionID': reportModelVersion.id }) }}">
+                                                    <i class="fa fa-folder-open"></i>
+                                                </a>
+                                            {% endif %}
+
+                                            {% if is_granted('REPORT_BLOCK_DELETE', versionBlock.block) and versionBlock.block.isSys == false %}
+                                                <a class="report-block-delete" href="{{ path('admin.report.model.version.block.delete', { 'reportBlockID': versionBlock.block.id, 'reportModelVersionID': reportModelVersion.id }) }}">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            {% endif %}
+                                        </td>
+                                    {% else %}
+                                        <td class="text-center"></td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-3"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="admin-block">
+        <div class="sf-read">
+            <h5>
+                {{ 'entity.report_model.section.version'|trans|capitalize }}
+            </h5>
+
+            <div class="row mt-5">
+                <div class="table-responsive">
+                    <table class="w-100 table-bordered table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>{{ 'entity.report_model_version.field.number'|trans }}</th>
+                                <th>{{ 'entity.report_model_version.field.status.name'|trans }}</th>
+                                <th>{{ 'entity.report_model_version.field.createdBy'|trans }}</th>
+                                <th>{{ 'entity.report_model_version.field.createdAt'|trans }}</th>
+                                <th>{{ 'entity.report_model_version.field.publishedBy'|trans }}</th>
+                                <th>{{ 'entity.report_model_version.field.publishedAt'|trans }}</th>
+                                <th>{{ 'entity.report_model_version.field.obsoletedBy'|trans }}</th>
+                                <th>{{ 'entity.report_model_version.field.obsoletedAt'|trans }}</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for version in reportModelVersion.reportModel.versions %}
+                                <tr>
+                                    <td>{{ version.numberVersion }}</td>
+                                    <td>{{ constant('STATUS', version)[version.status]  | trans }}</td>
+                                    <td>{{ version.createdBy is empty ? 'Automatique' : version.createdBy.fullName }}</td>
+                                    <td>{{ version.createdAt is empty ? '' : version.createdAt|date('d/m/Y') }}</td>
+                                    <td>{{ version.publishedBy is empty ? '' : version.publishedBy.fullName }}</td>
+                                    <td>{{ version.publishedAt is empty ? '' : version.publishedAt|date('d/m/Y') }}</td>
+                                    <td>{{ version.obsoletedBy is empty ? '' : version.obsoletedBy.fullName }}</td>
+                                    <td>{{ version.obsoletedAt is empty ? '' : version.obsoletedAt|date('d/m/Y') }}</td>
+                                    <td>
+                                        <a href="{{ path("admin.report.model.version.generate", {'reportModelID': reportModelVersion.reportModel.id, 'reportModelVersionID': reportModelVersion.id}) }}">
+                                            <i class="fa fa-eye c-grey"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+

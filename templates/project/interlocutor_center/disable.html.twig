@@ -1,0 +1,9 @@
+{% block content %}
+    <h1>Désactiver</h1>
+
+    <div class="admin-block">
+        <p>Êtes-vous sûr de vouloir désactiver l'interlocuteur' ?</p>
+        <a href type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</a>
+        <a class="btn btn-primary" href="{{ path('project.interlocutor_center.disable.btn', { 'id' : id , 'idInterlocutorCenter': idInterlocutorCenter}) }}">Valider</a>
+    </div>
+{% endblock %}

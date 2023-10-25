@@ -1,0 +1,26 @@
+{% extends 'layout/app.html.twig' %}
+
+{% block title %}{{ 'terms_of_service.label'|trans }}{% endblock %}
+
+{% block content %}
+    {{ parent() }}
+
+    <div class="jumbotron">
+        <h2 class="">{{ 'terms_of_service.label'|trans }}</h2>
+        <hr class="my-4">
+        <div id="tos-text">
+            {% block tos %}
+            {% endblock %}
+        </div>
+        <hr class="my-4">
+        {% if not signed %}
+            <form action="{{ path('tos') }}" method="post">
+                <label for="accept"><input type="checkbox" name="accept" id="accept" required="required" /> {{ 'terms_of_service.understood'|trans }}</label>
+                <br />
+                <a href="{{ path('logout') }}" class="btn btn-primary">{{ 'terms_of_service.disagree'|trans }}</a>
+                <button type="submit" class="btn btn-primary btn-lg float-right">{{ 'terms_of_service.agree'|trans }}</button>
+            </form>
+        {% endif %}
+    </div>
+
+{% endblock %}

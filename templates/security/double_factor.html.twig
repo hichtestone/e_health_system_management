@@ -1,0 +1,18 @@
+{% extends 'layout/security.html.twig' %}
+
+{% block title %}Double factor{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-4 col-md-3 col-sm-2"></div>
+        <div class="col-lg-4 col-md-6 col-sm-8">
+            <h2 class="my-5">{{ 'security.two_factor.label'|trans }}</h2>
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="float-right btn btn-primary">
+                {{ 'security.login'|trans }} <i class="fa fa-sign-in-alt"></i>
+            </button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

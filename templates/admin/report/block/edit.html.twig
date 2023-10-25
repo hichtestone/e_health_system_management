@@ -1,0 +1,49 @@
+{# set current menu #}
+{% set activeMenu = 'report_model' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'menu.admin.home'|trans }}">{{ 'menu.admin.home'|trans }}</a></li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('admin.report.model.index') }}" title="{{ 'entity.report_model.title' | trans }}">
+                    {{ 'entity.report_model.title' | trans }}
+                </a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('admin.report.model.version.show', { 'reportModelVersionID' : reportModelVersion.id }) }}">
+                    {{ 'general.file' | trans }} {{ 'general.model' | trans }} - {{ reportModelVersion.reportModel.name }}
+                </a>
+            </li>
+            <li class="breadcrumb-item active"> bloc -  {{ reportBlock.name }} ({{ ('form.action.'~action)|trans }})</li>
+        </ol>
+    </nav>
+
+    <h1>{{ ('entity.report_block.action.'~action)|trans|capitalize }} - {{ reportBlock.name }} </h1>
+
+    <input id="report-block-edit" type="hidden"
+           data-edit-block="{{ path('admin.report.model.version.block.edit', { 'reportBlockID' : reportBlock.id, 'reportModelVersionID' : reportModelVersion.id }) }}">
+    <input id="report-block-edit-param-new" type="hidden"
+           data-edit-block-param-new ="{{ path('admin.report.model.version.block.edit.param.new', { 'reportBlockID' : reportBlock.id, 'reportModelVersionID' : reportModelVersion.id }) }}">
+    <input id="report-block-edit-param-list" type="hidden"
+           data-edit-block-param-list="{{ path('admin.report.model.version.block.edit.param.list', { 'reportBlockID' : reportBlock.id, 'reportModelVersionID' : reportModelVersion.id }) }}">
+    <input id="report-block-edit-param-delete" type="hidden"
+           data-edit-block-param-delete="{{ path('admin.report.model.version.block.edit.param.delete', { 'reportBlockID' : reportBlock.id, 'reportModelVersionID' : reportModelVersion.id }) }}">
+    <input id="report-block-edit-param-order" type="hidden"
+           data-edit-block-param-order="{{ path('admin.report.model.version.block.edit.param.order', { 'reportBlockID' : reportBlock.id, 'reportModelVersionID' : reportModelVersion.id }) }}">
+    <input id="report-block-edit-param-ordering" type="hidden"
+           data-edit-block-param-ordering="{{ path('admin.report.model.version.block.edit.param.ordering', { 'reportBlockID' : reportBlock.id, 'reportModelVersionID' : reportModelVersion.id }) }}">
+    <input id="report-block-edit-param-edit" type="hidden"
+           data-edit-block-param-edit="{{ path('admin.report.model.version.block.edit.param.edit', { 'reportBlockID' : reportBlock.id, 'reportModelVersionID' : reportModelVersion.id }) }}">
+    <input id="report-model-show" type="hidden"
+           data-model-show="{{ path('admin.report.model.version.show', { 'reportModelVersionID' : reportModelVersion.id }) }}">
+
+
+    <div class="d-none data_translate"></div>
+
+    <report-block :reportModelID="{{ reportModelVersion.reportModel.id }}" :reportBlockID="{{ reportBlock.id }}" id="ReportBlock"/>
+
+{% endblock %}
+

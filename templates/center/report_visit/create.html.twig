@@ -1,0 +1,140 @@
+{% set activeMenu = 'center' %}
+{% set subMenu = 'center' %}
+
+{% extends 'layout/app.html.twig' %}
+{% block title %}{% endblock %}
+
+{% block body %}
+    {# Fil d'Ariane #}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('project.home.index', { 'id' : project.id }) }}" title="{{ project.acronyme }}">{{ project.acronyme }}</a>
+            </li>
+            {% if activeMenu2 == 'center' %}
+                <li class="breadcrumb-item">
+                    <a href="{{ path('project.center.index', { 'id' : project.id }) }}" title="{{ 'entity.Center.suite.list'|trans }}">{{ 'entity.Center.suite.list'|trans }}</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ path('project.center.show', { 'id' : project.id, 'idCenter' : center.id }) }}" title="{{ center.name }}">{{ 'general.file'|trans}} - {{ center.name }}</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ path('project.center.report.visit.center.index', { 'projectID' : project.id, 'centerID' : center.id }) }}" title="{{ 'entity.report_visit.title' | trans }}">{{ 'entity.report_visit.title' | trans }}</a>
+                </li>
+            {% endif %}
+            <li class="breadcrumb-item active">{{ ('form.action.'~action)|trans }}</li>
+
+        </ol>
+    </nav>
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('project.center.show', { 'id' : project.id, 'idCenter' : center.id }) }}">{{ 'entity.Center.field.title_tab'|trans }}</a>
+        </li>
+        {% if activeMenu2 == 'center' %}
+            <li class="nav-item">
+                <a class="nav-link active" href="{{ path('project.center.report.visit.center.index', { 'projectID' : project.id, 'centerID' : center.id }) }}">{{ 'entity.Center.field.visit_tab'|trans }}</a>
+            </li>
+        {% endif %}
+    </ul>
+
+    {% if options['report'] %}
+        <h1>{% if action == 'edit' %} {{ 'entity.report_visit.action.report_modify'|trans }} {% else %} {{ 'entity.report_visit.action.report_create'|trans }} {% endif %}</h1>
+    {% elseif options['validate'] %}
+        <h1>{{ 'entity.report_visit.action.report_validate'|trans }}</h1>
+    {% else %}
+        <h1>{% if action == 'edit' %} {{ 'entity.report_visit.action.modify'|trans }} {% else %} {{ 'entity.report_visit.action.create'|trans }} {% endif %}</h1>
+    {% endif %}
+
+
+    <div class="admin-block">
+        {{ form_start(form) }}
+        {% if options['report'] %}
+            <div class="row">
+                <div class="col-6">
+                    <p><span class="font-weight-bold">{{ 'entity.report_visit.field.report.center'|trans }}: </span>{{ reportVisit.center.number }} - {{ reportVisit.center.name }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <p> <span class="font-weight-bold"> {{ 'entity.report_visit.field.report.reader'|trans }} : </span> {{ user.username }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <p><span class="font-weight-bold">{{ 'entity.report_visit.field.report.expectedAt'|trans }}: </span>{{ reportVisit.expectedAt is empty ? '' : reportVisit.expectedAt|date('d/m/Y') }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <p> <span class="font-weight-bold">{{ 'entity.report_visit.field.report.visit_type'|trans }}: </span>{{ constant('VISIT_TYPE', reportVisit)[reportVisit.visitType] | trans }}</p>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-6">
+                    {{ form_row(form.reportType) }}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-6">
+                 {{ form_row(form.reportConfigVersion) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 mb-3">
+                    {{ form_row(form.reportedAt) }}
+                </div>
+            </div>
+
+        {% elseif options['validate']%}
+            <div class="row">
+                <div class="col-6">
+                    {{ form_row(form.validatedBy) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    {{ form_row(form.reportFileVich) }}
+                </div>
+            </div>
+        {% else %}
+            <div class="row">
+                <div class="col-6">
+                    <p><span class="font-weight-bold">Centre : </span>{{ center.number }} - {{ center.name }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    {{ form_row(form.visitType) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    {{ form_row(form.expectedAt) }}
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="row">
+            <div class="col-6">
+                <button type="submit" class="btn btn-primary">
+                    {% if options['report'] %}
+                        {% if action == 'edit' %} Modifier le rapport {% else %} {{ 'form.btn.submit'|trans }} {% endif %}
+                    {% elseif options['validate'] %}
+                        Valider le rapport
+                    {% else %}
+                        {% if action == 'edit' %} {{ 'entity.report_visit.action.edit'|trans }}{% else %} {{ 'entity.report_visit.action.add'|trans }} {% endif %}
+                    {% endif %}
+                </button>
+                <br>
+                <br>
+                <span style="color: #c30000;">* {{ ('general.star.mandatory')|trans }}</span>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

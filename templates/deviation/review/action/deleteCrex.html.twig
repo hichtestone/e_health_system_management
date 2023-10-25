@@ -1,0 +1,14 @@
+{% block content %}
+    <h1>Annuler une action supplémentaire</h1>
+
+    <div class="admin-block">
+        <p>Êtes-vous sûr de vouloir supprimer cette action supplémentaire ? <br>
+            Les données de l'action seront supprimées et elles n'apparaîtront plus dans le tableau des Actions supplémentaires préconisées</p>
+        <a href type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</a>
+        <a class="btn btn-primary" href="{{ path('no_conformity.protocol_crex.action.delete.btn', { 'reviewCrexID' : reviewCrexID, 'actionID': actionID }) }}">Confirmer</a>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('deviation') }}
+{% endblock %}

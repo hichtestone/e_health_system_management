@@ -1,0 +1,86 @@
+{% set allow_document_transverse_drug = is_granted('DRUG_READ_WRITE_ARCHIVE_DOCUMENTTRANSVERSE', drug) %}
+
+{# if is_granted('DRUG_LIST_DOCUMENTTRANSVERSE', drug) %} #}
+    <div class="admin-block">
+    <div class="sf-read">
+        <h5 style="margin-bottom: 2em; text-align: center;">{{ 'entity.Drug.action.list'|trans }}
+            {% if allow_document_transverse_drug %}
+                <a  style="margin-left: 1em;" class="btn btn-primary" href="{{ path('admin.drug.document.new', {id: drug.id}) }}" ><i class="fa fa-plus"></i></a>
+            {% endif %}</h5>
+        <div class="table-responsive">
+            <table class="w-100" >
+                <tr>
+                    <th>{{ 'entity.DocumentTransverse.field.name'|trans}}</th>
+                    <th>{{ 'entity.DocumentTransverse.field.isValid'|trans}}</th>
+                    <th>{{ 'entity.DocumentTransverse.field.TypeDocument'|trans}}</th>
+                    <th>{{ 'entity.VersionDocumentTransverse.field.version'|trans}}</th>
+                    <th>{{ 'entity.VersionDocumentTransverse.field.isValid'|trans}}</th>
+                    <th>{{ 'entity.DocumentTransverse.action.label'|trans}}</th>
+                </tr>
+
+                {% for document in drug.documentTransverses %}
+                    {% for version in document.versionDocumentTransverses %}
+                            <tr>
+                                <td>
+                                    <a href="{{ path('document_transverse_drug.show', { 'drug': drug.id, id: document.id}) }}">{{ document.name }}</a>
+                                </td>
+                                <td>
+                                    {% if document.isValid  %}
+                                        <span class="badge badge-success">{{ 'entity.DocumentTransverse.action.valid'|trans}} </span>
+                                    {% else %}
+                                        <span class="badge badge-danger"> {{ 'entity.DocumentTransverse.action.invalid'|trans}} </span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a>
+                                        {{ document.TypeDocument.name }}
+                                    </a>
+                                </td>
+
+                                <td>{{ version.version }}</td>
+
+
+                                <td>
+                                    {% if version.isValid  %}
+                                        <span class="badge badge-success">{{ 'entity.DocumentTransverse.action.valid'|trans}} </span>
+                                    {% else %}
+                                        <span class="badge badge-danger"> {{ 'entity.DocumentTransverse.action.invalid'|trans}} </span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{{ path('document_transverse_drug.show', { 'drug': drug.id, id: document.id}) }}" title="{{ 'entity.DocumentTransverse.action.show'|trans}}" >
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+
+                                    {% if is_granted('ROLE_DOCUMENTTRANSVERSE_READ', drug) %}
+                                        {% if version.filename1 != null %}
+                                            <a href="{{ vich_uploader_asset(version, 'filename1Vich') }}" download
+                                               title="{{ 'entity.DocumentTransverse.action.download'|trans }}">
+                                                <i class="fa fa-download" aria-hidden="true"></i>
+                                            </a>
+                                        {% endif %}
+                                    {% else %}
+                                        <i class="fa fa-download c-grey"></i>
+                                    {% endif %}
+
+                                    {% if allow_document_transverse_drug and document.deletedAt is null and is_archive_allowed %}
+                                        <a href="{{ path('document_transverse.archive_restore', { id: document.id}) }}" title="{{ 'form.action.archive'|trans}}" >
+                                            <i class="fa fa-archive"></i>
+                                        </a>
+                                    {% endif %}
+
+                                    {% if allow_document_transverse_drug and document.deletedAt is not null %}
+                                        <a href="{{ path('document_transverse.archive_restore', { id: document.id}) }}" title="{{ 'form.action.restore'|trans}}" >
+                                            <i class="fa fa-box-open"></i>
+                                        </a>
+                                    {% endif %}
+
+                                </td>
+                            </tr>
+                    {% endfor %}
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+{#  endif #}

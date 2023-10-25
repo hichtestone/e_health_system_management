@@ -1,0 +1,135 @@
+{# set current menu #}
+{% set activeMenu = 'interlocutor' %}
+{% set centres = [] %}
+
+
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'menu.admin.home'|trans }}">{{ 'menu.admin.home'|trans }}</a></li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('admin.interlocutors.index') }}" title="{{ 'menu.admin.interlocutors' | trans }}">
+                    {{ 'menu.admin.interlocutors' | trans }}
+                </a>
+            </li>
+            <li class="breadcrumb-item active">{{ 'general.file' | trans }} - {{ interlocutor.lastName|capitalize }}  {{ interlocutor.firstName }}</li>
+        </ol>
+    </nav>
+
+    <h1>{{ interlocutor.civility }} {{ interlocutor.lastName }}  {{ interlocutor.firstName }}</h1>
+
+    <div class="admin-block">
+        <h5>{{ 'show.main'|trans }}</h5>
+
+        <dl class="row">
+            <div class="col-12">
+                {% if is_granted('ROLE_INTERLOCUTOR_ARCHIVE') and interlocutor.deletedAt is null %}
+                    {% if is_granted('INTERLOCUTOR_ARCHIVE', interlocutor) %}
+                        <a class="btn btn-info float-right" href="{{ path('admin.interlocutor.archive', {'id': interlocutor.id }) }}">{{ 'general.archive' | trans }} </a>
+                    {% else %}
+                        <button class="btn btn-secondary disabled float-right" data-placement="left" data-toggle="tooltip" title="{{ 'entity.Interlocutor.action.title' | trans }}">{{ 'entity.Interlocutor.action.archiver' | trans }} </button>
+                    {% endif %}
+                {% endif %}
+                {% if is_granted('INTERLOCUTOR_RESTORE', interlocutor) %}
+                    <a class="btn btn-info float-right" href="{{ path('admin.interlocutor.restore', {'id': interlocutor.id }) }}">{{ 'general.unarchive' | trans }}</a>
+                {%  endif %}
+            </div>
+        </dl>
+
+        <div class="sf-read">
+            <dl class="row">
+                <div class="col-4">
+                    <dt>{{ 'entity.Interlocutor.field.civility' | trans }} : </dt>
+                    <dd>{{ interlocutor.civility }} </dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Interlocutor.field.lastName' | trans }} : </dt>
+                    <dd>{{ interlocutor.lastName }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Interlocutor.field.firstName' | trans }} : </dt>
+                    <dd>{{ interlocutor.firstName }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Interlocutor.field.job' | trans }} : </dt>
+                    <dd>{{ interlocutor.job }}</dd>
+                </div>
+                {% if interlocutor.job.id in jobNoRpps %}
+                    <div class="col-4">
+                        <dt>{{ 'entity.Interlocutor.field.rppsNumber' | trans }} : </dt>
+                        <dd>{{ interlocutor.rppsNumber }}</dd>
+                    </div>
+                {% endif %}
+                {% if interlocutor.job.id in jobInv %}
+                    <div class="col-4">
+                        <dt>{{ 'entity.Interlocutor.field.specialtyOne' | trans }} : </dt>
+                        <dd>{{ interlocutor.specialtyOne }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Interlocutor.field.specialtyTwo' | trans }} : </dt>
+                        <dd>{{ interlocutor.specialtyTwo }}</dd>
+                    </div>
+                {% endif %}
+                <div class="col-4">
+                    <dt>{{ 'entity.Interlocutor.field.cooperator' | trans }} : </dt>
+                    <dd>{{ interlocutor.cooperators|join(' / ') }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Interlocutor.field.phone' | trans }} : </dt>
+                    <dd>{{ interlocutor.phone }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Interlocutor.field.fax' | trans }} : </dt>
+                    <dd>{{ interlocutor.fax }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Interlocutor.field.email' | trans }} : </dt>
+                    <dd>{{ interlocutor.email }}</dd>
+                </div>
+            </dl>
+            <div class="row">
+                <dl class="col-6">
+                    {% if is_granted('INTERLOCUTOR_EDIT', interlocutor) %}
+                        <a class="btn btn-primary"
+                           href="{{ path('admin.interlocutor.edit', {'id' : interlocutor.id}) }}">
+                            {{ 'entity.Interlocutor.action.edit'|trans }}
+                        </a>
+                    {%  endif %}
+                </dl>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="admin-block">
+        <h5>{{ 'entity.Interlocutor.institution.list'|trans }}</h5>
+        <div class="table-responsive">
+
+            <table class="w-100">
+                <tr>
+                    <th>{{ 'entity.Interlocutor.institution.name'|trans}}</th>
+                    <th>{{ 'entity.Institution.field.type'|trans}}</th>
+                    <th>{{ 'entity.Institution.field.country'|trans}}</th>
+                    <th>{{ 'entity.Institution.field.city'|trans}}</th>
+                </tr>
+                {% for institution in interlocutor.institutions %}
+                    {% if institution.deletedAt is null %}
+                        <tr>
+                            <td><a href="{{ path('admin.institution.show', {id: institution.id}) }}">{{ institution.name }}</a></td>
+                            <td>{{ institution.institutionType }}</td>
+                            <td>{{ institution.country.name }}</td>
+                            <td>{{ institution.city }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    {# Liste des documents transverses dans un Interlocuteur #}
+    {{ render_esi(controller('App\\ESM\\Controller\\DocumentTransverseController::interlocutor_single_list', { 'id': interlocutor.id })) }}
+
+{% endblock %}

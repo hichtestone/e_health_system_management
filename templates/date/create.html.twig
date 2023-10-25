@@ -1,0 +1,234 @@
+{% set activeMenu = 'project' %}
+{% set subMenu = 'project' %}
+{% set activeMenu2 = 'dates' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    {# Fil d'Ariane #}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.home.index', { 'id' : project.id }) }}" title="{{ project.acronyme }}">{{ project.acronyme }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.list.dates', { 'id' : project.id }) }}" title="{{ 'menu.project.statutory'|trans}} > {{ 'menu.reglementaire.dates_chiffres'|trans }}">{{ 'menu.project.statutory'|trans}} > {{ 'menu.reglementaire.dates_chiffres'|trans }}</a></li>
+            <li class="breadcrumb-item active">{{ 'form.action.modification'|trans }}</li>
+        </ol>
+    </nav>
+
+    <h1>{{ 'entity.Date.action.modify'|trans }}</h1>
+
+    {{ form_start(form) }}
+        <div class="admin-block">
+            <h5>{{'entity.Date.section.patient'|trans }}</h5>
+            <div class="row">
+                <div class="col-6">
+                    {{ form_row(form.amendmentsBeforFirstInclusion) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    {{ form_row(form.numberExpectedPatients) }}
+                    {{ form_row(form.numberPatientsIncluded) }}
+                    {{ form_row(form.expectedDurationInclusionAt) }}
+                </div>
+
+                <div class="col-6">
+                    {{ form_row(form.numberScreenedPatients) }}
+                    {{ form_row(form.numberRandomizedPatients) }}
+                    {{ form_row(form.expectedDurationFollowUpAfterInclusionAt)}}
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-block">
+            <h5>{{'entity.Date.section.date'|trans }}</h5>
+            <div class="row">
+                <div class="col-6">
+                    {{ form_row(form.submissionAt) }}
+                </div>
+                <div class="col-6">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    {{ form_row(form.feasibilityCommitteeAt) }}
+                </div>
+                <div class="col-6">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    {{ form_row(form.validationCommmitteeReviewEndedAt) }}
+                </div>
+                <div class="col-6">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    {{ form_row(form.reviewCommitteeAt) }}
+                </div>
+                <div class="col-6">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    {{ form_row(form.registrationAt) }}
+                </div>
+                <div class="col-6">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    {{ form_row(form.submissionAt) }}
+                </div>
+                <div class="col-6">
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-6">
+                    {{ form_row(form.subscriptionStartedAt) }}
+                </div>
+                <div class="col-6">
+                    {{ form_row(form.subscriptionEndedAt) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    {{ form_row(form.certificationAt) }}
+                </div>
+                <div class="col-6">
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-6">
+                    {{ form_row(form.kiffOfMeetingAt) }}
+                </div>
+                <div class="col-6">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    {{ form_row(form.mepForecastAt) }}
+                </div>
+                <div class="col-6">
+                    {{ form_row(form.mepAt) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    {{ form_row(form.forecastInclusionStartedAt) }}
+                </div>
+                <div class="col-6">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    {{ form_row(form.firstConsentAt) }}
+                </div>
+                <div class="col-6">
+                    {{ form_row(form.inclusionPatientStartedAt) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    {{ form_row(form.forecastInclusionEndedAt) }}
+                </div>
+                <div class="col-6">
+                    {{ form_row(form.inclusionPatientEndedAt) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                </div>
+                <div class="col-6">
+                    {{ form_row(form.studyDeclarationEndedAt) }}
+                </div>
+            </div>
+        </div>
+
+
+        <div class="admin-block">
+        <h5>{{'entity.Date.section.report'|trans }}</h5>
+
+        <div class="row">
+            <div class="col-4">
+                {{ form_row(form.expectedLPLVAt) }}
+            </div>
+            <div class="col-4">
+                {{ form_row(form.actualLPLVAt) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4">
+                {{ form_row(form.expectedReportAnalysedAt) }}
+            </div>
+            <div class="col-4">
+                {{ form_row(form.actualReportAnalysedtAt) }}
+            </div>
+            <div class="col-4">
+                {{ form_row(form.finalReportAnalysedAt) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4">
+                {{ form_row(form.finalExpectedLPLVAt) }}
+            </div>
+            <div class="col-4">
+                {{ form_row(form.finalActualLPLVAt) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4">
+                {{ form_row(form.finalExpectedReportAt) }}
+            </div>
+            <div class="col-4">
+                {{ form_row(form.finalActualReportAt) }}
+            </div>
+            <div class="col-4">
+                {{ form_row(form.finalActualReportClinicalAt) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4">
+                {{ form_row(form.depotClinicalTrialsAt) }}
+            </div>
+            <div class="col-4">
+                {{ form_row(form.depotEudraCtAt) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <button type="submit" class="btn btn-primary">
+                    {{ ('entity.Date.action.modify')|trans }}
+                </button>
+                <br>
+                <br>
+                <span style="color: #c30000">* {{ ('general.star.mandatory')|trans }}</span>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% block content %}
+    <h1>Supprimer une action</h1>
+
+    <div class="admin-block">
+
+        {{ form_start(form, {'action': url}) }}
+        <p>Êtes-vous sûr de vouloir supprimer cette action? <br>
+            Les informations de cette action ne pourront plus être récupérées.</p>
+        <div class="row mb-3">
+            {{ form_label(form.comment, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+        </div>
+        <div class="row mb-3">
+            {{ form_widget(form.comment) }}
+        </div>
+
+        <a href type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</a>
+        <button type="submit" class="btn btn-primary">Confirmer</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

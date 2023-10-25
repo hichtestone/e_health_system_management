@@ -1,0 +1,8 @@
+{% extends 'email/base.html.twig' %}
+
+{% set project_show = project is defined ? path('admin.project.show', {'id': project.id}) : '' %}
+
+{% block body %}
+    Votre demande de clôture du projet {{ project.name }} a été refusée.
+    Vous pouvez consulter la fiche du projet en cliquant sur le lien suivant : {{ app.request.schemeAndHttpHost  ~ project_show }}
+{% endblock %}

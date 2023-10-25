@@ -1,0 +1,228 @@
+{% set activeMenu = 'settings' %}
+{% set subMenu = 'settings' %}
+{% set activeMenu2 = 'home' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a></li>
+            <li class="breadcrumb-item active">{{ project.acronyme }}</li>
+        </ol>
+    </nav>
+
+    {% if project is defined and  projectShow is defined %}
+        <div class="admin-block">
+            <div class="sf-read">
+
+                <h5>{{ 'entity.Project.header.characteristic_management' | trans }}</h5>
+                <dl class="row">
+                    <div class="col-4">
+                        <dt>{{ 'entity.Project.register.labels.name_french' | trans }} :</dt>
+                        <dd style="word-break: break-word">{{ project.name }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Project.register.labels.name_english' | trans }} :</dt>
+                        <dd style="word-break: break-word">{{ project.nameEnglish }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Project.register.labels.acronym' | trans }} :</dt>
+                        <dd>{{ project.acronyme }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.status.label' | trans }} :</dt>
+                        <dd>{{ project.projectStatus ?? '' }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Project.register.labels.ref' | trans }} :</dt>
+                        <dd>{{ project.ref }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Project.register.labels.promoter' | trans }} :</dt>
+                        <dd>{{ project.sponsor ?? '' }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Project.register.labels.studyPopulation' | trans }} :</dt>
+                        {% if project.studyPopulation is not null %}
+                            <dd>
+                                {% if '0' in project.studyPopulation %}
+                                    {{ constant('STUDY_POPULATION', project)[0] }} <br>
+                                {% endif %}
+                                {% if '1' in project.studyPopulation %}
+                                    {{ constant('STUDY_POPULATION', project)[1] }}
+                                {% endif %}
+                            </dd>
+                        {% else %}
+                            <dd>{{ project.studyPopulation }}</dd>
+                        {% endif %}
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Project.register.labels.eudractNumber' | trans }} :</dt>
+                        <dd>{{ project.eudractNumber }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Project.register.labels.nctNumber' | trans }} :</dt>
+                        <dd>{{ project.nctNumber }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Project.register.labels.trl_indice' | trans }} :</dt>
+                        <dd>{{ project.trlIndice }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Project.register.labels.territory' | trans }} :</dt>
+                        <dd>{{ project.territory }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Project.register.labels.countries' | trans }} :</dt>
+                        {% if project.countries is not null %}
+                            <dd>{{ project.countries|map((country) => country.name )|join(' | ') }}</dd>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-4">
+                        <dt>{{ 'entity.Project.register.labels.responsiblePM' | trans }} :</dt>
+                        <dd>{{ project.responsiblePM }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Project.register.labels.responsibleCRA' | trans }} :</dt>
+                        <dd>{{ project.responsibleCRA }}</dd>
+                    </div>
+                </dl>
+
+                <h5>{{ 'entity.Project.header.trail_management' | trans }}</h5>
+                <dl class="row">
+                    <div class="col-4">
+                        <dt>{{ 'entity.Project.register.labels.trail_phase' | trans }} :</dt>
+                        <dd>{{ project.trailPhase ?? '' }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Project.register.labels.membership_group' | trans }} :</dt>
+                        <dd>{{ project.membershipGroup ?? '' }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Project.register.labels.trail_type' | trans }} :</dt>
+                        <dd>{{ project.trailType ?? '' }}</dd>
+                    </div>
+                </dl>
+
+                <div class="table-drug-project mb-3">
+                    <div class="table-wrap table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>{{ 'entity.Project.register.labels.trail_treatment' | trans }}</th>
+                                <th>{{ 'entity.Project.register.labels.drug' | trans }}</th>
+                                <th>{{ 'entity.Drug.field.version_bi' | trans }}</th>
+                                <th>{{ 'entity.Drug.field.version_rcp' | trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for treatment in trail_treatments %}
+                                <tr>
+                                    {% if treatment.drug is not null  %}
+                                        <td>{{ treatment.drug.trailTreatment.label ?? '' }}</td>
+                                    {% else %}
+                                        <td>{{ treatment.TrailTreatment.label ?? '' }}</td>
+                                    {% endif %}
+                                    <td>{{ treatment.drug.name ?? '' }}</td>
+                                    <td>{{ treatment.VersionBi.version ?? '' }}</td>
+                                    <td>{{ treatment.VersionRcp.version ?? '' }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h5>{{ 'entity.Project.header.crf_management' | trans }}</h5>
+                <dl class="row">
+                    <div class="col-4">
+                        <dt>{{ 'entity.Project.register.labels.crfType' | trans }} :</dt>
+                        <dd>{{ project.crfType }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Project.register.labels.url' | trans }} :</dt>
+                        <dd>{{ project.crfUrl }}</dd>
+                    </div>
+                </dl>
+
+                <h5>{{ 'entity.Project.header.sites_management' | trans }}</h5>
+                <dl class="row">
+                    <div class="col-4">
+                        <dt>{{ 'entity.Project.register.labels.payment_unit' | trans }} :</dt>
+                        <dd>{{ project.paymentUnit }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Project.register.labels.patient_number' | trans }} :</dt>
+                        <dd>{{ project.patientNumber }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Project.register.labels.add_intervenants' | trans }} :</dt>
+                        {% for intervenant in project.metasUser %}
+                            <dd>{{ intervenant }}</dd>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-4">
+                        <dt>{{ 'entity.Project.register.labels.add_investigateurs' | trans }} :</dt>
+                        {% for participant in project.metasParticipant %}
+                            <dd>{{ participant }}</dd>
+                        {% endfor %}
+                    </div>
+
+                </dl>
+
+                <h5>{{ 'entity.Project.header.responsibility_management' | trans }}</h5>
+                <dl class="row">
+                    <div class="col-4">
+                        <dt>{{ 'entity.Project.register.labels.coordinating_investigators' | trans }} :</dt>
+                        <dd>{{ project.coordinatingInvestigators }}</dd>
+                    </div>
+                </dl>
+
+                <h5>{{ 'entity.Project.header.delegation_management' | trans }}</h5>
+                <dl class="row">
+                    {% if project.Delegation is not null %}
+                        <div class="col-4">
+                            <dt>{{ 'entity.Project.register.labels.sponsor' | trans }} :</dt>
+                            <dd>{{ project.sponsor }}</dd>
+                        </div>
+                        <div class="col-4">
+                            <dt>{{ 'entity.Project.register.labels.regulatory' | trans }} :</dt>
+                            <dd>{% if project.delegation.regulatory == 1 %} Oui {% else %} Non {% endif %}</dd>
+                        </div>
+                        <div class="col-4">
+                            <dt>{{ 'entity.Project.register.labels.manitoring' | trans }} :</dt>
+                            <dd>{% if project.delegation.manitoring == 1 %} Oui {% else %} Non {% endif %}</dd>
+                        </div>
+                        <div class="col-4">
+                            <dt>{{ 'entity.Project.register.labels.pharmacovigilance' | trans }} :</dt>
+                            <dd>{% if project.delegation.pharmacovigilance == 1 %}
+                                    Oui
+                                    {% if project.delegation.dsur %}
+                                        <span class="badge badge-info">DSURs</span>
+                                    {% endif %}
+                                    {% if project.delegation.susar %}
+                                        <span class="badge badge-info">SUSARs</span>
+                                    {% endif %}
+                                {% else %} Non {% endif %}
+                            </dd>
+                        </div>
+                    {%  else %}
+                        <div class="col-4">
+                            <dt>{{ 'entity.Project.register.labels.sponsor' | trans }} :</dt>
+                            <dd>UNICANCER</dd>
+                        </div>
+                    {% endif %}
+                </dl>
+
+                {% if is_granted('PROJECT_EDIT', project) %}
+                    <a class="btn btn-primary"
+                       href="{{ path('admin.project.edit', {'id' : project.id}) }}">{{ 'entity.Project.modify'|trans }}</a>
+                {% endif %}
+            </div>
+        </div>
+    {% endif%}
+
+{% endblock %}

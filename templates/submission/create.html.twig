@@ -1,0 +1,56 @@
+{# set current menu #}
+{% set activeMenu = 'project' %}
+{% set subMenu = 'project' %}
+{% set activeMenu2 = 'dates' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.home.index', { 'id' : project.id }) }}" title="{{ project.acronyme }}">{{ project.acronyme }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.list.submissions', { 'id' : project.id }) }}" title="{{ 'menu.project.statutory'|trans}} > {{ 'menu.reglementaire.submission'|trans }}">{{ 'menu.project.statutory'|trans}} > {{ 'menu.reglementaire.submission'|trans }}</a></li>
+            <li class="breadcrumb-item active">{% if edit %} {{ 'form.action.modification'|trans }} {% else %}  {{ 'form.action.creation'|trans }} {% endif %}</li>
+        </ol>
+    </nav>
+
+    {# Onglets dates et chiffres / Soumissions / rgpd #}
+    {% include 'menu/reglementaire.html.twig' with {'activetab': 'submission'} %}
+
+    <h1>{% if edit %} {{ ('entity.Submission.field.edit')|trans }} {%  else %} {{ ('entity.Submission.field.create')|trans }} {% endif %}</h1>
+
+    <div class="admin-block" id="new-submission">
+        <div class="row">
+            <div class="col-6">
+                {{ form_start(form) }}
+                    {{ form_row(form.country) }}
+                    {{ form_row(form.typeSubmission) }}
+                <div id="submissionAmendmentNumber">
+                    {{ form_row(form.amendmentNumber) }}
+                </div>
+                <div id="submissionDeclarationType">
+                    {{ form_row(form.typeDeclaration) }}
+                </div>
+                    {{ form_row(form.typeSubmissionRegulatory) }}
+                    {{ form_row(form.nameSubmissionRegulatory) }}
+                    {{ form_row(form.submissionAt) }}
+                    {{ form_row(form.estimatedSubmissionAt) }}
+                    {{ form_row(form.question) }}
+                    {{ form_row(form.comment, {
+                        'attr': { 'class': 'text-area-custom-150' }
+                    }) }}
+                    {{ form_row(form.fileNumber) }}
+                    {{ form_row(form.admissibilityAt) }}
+                    {{ form_row(form.authorizationAt) }}
+                    <button type="submit" class="btn btn-primary" type="submit">
+                        {% if edit %} {{ ('entity.Submission.action.edit')|trans }} {%  else %} {{ ('entity.Submission.action.create')|trans }} {% endif %}
+                    </button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

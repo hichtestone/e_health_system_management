@@ -1,0 +1,211 @@
+{% set activeMenu = 'center' %}
+{% set subMenu = 'center' %}
+{% set activeMenu2 = 'interlocutor' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.home.index', { 'id' : project.id }) }}" title="{{ project.acronyme }}">{{ project.acronyme }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.selection.index', { 'id' : project.id }) }}" title="Centres">Centres</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.list.interlocutors', { 'id' : project.id }) }}" title="{{ 'entity.Center.action.interlocutor.project'|trans }}">{{ 'entity.Center.action.interlocutor.project'|trans }}</a></li>
+            <li class="breadcrumb-item Active">Fiche - {{ interlocutor.displayName }}</li>
+        </ol>
+    </nav>
+
+    <h1>{{ interlocutor.civility }} {{ interlocutor.displayName }}</h1>
+
+    <div class="admin-block">
+        <h5>{{ 'show.main'|trans }}</h5>
+        <div class="sf-read">
+            <dl class="row">
+                <div class="col-4">
+                    <dt>{{ 'entity.Interlocutor.field.civility' | trans }} : </dt>
+                    <dd>{{ interlocutor.civility }} </dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Interlocutor.field.lastName' | trans }} : </dt>
+                    <dd>{{ interlocutor.lastName }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Interlocutor.field.firstName' | trans }} : </dt>
+                    <dd>{{ interlocutor.firstName }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Interlocutor.field.job' | trans }} : </dt>
+                    <dd>{{ interlocutor.job }}</dd>
+                </div>
+                {% if interlocutor.job.id in jobNoRpps %}
+                    <div class="col-4">
+                        <dt>{{ 'entity.Interlocutor.field.rppsNumber' | trans }} : </dt>
+                        <dd>{{ interlocutor.rppsNumber }}</dd>
+                    </div>
+                {% endif %}
+                {% if interlocutor.job.id in jobInv %}
+                    <div class="col-4">
+                        <dt>{{ 'entity.Interlocutor.field.specialtyOne' | trans }} : </dt>
+                        <dd>{{ interlocutor.specialtyOne }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Interlocutor.field.specialtyTwo' | trans }} : </dt>
+                        <dd>{{ interlocutor.specialtyTwo }}</dd>
+                    </div>
+                {% endif %}
+                {% if interlocutor.cooperators is not null %}
+                <div class="col-4">
+                    <dt>{{ 'entity.Interlocutor.field.cooperator' | trans }} : </dt>
+                    <dd>{{ interlocutor.cooperators|join(' | ')  }}</dd>
+                </div>
+                {% endif %}
+                <div class="col-4">
+                    <dt>{{ 'entity.Interlocutor.field.phone' | trans }} : </dt>
+                    <dd>{{ interlocutor.phone }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Interlocutor.field.fax' | trans }} : </dt>
+                    <dd>{{ interlocutor.fax }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Interlocutor.field.email' | trans }} : </dt>
+                    <dd>{{ interlocutor.email }}</dd>
+                </div>
+            </dl>
+            <div class="row">
+                <dl class="col-6">
+                    {% if is_granted('PROJECTINTERLOCUTOR_EDIT', interlocutor) and is_granted('PROJECT_WRITE', project) %}
+                        <a class="btn btn-primary"
+                           href="{{ path('admin.interlocutor.edit', {'id' : interlocutor.id }) }}">
+                            {{ 'entity.Interlocutor.action.edit'|trans }}
+                        </a>
+                    {%  endif %}
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <div class="admin-block">
+        <div class="sf-read">
+            <h5>{{ 'entity.Service.action.list'|trans }}</h5>
+            <div class="table-responsive">
+                <table class="w-100">
+                    <tr>
+                        <th>{{ 'entity.Center.field.number'|trans}}</th>
+                        <th>{{ 'entity.Center.field.centerStatus'|trans}}</th>
+                        <th>{{ 'entity.Service.field.institution'|trans}}</th>
+                        <th>{{ 'entity.Center.field.service'|trans}}</th>
+                        <th>{{ 'entity.Center.field.createdAt'|trans}}</th>
+                        <th>{{ 'entity.Center.field.deletedAt'|trans}}</th>
+                    </tr>
+                      {% for interlocutorCenter in interlocutorCenters %}
+                            <tr>
+                                <td>
+                                    <a href="{{ path('project.center.show', {'id' : project.id, 'idCenter' : interlocutorCenter.center.id }) }}">
+                                        {{ interlocutorCenter.center.number }}
+                                        {% if interlocutorCenter.isPrincipalInvestigator %}<span class="badge badge-info">PI</span>{% endif %}
+                                    </a>
+                                </td>
+                                <td>{{ interlocutorCenter.center.centerStatus }}</td>
+                                <td><a href="{{ path('project.institution.show', {'id': project.id, 'idInstitution': interlocutorCenter.service.institution.id } ) }}" data-sw-link="" data-sw-type="information" data-sw-title="{{ interlocutorCenter.service.institution.name }}">{{ interlocutorCenter.service.institution.name }}</a></td>
+                                <td><a href="{{ path('project.service.show', {'id': project.id, 'idService': interlocutorCenter.service.id } ) }}" data-sw-link="" data-sw-type="information" data-sw-title="{{ interlocutorCenter.service.name }}">{{ interlocutorCenter.service.name }}</a></td>
+                                <td>{{ interlocutorCenter.enabledAt is empty ? '' : interlocutorCenter.enabledAt|date('d/m/Y') }}</td>
+                                <td>{{ interlocutorCenter.disabledAt is empty ? '' : interlocutorCenter.disabledAt|date('d/m/Y') }}</td>
+                            </tr>
+                      {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="admin-block">
+        <h5>{{ 'entity.DocumentTracking.label'|trans }}
+            {% if is_granted('PROJECTINTERLOCUTOR_EDIT', interlocutor) and is_granted('PROJECT_WRITE', project) %}
+                <a class="btn btn-primary" id="document-new" href="{{ path('project.interlocutor.trackingDocument.new', {id: project.id, idInterlocutor: interlocutor.id}) }}" ><i class="fa fa-plus"></i></a>
+            {% endif %}
+        </h5>
+
+        <div class="table-responsive">
+            <table class="w-100" id="interlocutor-document-tracking-table">
+                <tr>
+                    <th>{{ 'entity.DocumentTracking.field.document'|trans }}</th>
+                    <th>{{ 'entity.DocumentTracking.field.sentAt'|trans }}</th>
+                    <th>{{ 'entity.DocumentTracking.field.receivedAt'|trans }}</th>
+                    {% if is_granted('PROJECTINTERLOCUTOR_EDIT', interlocutor) %}
+                        <th>{{ 'form.action.action'|trans }}</th>
+                    {% endif %}
+                </tr>
+                {% for documentTracking in documentTrackings %}
+                    {% if documentTracking.documentTracking is not null %}
+                        {% if documentTracking.documentTracking.project.id == project.id %}
+                            <tr>
+                                <td>
+                                    <a href="{{ path('project.documentTracking.show', {id: project.id, idDocumentTracking: documentTracking.documentTracking.id}) }}">{{ documentTracking.documentTracking.title }} {{ documentTracking.documentTracking.version }}</a>
+                                </td>
+                                <td>
+                                    <span>{{ documentTracking.sentAt is null ? '' : documentTracking.sentAt|date('d/m/Y') }}</span>
+                                </td>
+                                <td>
+                                    <span>{{ documentTracking.receivedAt is null ? '' : documentTracking.receivedAt|date('d/m/Y') }}</span>
+                                </td>
+                                {% if is_granted('PROJECTINTERLOCUTOR_EDIT', interlocutor) and is_granted('PROJECT_WRITE', project) %}
+                                    <td><a title="{{ 'form.action.edit'|trans }}" href="{{ path('project.interlocutor.trackingDocument.edit', {id: project.id, idInterlocutor: interlocutor.id, idDocumentTracking: documentTracking.id}) }}" class="document-edit"><i class="fa fa-edit"></i></a></td>
+                                {% endif %}
+                            </tr>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    {% if is_granted('ROLE_COMMUNICATION_READ') %}
+        <div class="admin-block">
+        <div class="sf-read">
+            <h5>{{ 'entity.Contact.action.list'|trans }}</h5>
+            <div class="table-responsive">
+                <table class="w-100">
+                    <tr>
+                        <th>{{ 'entity.Contact.field.transmitter'|trans}}</th>
+                        <th>{{ 'entity.Contact.field.recipient'|trans}}</th>
+                        <th>{{ 'entity.Contact.field.phase'|trans}}</th>
+                        <th>{{ 'entity.Contact.field.type'|trans}}</th>
+                        <th>{{ 'entity.Contact.field.completed'|trans}}</th>
+                        <th>{{ 'entity.Contact.field.date'|trans}} &amp; {{ 'entity.Contact.field.hour'|trans}}</th>
+                        <th>{{ 'entity.Contact.field.object'|trans}}</th>
+                        <th>{{ 'Action'|trans}}</th>
+                    </tr>
+                    {% for contact in contacts %}
+                        {% if contact.typeRecipient.label == 'Interlocuteur(s)' %}
+                            {% for interlocutorContact in contact.interlocutors %}
+                                {% if interlocutorContact.id == interlocutor.id  %}
+                                    <tr>
+                                        <td>
+                                            <a href="{{ path('project.user.show', {'id': project.id, 'idUser': contact.intervenant.id}) }}">{{ contact.intervenant }}</a>
+                                        </td>
+                                        <td>{{ interlocutorContact.displayName }}</td>
+                                        <td>{{ contact.phase }}</td>
+                                        <td>{{ contact.type }}</td>
+                                        <td>{% if contact.completed == true %} Oui {% else %} Non {% endif %}</td>
+                                        <td>{{ contact.date is empty ? '' : contact.date|date('d/m/Y') }} à {{ contact.hour }} </td>
+                                        <td>{{ contact.object}}</td>
+                                        <td>
+                                            <a href="{{ path('project.contact.show', {'id': project.id, 'idContact': contact.id}) }}"><i class="fa fa-eye"></i></a>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if is_granted('ROLE_DOCUMENTTRANSVERSE_READ') and is_granted('ROLE_PROJECT_SETTINGS_READ') %}
+        {# Liste des documents transverses dans un Interlocuteur #}
+        {{ render_esi(controller('App\\ESM\\Controller\\InterlocutorController::interlocutor_document_transverse', { 'id': interlocutor.id })) }}
+    {% endif %}
+
+{% endblock %}

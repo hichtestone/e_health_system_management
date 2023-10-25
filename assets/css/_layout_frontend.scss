@@ -1,0 +1,171 @@
+html {
+  // Utile - pour fixer le footer en bas de page
+  height: 100%;
+}
+body {
+  // Utile - pour fixer le footer en bas de page
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Avoid the IE 10-11 `min-height` bug. */
+  font-size: 0.9rem!important;
+}
+
+#content {
+  // Utile - pour fixer le footer en bas de page
+  flex: 1 0 auto;
+
+  padding: 1em;
+}
+
+#footer {
+  // Utile - pour fixer le footer en bas de page
+  flex-shrink: 0;
+
+  color: $app-menu-color;
+  font-style: italic;
+  background-color: white;
+  border-top: 0.5px solid #97c8e8;
+
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+
+  a{
+    color: $app-menu-color;
+  }
+  a:hover{
+    color: $app-menu-color-hover;
+    text-decoration: none;
+  }
+}
+
+/**
+  COLORS
+ */
+.c-black{color: $c_black;}
+.c-blue-d{color: $c_blue_dark;}
+.c-blue-l{color: $c_blue_light;}
+.c-green{color: $c_green;}
+.c-grey{color: $c_grey;}
+.c-orange{color: $c_orange_light;}
+.c-red{color: $c_red;}
+.c-white{color: $c_white;}
+.c-yellow{color: $c_yellow;}
+.c-maroon{color: $c_maroon;}
+.c-purple{color: $c_purple;}
+
+/**
+  Fil d'Ariane
+ */
+.breadcrumb-wrap{
+
+  font-weight: bold;
+
+  .no-marge{
+    ol{
+      margin: 0;
+    }
+  }
+
+}
+
+/**
+  Cards
+ */
+.cards-wrap{
+
+  ul{
+    padding: 0;
+    list-style: none !important;
+
+  }
+
+  li {
+
+    .card {
+      transition: all 300ms ease;
+    }
+    .card:hover{
+      transform:scale(1.01);
+      -webkit-box-shadow: 0px 7px 44px -8px rgba(0,0,0,0.4);
+      -moz-box-shadow: 0px 7px 44px -8px rgba(0,0,0,0.4);
+      box-shadow: 0px 7px 44px -8px rgba(0,0,0,0.4);
+    }
+
+    > a:hover{
+      text-decoration: none;
+    }
+
+  }
+}
+
+/**
+  HIDDEN BLOCKS
+ */
+
+#mpFlash{
+  display: block;
+  text-align: center;
+  z-index: 99999;
+  position: relative;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: 180px;
+}
+
+
+.modal-backdrop{
+  z-index: 100000!important;
+}
+.modal{
+  z-index: 100050!important;
+}
+
+
+/*
+  MAIN
+ */
+#main{
+  margin-top: 15px;
+}
+
+/**
+  Typography
+ */
+h1,h2 {
+  text-align: center;
+}
+
+h1 {
+  margin: 25px 0!important;
+  font-size: 2rem!important;
+}
+
+h2 {
+  font-size: 1.8rem!important;
+}
+
+h5 {
+  text-decoration: underline;
+}
+
+a {
+  text-decoration: underline;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.admin-block {
+  dd {
+    a {
+      text-decoration: underline;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+}
+

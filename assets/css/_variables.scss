@@ -1,0 +1,66 @@
+
+
+/**
+    PARAMETRAGES
+ */
+
+// couleurs
+$c_black: #292929;
+$c_blue_dark: #2c4d7a;
+$c_blue_light: #97c8e8;
+$c_green: #5bcc36;
+$c_grey: #858585;
+$c_orange_light: #e75113;;
+$c_orange_dark: #d0511d;
+$c_red: #e02833;
+$c_white: #fff;
+$c_yellow: #dac338;
+$c_maroon: #632e20;
+$c_purple: #9d2c9c;
+
+
+
+// paramètre structure
+$app-menu-bg: $c_white;
+$app-menu-color: $c_blue_dark;
+$app-menu-color-hover: $c_blue_dark;
+$app-menu-admin-bg: $c-red;
+$app-menu-admin-color: $c-red;
+$app-menu-admin-color-hover: $c-red;
+$app-bg: $c_white;
+$app-color: $c_blue_dark;
+$headings-color: $c_blue_dark;
+
+
+
+
+/**
+    override des paramètres bootstrap
+ */
+
+// structure
+$navbar-dark-color: $app-menu-color;
+$navbar-dark-active-color: $app-menu-color-hover;
+$navbar-dark-hover-color: $app-menu-color-hover;
+$body-bg: $app-bg;
+$body-color: $app-color;
+
+
+
+
+// link
+$link-color: $c_blue_dark;
+
+
+
+// tables
+$table-cell-padding: 0.3rem;
+
+
+
+
+
+// transforme color to
+@mixin background-opacity($color, $opacity) {
+  background-color: rgba($color, $opacity);
+}

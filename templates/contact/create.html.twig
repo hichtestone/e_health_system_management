@@ -1,0 +1,51 @@
+{% set activeMenu = 'project' %}
+{% set subMenu = 'project' %}
+{% set activeMenu2 = 'communication' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.home.index', { 'id' : project.id }) }}"
+                                           title="{{ project.acronyme }}">{{ project.acronyme }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.list.meetings', { 'id' : project.id }) }}" title="communication">
+                    Communication</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.list.contacts', { 'id' : project.id }) }}" title="{{ 'entity.Contact.field.name'|trans}}">
+                    {{ 'entity.Contact.field.name'|trans}}</a></li>
+            <li class="breadcrumb-item active">{% if edit %} {{ 'form.action.modification'|trans }} {% else %}  {{ 'form.action.creation'|trans }} {% endif %}</li>
+        </ol>
+    </nav>
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('project.list.meetings', { 'id' : project.id }) }}">{{ 'entity.Meeting.field.name'|trans}}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('project.list.trainings', { 'id' : project.id }) }}">{{ 'entity.Training.field.name'|trans}}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="{{ path('project.list.contacts', { 'id' : project.id }) }}">{{ 'entity.Contact.field.name'|trans}}</a>
+        </li>
+    </ul>
+
+    <h1>{% if edit %} {{ ('entity.Contact.action.edit')|trans }} {%  else %} {{ ('entity.Contact.action.create')|trans }}{% endif %}</h1>
+
+    <p id="recipient">{% if lang == 'fr' %} Destinateur(s){% else %} Recipient(s) {% endif %}</p>
+    <div class="admin-block">
+        {{ form_start(form) }}
+        <dl class="row">
+            <div class="col-6">
+                {{ form_widget(form) }}
+                <button type="submit" class="btn btn-primary" type="submit">
+                    {% if edit %} {{ ('entity.Contact.action.edit')|trans }} {%  else %} {{ ('entity.Contact.action.create')|trans }} {% endif %}
+                </button>
+            </div>
+        </dl>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+

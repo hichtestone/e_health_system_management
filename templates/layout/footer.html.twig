@@ -1,0 +1,17 @@
+<footer id="footer">
+    {% block footer %}
+        <div class="container-fluid">
+            <span>
+                    {{ app_name is defined ? app_name : "" }}
+                    {{ app_version is defined ? "v" ~ app_version : "" }}
+                    {{ app.environment is same as('prod') ? '' : app.environment }}
+            </span>
+            <span> - © 2020 - </span>
+            <a href="javascript:void(0)" data-ajax-popup="{{ path('popup.support') }}" data-ap-type="question" data-ap-title="{{ 'support.label'|trans }}">{{ 'support.label'|trans }}</a>
+            <span> - made by <a href="https://clinfile.com/">Clinfile</a></span>
+            <span> - <a href="{{ path('tos') }}">{{ 'terms_of_service.label'|trans }}</a></span>
+            {# <span> - <a href="{{ path('app.release_notes') }}">{{ 'app.release_note'|trans }}</a></span>#}
+        </div>
+    {% endblock %}
+</footer>
+<div id="footer-phantom"></div>

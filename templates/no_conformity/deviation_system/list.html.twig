@@ -1,0 +1,46 @@
+{% set activeMenu = 'no_conformity' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ path('no_conformity.protocol_deviation_crex') }}" title="{{ 'menu.NonConformity.label' | trans }}">{{ 'menu.NonConformity.label' | trans }}</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <a href="{{ path('deviation.system.list')}}">{{ 'entity.NoConformity.menu.system'|trans }}</a>
+            </li>
+        </ol>
+    </nav>
+
+    <h1>{{ 'entity.NoConformity.menu.system'|trans }}
+        {% if is_granted('DEVIATION_SYSTEM_DRAFT_CREATE') %}
+            <a class="btn btn-primary" href="{{ path('deviation.system.declaration') }}">
+                <i class="fa fa-plus"></i>
+            </a>
+        {% endif %}
+    </h1>
+
+    {% include 'menu/no_conformity.html.twig' with {'activetab': 'system'} %}
+
+    {{ list.render|raw }}
+
+    <div class="row">
+        <div class="col-lg-12">
+            {% if is_granted('DEVIATION_SYSTEM_CLOSE_MULTI') %}
+                <button id="deviation-system-close-multi" class="btn btn-primary float-right">{{ 'entity.NoConformity.field.system.clos_all'|trans}}</button>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('deviation-system') }}
+{% endblock %}
+

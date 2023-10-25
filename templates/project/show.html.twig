@@ -1,0 +1,31 @@
+{% set activeMenu = 'project' %}
+{% set subMenu = 'project' %}
+{% set activeMenu2 = 'home' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+
+    {% if project is defined and users == true %}
+        <div class="admin-block">
+            <h5>{{ 'entity.Project.user.user_list'|trans }}</h5>
+            <div class="table-responsive">
+                <table class="w-100">
+                    <tr>
+                        <th>{{ 'entity.Project.user.full_name'|trans({'%count%': 1}) }}</th>
+                        <th>{{ 'entity.Project.user.profile'|trans}}</th>
+                        <th>{{ 'entity.Project.user.email'|trans }}</th>
+                    </tr>
+                    {% for userProject in project.userProjects %}
+                        <tr>
+                            <td>{{ userProject.user.displayName }} ({{ userProject.user.job.label }})</td>
+                            <td>{{ userProject.user.profile }}</td>
+                            <td>{{ userProject.user.email }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    {% endif%}
+
+{% endblock %}

@@ -1,0 +1,99 @@
+{% set activeMenu = 'settings' %}
+{% set subMenu = 'settings' %}
+{% set activeMenu2 = 'diagram-study' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.home.index', { 'id' : project.id }) }}" title="{{ project.acronyme }}">{{ project.acronyme }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.list.visit.setting', { 'id' : project.id }) }}" title="phase-setting">{{ 'entity.VisitSetting.label'|trans }}</a></li>
+            <li class="breadcrumb-item active">{% if edit %} Modification {% else %} Création {% endif %}</li>
+        </ol>
+    </nav>
+
+    {# Onglets Dans Schema d'etudes #}
+    {% include 'menu/schema_etude.html.twig' with {'activetab': 'visit_settings'} %}
+
+    <h1>{% if edit %} {{ 'entity.VisitSetting.action.edit'|trans }} {%  else %} {{ 'entity.VisitSetting.action.new-title'|trans }} {% endif %}</h1>
+
+    <div class="admin-block" id="new-phase-setting">
+        {{ form_start(form) }}
+
+            <div class="row">
+                <div class="col-6">
+                    {{ form_row(form.ordre) }}
+                </div>
+                <div class="col-6">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    {{ form_row(form.phase) }}
+                </div>
+                <div class="col-6">
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-6">
+                    {{ form_row(form.short) }}
+                </div>
+                <div class="col-6">
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-6">
+                    {{ form_row(form.label) }}
+                </div>
+                <div class="col-6">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    {{ form_row(form.price) }}
+                </div>
+                <div class="col-6">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-3">
+                    {{ form_row(form.delay) }}
+                </div>
+                <div class="col-3">
+                    {{ form_row(form.delayApprox) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    {{ form_row(form.patientVariable) }}
+                </div>
+                <div class="col-6">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                        <button type="submit" class="btn btn-primary" type="submit">
+                            {% if edit %} {{ ('entity.VisitSetting.action.edit')|trans }} {%  else %} {{ 'entity.VisitSetting.action.create'|trans }} {% endif %}
+                        </button>
+                        <br>
+                        <br>
+                        <span style="color: #c30000">* {{ ('general.star.mandatory')|trans }}</span>
+                </div>
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+

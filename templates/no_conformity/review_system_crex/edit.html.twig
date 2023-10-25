@@ -1,0 +1,93 @@
+{% set activeMenu = 'no_conformity' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <h1>{% if action == 'edit' %} {{ 'entity.Deviation.DeviationReview.action.modify'|trans }} {% else %} {{ 'entity.Deviation.DeviationReview.action.create'|trans }} {% endif %}</h1>
+
+
+    <div class="admin-block">
+        <div class="sf-read">
+            <h5>{{ 'entity.Deviation.DeviationReview.file.deviation'|trans }}</h5>
+        </div>
+
+        <dl class="row">
+            <div class="col-4">
+                <dt>Statut de la déviation :</dt>
+                <dd>{{ constant('App\\ESM\\Entity\\Deviation::STATUS')[review.deviationSystem.status]  | trans }}</dd>
+            </div>
+            <div class="col-4">
+                <dt>Date de résolution :</dt>
+                <dd>{{ review.deviationSystem.closedAt is empty ? '' : review.deviationSystem.closedAt|date('d/m/Y') }}</dd>
+            </div>
+            <div class="col-4">
+                <dt> Nom du déclarant :</dt>
+                <dd>{{ review.deviationSystem.declaredBy }}</dd>
+            </div>
+        </dl>
+
+        <dl class="row">
+            <div class="col-4">
+                <dt>Ref ISO 9001:</dt>
+                <dd>{{ review.deviationSystem.refISO9001 }}</dd>
+            </div>
+            <div class="col-4">
+                <dt>Processus :</dt>
+                <dd>{{ review.deviationSystem.process|join(' | ') }}</dd>
+            </div>
+            <div class="col-4">
+                <dt>Référent AQ :</dt>
+                <dd>{{ review.deviationSystem.referentQA }}</dd>
+            </div>
+        </dl>
+
+
+
+        <dl class="row">
+            <div class="col-4">
+                <dt>Référence Déviation NC Système :</dt>
+                <dd>{{ review.deviationSystem.code }}</dd>
+            </div>
+            <div class="col-4">
+                <dt>Résumé déviation :</dt>
+                <dd>{{ review.deviationSystem.resume }}</dd>
+            </div>
+            <div class="col-4">
+                <dt>Description déviation :</dt>
+                <dd style="overflow-wrap:break-word;">{{ review.deviationSystem.description}}</dd>
+            </div>
+        </dl>
+
+
+    </div>
+
+    <div class="admin-block">
+        {{ form_start(form) }}
+        <div class="row mb-3">
+            <div class="col-4">
+                {{ form_label(form.doneAt, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-4">
+                {{ form_widget(form.doneAt) }}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-4">
+                {{ form_label(form.comment, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-4">
+                {{ form_widget(form.comment) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <button type="submit" class="btn btn-primary">{{ ('entity.Deviation.DeviationReview.action.'~action)|trans }}</button>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

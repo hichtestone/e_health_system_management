@@ -1,0 +1,38 @@
+{% set activeMenu = 'report_model' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('admin.projects.index') }}" title="{{ 'menu.admin.home'|trans }}">{{ 'menu.admin.home'|trans }}</a></li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('admin.report.model.index') }}" title="{{ 'entity.report_model.title' | trans }}">
+                    {{ 'entity.report_model.title' | trans }}
+                </a>
+            </li>
+        </ol>
+    </nav>
+
+    <h1>{{ 'entity.report_model.title' | trans }} <br>
+        {% if is_granted('REPORT_MODEL_CREATE') %}
+            <a class="btn btn-primary" href="{{ path('admin.report.model.new') }}">{{ 'entity.report_model.action.new'|trans }}</a>
+        {% endif %}
+    </h1>
+
+    {{ list.render|raw }}
+
+    {% if is_granted('REPORT_MODEL_CREATE') %}
+    <div class="row mb-5">
+        <div class="col-4">
+            <i id="reportMonitoring-publication" class="btn btn-primary" href data-placement="left" data-toggle="tooltip" title="{{ 'entity.report_model.publish_message'|trans }}">{{ 'entity.report_model.publish'|trans }}</i>
+            <i id="reportMonitoring-obsolete" class="btn btn-primary" href data-placement="right" data-toggle="tooltip" title="{{ 'entity.report_model.obsolete_message'|trans}}">{{ 'entity.report_model.obsolete'|trans}}</i>
+        </div>
+        <div class="col-9">
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}

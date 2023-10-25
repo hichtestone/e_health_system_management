@@ -1,0 +1,11 @@
+<div id="mpFlash" style="z-index: 999999">
+
+    {% for category in ['success','warning','danger','info'] %}
+        {% for message in app.session.flashbag.get(category) %}
+            <div>
+                <span class="d-inline-block alert alert-{{ category }}">{{ message|trans }}</span>
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+</div>

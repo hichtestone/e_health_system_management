@@ -1,0 +1,82 @@
+{% set menu = (app.request.server.get('REQUEST_URI') matches '{^/admin/}') ? 'admin' :
+    (app.request.server.get('REQUEST_URI') matches '#^\/projects\/\\d#') ? 'project' : 'default' %}
+{% set subMenu = subMenu ?? '' %}
+{% set activeMenu = activeMenu ?? '' %}
+{% set activeMenu2 = activeMenu2 ?? '' %}
+
+<!DOCTYPE html>
+
+<html lang="{{ app.request.locale }}">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="icon" type="image/png" href="{{ asset('build/images/favicon.png') }}">
+        <title>{% block title %}{{ app_name }} v{{ app_version }} {{ app.environment is same as('prod') ? '' : app.environment }}{% endblock %}</title>
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+    </head>
+
+    <body>
+
+        {% if menu == 'project' %}
+
+            {# Projet en cours a partir de l'URL courante #}
+            {% set project = get_project(app.request.server.get('REQUEST_URI')) %}
+
+            {# ID Projet en cours a partir de l'URL courante #}
+            {% set project_id = get_project_id(app.request.server.get('REQUEST_URI')) %}
+
+            <style>
+                #menu {
+                    background-color: {{ project.backgroundColor }};
+                }
+                #menu a {
+                    color: {{ project.fontColor }};
+                }
+                #menu a.active, #menu a:hover {
+                    border-bottom-color: {{ project.fontColor }};
+                }
+            </style>
+        {% endif %}
+
+        {# Menu #}
+        <header id="header">
+            {% block menu %}
+            {% endblock %}
+        </header>
+
+
+
+        {# Contenu #}
+        <main role="main" id="content">
+
+            {# Flash message #}
+            {{ include('layout/flash.html.twig') }}
+
+            <div id="main-fluid-pre" class="container-fluid">
+                {% block prebody %}{% endblock %}
+            </div>
+
+            <div id="main" class="container">
+                {% block body %}{% endblock %}
+            </div>
+
+            <div id="main-fluid-post" class="container-fluid">
+                {% block postbody %}{% endblock %}
+            </div>
+
+        </main>
+
+        {# Footer #}
+        {{ include('layout/footer.html.twig') }}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+
+    </body>
+
+</html>

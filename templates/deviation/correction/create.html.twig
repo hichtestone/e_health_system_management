@@ -1,0 +1,68 @@
+{# set current menu #}
+{% set activeMenu = 'project' %}
+{% set subMenu = 'project' %}
+{% set activeMenu2 = 'protocol-deviation' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('deviation') }}
+{% endblock %}
+
+{% block title %}Déviation - corrections{% endblock %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="Accueil">{{ 'menu.project.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.show', { 'id' : project.id }) }}">{{ 'menu.project.manage'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('deviation.list', { 'projectID' : project.id }) }}">{{ 'menu.project.protocol_deviation'|trans }}</a></li>
+            <li class="breadcrumb-item "><a href="{{ path('deviation.declaration', { 'projectID' : project.id, 'deviationID': deviation.id }) }}">{{ 'deviation.titre.declaration'|trans|capitalize }}</a></li>
+            <li class="breadcrumb-item active">Création corrections de déviations </li>
+        </ol>
+    </nav>
+
+    {% include 'menu/deviation.html.twig' with {'activetab': 'declaration'} %}
+
+    <h1>{% if action == 'edit' %} Edition corrections de déviations {% else %} Création corrections de déviations {% endif %}</h1>
+
+    {{ form_start(form) }}
+
+        <div class="container-fluid admin-block pl-3 mb-2">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-lg-12">{{ form_row(form.applicationPlannedAt) }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">{{ form_row(form.realizedAt) }}</div>
+                    </div>
+                </div>
+                <div class="col-lg-6">{{ form_row(form.description) }}</div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6">{{ form_row(form.efficiencyMeasure) }}</div>
+                <div class="col-lg-6">{{ form_row(form.notEfficiencyMeasureReason) }}</div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-3 offset-9">
+                    <button class="btn btn-primary float-right" type="submit">Enregistrer</button>
+                </div>
+            </div>
+
+        </div>
+
+        {{ form_rest(form) }}
+
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('deviation') }}
+{% endblock %}

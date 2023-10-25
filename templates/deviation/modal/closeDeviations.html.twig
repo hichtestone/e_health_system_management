@@ -1,0 +1,45 @@
+{% block content %}
+
+    <div class="admin-block">
+
+        <div>
+
+            <p>
+                <span class="text-primary">Êtes-vous sûr de vouloir clôturer les déviations suivantes ?</span>
+            </p>
+
+            <div>
+                {% if deviationsNotClosed is not empty %}
+                    {% for deviationNotClosed in deviationsNotClosed %}
+                        <li class="text-primary">{{ deviationNotClosed.code }}</li>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <br>
+
+            <div>
+                {% if deviationsDraft is not empty %}
+                    <p class="text-danger">Attention les déviations suivantes sont en mode brouillon</p>
+                    {% for deviationDraft in deviationsDraft %}
+                        <li>{{ deviationDraft.code }}</li>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <br>
+
+            <div>
+                {% if deviationsAlreadyClosed is not empty %}
+                    <p class="text-danger">Attention les déviations suivantes sont déjà clôturées</p>
+                    {% for deviationAlreadyClosed in deviationsAlreadyClosed %}
+                        <li>{{ deviationAlreadyClosed.code }}</li>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}

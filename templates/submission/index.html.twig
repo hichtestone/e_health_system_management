@@ -1,0 +1,28 @@
+{% set activeMenu = 'project' %}
+{% set subMenu = 'project' %}
+{% set activeMenu2 = 'dates' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.home.index', { 'id' : project.id }) }}" title="{{ project.acronyme }}">{{ project.acronyme }}</a></li>
+            <li class="breadcrumb-item active">{{ 'menu.project.statutory'|trans}} > {{ 'menu.reglementaire.submission'|trans }}</li>
+        </ol>
+    </nav>
+
+    {# Onglets dates et chiffres / Soumissions / rgpd #}
+    {% include 'menu/reglementaire.html.twig' with {'activetab': 'submission'} %}
+
+    <h1>{{ 'entity.Submission.action.list'|trans }}
+         {% if is_granted('PROJECT_ACCESS_AND_OPEN', project) and is_granted('PROJECT_WRITE', project) and is_granted('SUBMISSION_CREATE') %}
+            <a class="btn btn-primary" href="{{ path('project.submission.new', {id: project.id}) }}" ><i class="fa fa-plus"></i></a>
+        {% endif %}
+    </h1>
+
+    {{ list.render|raw }}
+
+{% endblock %}

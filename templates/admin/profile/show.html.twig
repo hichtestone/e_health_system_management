@@ -1,0 +1,60 @@
+{% set activeMenu = 'profile' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('admin.projects.index') }}" title="{{ 'menu.admin.home'|trans }}">{{ 'menu.admin.home'|trans }}</a></li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('admin.profiles.index') }}" title="{{ 'menu.admin.profiles' | trans }}">
+                    {{ 'menu.admin.profiles' | trans }}
+                </a>
+            </li>
+            <li class="breadcrumb-item active">
+                {{ 'general.file' | trans }}  - {{ profile.name|capitalize }}
+            </li>
+        </ol>
+    </nav>
+
+    <h1>Fiche - {{ profile.name|capitalize }}</h1>
+
+    <div class="admin-block">
+        <h5>{{ 'show.main'|trans }}</h5>
+        <dl class="row">
+            <div class="col-12">
+                {% if is_granted('PROFILE_ARCHIVE', profile) %}
+                    <a class="btn btn-info float-right"
+                       href="{{ path('admin.profile.archive', {'id' : profile.id }) }}">Archiver</a>
+                {% endif %}
+                {% if is_granted('PROFILE_RESTORE', profile) %}
+                    <a class="btn btn-info float-right"
+                       href="{{ path('admin.profile.restore', {'id' : profile.id }) }}">Restaurer</a>
+                {% endif %}
+            </div>
+        </dl>
+
+        <dl class="row">
+            <div class="col-6">
+                <dt>{{ 'Name: ' }}</dt>
+                <dd>{{ profile.name }}</dd>
+            </div>
+            <div class="col-6">
+                <dt>{{ 'Acronyme : ' }}</dt>
+                <dd>{{ profile.acronyme }}</dd>
+            </div>
+            <div class="col-12">
+                <dt>
+                {# Tree #}
+                {{ tree(profile.id, 'App\\ESM\\Entity\\Profile', 'App\\ESM\\Entity\\Role', 'parent', 'children',  'code', 'profile_role', 'profile_roleText', true) }}
+                </dt>
+            </div>
+        </dl>
+
+        {% if is_granted('PROFILE_EDIT', profile) %}
+        <a class="btn btn-primary"
+           href="{{ path('admin.profile.edit', {'id' : profile.id}) }}">{{ 'entity.Profile.modify'|trans }}</a>
+        {% endif %}
+    </div>
+
+{% endblock %}

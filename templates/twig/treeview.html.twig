@@ -1,0 +1,23 @@
+{% macro tree(rows, roleProfileList, read_only) %}
+    {% import _self as macros %}
+    {% for row in rows %}
+        <li data-id="{{ row.id }}" data-jstree='{"checkbox_disabled":{{ read_only }} }'>
+            <a href="javascript:;" class="{{ row.id in roleProfileList ? ' jstree-clicked' : '' }}">{{ row.name is not empty ? ('role.'~row.name) | trans : '' }}</a>
+            {% if row.values is defined %}
+                <ul>
+                    {{ macros.tree(row.values, roleProfileList, read_only) }}
+                </ul>
+            {% endif %}
+        </li>
+    {% endfor %}
+{% endmacro %}
+
+
+{% import _self as macros %}
+{% if rows is not empty %}
+    <div data-tree data-select-field-id="{{ selectfieldId }}" data-hidden-select-field-id="{{ hiddenSelectfieldId }}">
+        <ul>
+            {{ _self.tree(rows, roleProfileList, read_only) }}
+        </ul>
+    </div>
+{% endif %}

@@ -1,0 +1,19 @@
+{% set activeMenu = 'artefact' %}
+
+{% extends 'ETMF/layout/app.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    <h1>{{ 'entity.Workflow.list.header'|trans }}
+        {% if is_granted('WORKFLOW_CREATE') %}
+            <a class="btn btn-primary" href="{{ path('admin.workflow.new') }}" ><i class="fa fa-plus"></i></a>
+        {% endif %}
+    </h1>
+
+
+    {% if list is defined %}
+        {{ list.render|raw }}
+    {% endif %}
+
+{% endblock %}

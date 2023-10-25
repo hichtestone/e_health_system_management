@@ -1,0 +1,58 @@
+{% set activeMenu = 'profile' %}
+
+{% set id = action is defined and profile is defined  ? profile.id : 0 %}
+
+
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('admin.projects.index') }}" title="{{ 'menu.admin.home'|trans }}">{{ 'menu.admin.home'|trans }}</a></li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('admin.profiles.index') }}" title="{{ 'menu.admin.profiles' | trans }}">
+                    {{ 'menu.admin.profiles' | trans }}
+                </a>
+            </li>
+            <li class="breadcrumb-item active">{{ ('form.action.'~action)|trans }}</li>
+        </ol>
+    </nav>
+
+    <h1>{{ ('entity.Profile.'~action)|trans }}</h1>
+
+    <div class="admin-block" id="new-add">
+
+        <div class="row">
+
+            <div class="col-6">
+
+                {{ form_start(form) }}
+
+                    {{ form_row(form.name) }}
+                    {{ form_row(form.acronyme) }}
+                    {{ form_row(form.type) }}
+
+                    {{ form_label(form.roles) }}
+                    {{ tree(id, 'App\\ESM\\Entity\\Profile', 'App\\ESM\\Entity\\Role', 'parent', 'children',  'code', 'profile_roles', 'profile_roleText') }}
+
+                    <div class="d-none jstree-form">
+                        {{ form_widget(form.roles) }}
+                    </div>
+
+                    <br >
+
+                    <button type="submit" class="btn btn-primary" type="submit">{{ ('entity.Profile.'~action)|trans }}</button>
+                    <br>
+                    <br>
+                    <span style="color: #c30000">* {{ ('general.star.mandatory')|trans }}</span>
+
+                {{ form_end(form) }}
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}

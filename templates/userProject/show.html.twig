@@ -1,0 +1,182 @@
+{% set activeMenu = 'project' %}
+{% set subMenu = 'project' %}
+{% set activeMenu2 = 'user_project' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="Accueil">Accueil</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.show', { 'id' : project.id }) }}" title="{{ project.acronyme }}">{{ project.acronyme }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.user.list', { 'id' : project.id }) }}" title="{{ 'intervenants du projet'|trans }}">Intervenants du projet</a></li>
+            <li class="breadcrumb-item active">Fiche</li>
+        </ol>
+    </nav>
+
+    <h1>{{ user.civility.label }} {{ user.displayName }}</h1>
+    <div class="admin-block">
+        <h5>{{ 'show.main'|trans }}</h5>
+        <dl class="row">
+            <div class="col-3">
+                <dt>{{ 'entity.User.register.labels.civility' | trans }} &colon;</dt>
+                <dd>{{ user.civility.label }}</dd>
+            </div>
+            <div class="col-3">
+                <dt>{{ 'entity.User.register.labels.lastName' | trans }} &colon;</dt>
+                <dd>{{ user.lastName }}</dd>
+            </div>
+            <div class="col-3">
+                <dt>{{ 'entity.User.register.labels.firstName' | trans }} &colon;</dt>
+                <dd>{{ user.firstName }}</dd>
+            </div>
+            <div class="col-3">
+                <dt>{{ 'entity.User.register.labels.email' | trans }} &colon;</dt>
+                <dd>{{ user.email }}</dd>
+            </div>
+        </dl>
+        <dl class="row">
+            <div class="col-3">
+                <dt>{{ 'entity.User.register.labels.society' | trans }} &colon;</dt>
+                <dd>{{ user.society }}</dd>
+            </div>
+            <div class="col-3">
+                <dt>{{ 'entity.User.register.labels.phone' | trans }} &colon;</dt>
+                <dd>{{ user.phone }}</dd>
+            </div>
+            <div class="col-3">
+                <dt>{{ 'entity.User.register.labels.department' | trans }} &colon;</dt>
+                <dd>{{ user.department }}</dd>
+            </div>
+            <div class="col-3">
+                <dt>{{ 'entity.User.register.labels.job' | trans }} &colon;</dt>
+                <dd>{{ user.job }}</dd>
+            </div>
+        </dl>
+
+        {% if is_granted('USER_EDIT', user) %}
+            <a class="btn btn-primary"
+               href="{{ path('admin.user.edit', {'id' : user.id}) }}">{{ 'entity.User.modify'|trans }}</a>
+        {% endif %}
+    </div>
+
+    <div class="admin-block">
+        <div class="table-responsive">
+            <table class="w-100" id="user-projects">
+                <tr>
+                    <th>{{ 'entity.Project.user.date_started_project'|trans }}</th>
+                    <th>{{ 'entity.Project.user.date_ended_project'|trans }}</th>
+                    <th>{{ 'entity.Project.user.rate'|trans }}</th>
+                </tr>
+
+                {% for userProject in userProjects %}
+                    <tr>
+                        <td>{{ userProject.project.createdAt|date('d/m/Y') }}</td>
+                        <td>{{ userProject.disabledAt is empty ? '' : userProject.disabledAt|date('d/m/Y') }}</td>
+                        <td>
+                            <span>{{ userProject.rate is null ? '' : userProject.rate~'%' }}</span>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    {% if is_granted('ROLE_COMMUNICATION_READ') %}
+        <div class="admin-block">
+            <h5>{{ 'entity.Meeting.action.list'|trans }}</h5>
+            <div class="table-responsive">
+                <table class="w-100">
+                    <tr>
+                        <th>{{ 'entity.Meeting.field.type'|trans({'%count%': 1}) }}</th>
+                        <th>{{ 'entity.Meeting.field.startedAtShort'|trans }}</th>
+                        <th>{{ 'entity.Meeting.field.object'|trans }}</th>
+                    </tr>
+                    {% if userMeetings is defined and userMeetings|length > 0 %}
+                        {% for meeting in userMeetings %}
+                            <tr>
+                                <td>
+                                    <a href="{{ path('project.meeting.show', {'id' : project.id, 'idMeeting' : meeting.id }) }}">{{ meeting.type|capitalize }}</a>
+                                </td>
+                                <td>{{ meeting.startedAt is empty ? '' : meeting.startedAt|date('d/m/Y') }}</td>
+                                <td>{{ meeting.object }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </table>
+            </div>
+        </div>
+        <div class="admin-block">
+            <h5>{{ 'entity.Training.action.list'|trans }}</h5>
+            <div class="table-responsive">
+                <table class="w-100">
+                    <tr>
+                        <th>{{ 'entity.Training.field.title'|trans({'%count%': 1}) }}</th>
+                        <th>{{ 'entity.Training.field.startedAt'|trans }}</th>
+                        <th>{{ 'entity.Training.field.endedAt'|trans }}</th>
+                        <th>{{ 'entity.Training.field.former'|trans }}</th>
+
+                    </tr>
+                    {% if userTrainings is defined and userTrainings|length > 0 %}
+                        {% for training in userTrainings %}
+                            <tr>
+                                <td>
+                                    <a href="{{ path('project.training.show', {'id' : project.id, 'idTraining' : training.id }) }}">{{ training.title|capitalize }}</a>
+                                </td>
+                                <td>{{ training.startedAt is empty ? '' : training.startedAt|date('d/m/Y') }}</td>
+                                <td>{{ training.endedAt is empty ? '' : training.endedAt|date('d/m/Y') }}</td>
+                                <td>{{ training.teacher.fullName }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+
+                </table>
+            </div>
+        </div>
+        <div class="admin-block">
+            <div class="sf-read">
+                <h5>{{ 'entity.Contact.action.list'|trans }}</h5>
+                <div class="table-responsive">
+                    <table class="w-100">
+                        <tr>
+                            <th>{{ 'entity.Contact.field.transmitter'|trans}}</th>
+                            <th>{{ 'entity.Contact.field.recipient'|trans}}</th>
+                            <th>{{ 'entity.Contact.field.phase'|trans}}</th>
+                            <th>{{ 'entity.Contact.field.type'|trans}}</th>
+                            <th>{{ 'entity.Contact.field.completed'|trans}}</th>
+                            <th>{{ 'entity.Contact.field.date'|trans}} &amp; {{ 'entity.Contact.field.hour'|trans}}</th>
+                            <th>{{ 'entity.Contact.field.object'|trans}}</th>
+                            <th>{{ 'Action'|trans}}</th>
+                        </tr>
+                        {% for contact in contacts %}
+                            {% if contact.typeRecipient.label == 'Intervenant(s)' %}
+                                {% for intervenant in contact.intervenants %}
+                                    {% if intervenant.id == user.id %}
+                                        <tr>
+                                            <td>
+                                                <a href="{{ path('project.user.show', {'id': project.id, 'idUser': contact.intervenant.id}) }}">{{ contact.intervenant }}</a>
+                                            </td>
+                                            <td>{{ intervenant.displayName }}</td>
+                                            <td>{{ contact.phase }}</td>
+                                            <td>{{ contact.type }}</td>
+                                            <td>{% if contact.completed == true %} Oui {% else %} Non {% endif %}</td>
+                                            <td>{{ contact.date is empty ? '' : contact.date|date('d/m/Y') }} à {{ contact.hour }} </td>
+                                            <td>{{ contact.object}}</td>
+                                            <td>
+                                                <a href="{{ path('project.contact.show', {'id': project.id, 'idContact': contact.id}) }}"><i class="fa fa-eye"></i></a>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

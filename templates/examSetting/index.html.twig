@@ -1,0 +1,37 @@
+{% set activeMenu = 'settings' %}
+{% set subMenu = 'settings' %}
+{% set activeMenu2 = 'diagram-study' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block body %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.home.index', { 'id' : project.id }) }}"
+                                           title="{{ project.acronyme }}">{{ project.acronyme }}</a></li>
+            <li class="breadcrumb-item active"><a href="{{ path('project.list.exam.setting', { 'id' : project.id }) }}"
+                                           title="phase-setting">{{ 'entity.ExamSetting.label'|trans }}</a></li>
+        </ol>
+    </nav>
+
+    {# Onglets Dans Schema d'etudes #}
+    {% include 'menu/schema_etude.html.twig' with {'activetab': 'exam_settings'} %}
+
+    {# Translate text js #}
+    <div class="d-none data_translate"
+         data-entity-ExamSetting-field-modal-title = "{{ 'entity.ExamSetting.field.modal-order.title' | trans }}"
+         data-entity-ExamSetting-field-modal-add = "{{ 'entity.ExamSetting.field.modal-order.add' | trans }}"
+         data-entity-ExamSetting-field-modal-cancel = "{{ 'entity.ExamSetting.field.modal-order.cancel' | trans }}"
+    ></div>
+
+    <h1>{{ 'entity.ExamSetting.action.list'|trans }} <br>
+        {% if is_granted('PROJECT_ACCESS_AND_OPEN', project) and is_granted('PROJECT_WRITE', project) and is_granted('EXAMSETTING_CREATE') %}
+            <a class="btn btn-primary" href="{{ path('project.exam.setting.new', {'id' : project.id}) }}">{{ 'entity.ExamSetting.action.new'|trans }}</a>
+            <order-exam-table :project-id="{{ project.id }}" id="OrderExamTable"/>
+        {% endif %}
+    </h1>
+
+    {{ list.render|raw }}
+
+{% endblock %}

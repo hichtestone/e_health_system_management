@@ -1,0 +1,160 @@
+{# set current menu #}
+
+{% set activeMenu = 'project' %}
+
+{% extends 'layout/app.html.twig' %}
+
+
+
+{% block content %}
+
+    <h2>{{ 'entity.Project.action.new_treatment' | trans }}</h2>
+
+    <form method="post">
+        <div class="admin-block" >
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>{{ 'entity.Project.register.labels.trail_treatment' | trans }}</label>
+                    {# Types de traitements #}
+                    <select  class="form-control" data-drug-project  data-show="treatment_" name="trail_treatment[]">
+                        <option value=""></option>
+                        {% for treatment in trail_treatment_list %}
+                            <option value="{{ treatment.id }}">{{ treatment.label }}</option>
+                        {% endfor %}
+                    </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    {# Medicaments #}
+                    {% for treatment in trail_treatment_list %}
+                        <div class="d-none" data-hide="treatment_" data-block="treatment_{{ treatment.id }}">
+
+                            {# Count filled field #}
+                            {% set counter = 0 %}
+                            {% for drug in drugs_list %}
+                                {% if drug.trailTreatment == treatment %}
+                                    {% set counter = counter + 1 %}
+                                {% endif %}
+                            {% endfor %}
+
+                            {# Show only filled field #}
+                            {% if 0 < counter %}
+
+                            <div class="form-group">
+                                <label>{{ 'entity.Project.register.labels.drug' | trans }}</label>
+                                <select class="form-control" data-show="drug_rcp_bi_" data-drug-project name="drug[]">
+                                    <option value=""></option>
+                                    {% for drug in drugs_list %}
+                                        {% if drug.trailTreatment == treatment %}
+                                            <option value="{{ 't:' ~ treatment.id ~'_d:' ~ drug.id }}">{{ drug.name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            {% else %}
+                                <div class="alert alert-info">{{ 'general.error.warning_empty_relation' | trans }} </div>
+                            {% endif %}
+
+                        </div>
+                    {% endfor %}
+                </div>
+                </div>
+
+
+            <div class="row">
+                <div class="col-12">
+                {# Versions BI #}
+                {% for drug in drugs_list %}
+                    <div class="d-none" data-hide="drug_rcp_bi_" data-block="drug_rcp_bi_{{ 't:' ~ drug.trailTreatment.id ~'_d:' ~ drug.id }}">
+
+
+                            {# Count filled field #}
+                            {% set counter = 0 %}
+                            {% for version in version_bi_list %}
+                                {% if version.documentTransverse.drug == drug %}
+                                    {% set counter = counter + 1 %}
+                                {% endif %}
+                            {% endfor %}
+
+                            {# Show only filled field #}
+                            {% if 0 < counter %}
+
+                        <div class="form-group">
+                            <label>{{ 'entity.Drug.field.version_bi' | trans }}</label>
+                                <select  class="form-control" data-drug-project name="version_bi[]">
+                                    <option value=""></option>
+                                    {% for version in version_bi_list %}
+                                        {% if version.documentTransverse.drug == drug %}
+                                            <option value="{{ 't:' ~ version.documentTransverse.drug.trailTreatment.id ~'_d:' ~ version.documentTransverse.drug.id ~'_v:' ~ version.id }}">{{ version.version }} ({{ version.documentTransverse.name }})</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                        </div>
+                            {% else %}
+                                <div class="alert alert-info">{{ 'general.error.warning_empty_relation' | trans }} </div>
+                            {% endif %}
+                    </div>
+                {% endfor %}
+                </div>
+                </div>
+
+            <div class="row">
+                <div class="col-12">
+                    {# Versions RCP #}
+                    {% for drug in drugs_list %}
+                        <div class="d-none" data-hide="drug_rcp_bi_" data-block="drug_rcp_bi_{{ 't:' ~ drug.trailTreatment.id ~'_d:' ~ drug.id }}">
+
+                            {# Count filled field #}
+                            {% set counter = 0 %}
+                            {% for version in version_rcp_list %}
+                                {% if version.documentTransverse.drug == drug %}
+                                    {% set counter = counter + 1 %}
+                                {% endif %}
+                            {% endfor %}
+
+                            {# Show only filled field #}
+                            {% if 0 < counter %}
+
+                            <div class="form-group">
+                                <label>{{ 'entity.Drug.field.version_rcp' | trans }}</label>
+                                <select  class="form-control" data-drug-project name="version_rcp[]">
+                                    <option value=""></option>
+                                    {% for version in version_rcp_list %}
+                                        {% if version.documentTransverse.drug == drug %}
+                                            <option value="{{ 't:' ~ version.documentTransverse.drug.trailTreatment.id ~'_d:' ~ version.documentTransverse.drug.id ~'_v:' ~ version.id }}">{{ version.version }} ({{ version.documentTransverse.name }})</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            {% else %}
+                                <div class="alert alert-info">{{ 'general.error.warning_empty_relation' | trans }} </div>
+                            {% endif %}
+
+                        </div>
+                    {% endfor %}
+                </div>
+                </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <button type="submit" class="btn btn-primary" type="submit">{{  'word.save' |trans }}</button>
+                    <br>
+                    <br>
+                    <span style="color: #c30000">* {{ ('general.star.mandatory')|trans }}</span>
+                </div>
+            </div>
+    </form>
+
+    <div class="hidden data_translate"
+         data-dialog-warning_add_project="{{ 'entity.Drug.error.warning_add_project' | trans }}"
+         data-dialog-warning_add_rows="{{ 'entity.Drug.error.warning_add_rows' | trans }}"
+         {# Nombre de lignes autorisées #}
+         data-max_rows="5"
+    ></div>
+
+{% endblock %}
+

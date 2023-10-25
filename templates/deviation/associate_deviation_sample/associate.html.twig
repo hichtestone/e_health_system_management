@@ -1,0 +1,47 @@
+{% set activeMenu = 'center' %}
+{% set subMenu = 'project' %}
+{% set activeMenu2 = 'protocol-deviation' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block title %}Deviation - echantillions{% endblock %}
+
+{% block body %}
+
+    <h1>Deviations protocolaires</h1>
+
+    {% include 'menu/deviation.html.twig' with {'activetab': 'sample', 'deviationID' : deviation.id, 'editMode': 'edit'} %}
+    <br>
+    <h2>Ajouter une déviation échantillon biologique</h2>
+    <br>
+
+    <div class="admin-block">
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-lg-12">{{ form_row(form.deviationSample) }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-lg-12">{{ form_row(form.resume) }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <a href="{{ path('deviation.sample', { 'projectID' : project.id, 'deviationID' : deviation.id }) }}" type="button" class="btn btn-secondary">Annuler</a>
+                <button class="btn btn-primary" id="associateDeviationSample" type="submit">Ajouter</button>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('deviation') }}
+{% endblock %}

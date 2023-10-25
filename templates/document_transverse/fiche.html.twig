@@ -1,0 +1,287 @@
+{# On est dans Admin > Interlocuteurs #}
+{% if app.request.get('_route') == 'document_transverse_interlocuteur.show'%}
+    {% set activeMenu = 'interlocutor' %}
+    {% set breadcrumb_route_index = 'admin.interlocutors.index' %}
+    {% set route_show_document = path('document_transverse_interlocuteur.show', {'interlocutor': document.interlocutor.id, id: document.id}) %}
+    {% set show_label_document = document.interlocutor.fullName %}
+    {% set breadcrumb_menu_index = 'menu.admin.interlocutors' %}
+    {% set route_edit = path('document_transverse_interlocutor.edit', {'interlocutor': document.interlocutor.id, id: document.id}) %}
+{% endif %}
+
+{# On est dans Admin > Etablissement #}
+{% if app.request.get('_route') == 'document_transverse_institution.show'  %}
+    {% set activeMenu = 'institution' %}
+    {% set breadcrumb_route_index = 'admin.institutions.index' %}
+    {% set route_show_document = path('document_transverse_institution.show', {'institution': document.institution.id, id: document.id}) %}
+    {% set show_label_document = document.institution.name %}
+    {% set breadcrumb_menu_index = 'menu.admin.institutions' %}
+    {% set route_edit = path('document_transverse_institution.edit', {'institution': document.institution.id, id: document.id}) %}
+{% endif %}
+
+{# On est dans Projet > Centre #}
+{% if app.request.get('_route') == 'document_transverse_center.show'  %}
+    {% set activeMenu = 'center' %}
+    {% set breadcrumb_route_index = 'admin.institutions.index' %}
+    {% set breadcrumb_menu_index = 'entity.Center.action.list' %}
+{% endif %}
+
+{# On est dans Admin > Medicament #}
+{% if app.request.get('_route') == 'document_transverse_drug.show'  %}
+    {% set activeMenu = 'drugs' %}
+    {% set breadcrumb_route_index = 'admin.drugs.index' %}
+    {% set route_show_document = path('document_transverse_drug.show', {'drug': document.drug.id, id: document.id}) %}
+    {% set show_label_document = document.drug.name %}
+    {% set breadcrumb_menu_index = 'menu.admin.drugs' %}
+    {% set route_edit = path('document_transverse_drug.edit', {'drug': document.drug.id, id: document.id}) %}
+{% endif %}
+
+{# On est dans Document transverse #}
+{% if app.request.get('_route') == 'document_transverse.show'  %}
+    {% set activeMenu = 'documentTransverse' %}
+    {% set breadcrumb_route_index = 'document_transverse.index' %}
+    {% set breadcrumb_menu_index = 'menu.DocumentTransverse.label' %}
+    {% set route_edit = path('document_transverse.edit', { id: document.id}) %}
+{% endif %}
+
+
+{% set allow_edit_create_version = is_granted('ROLE_DRUG_READ_WRITE_ARCHIVE_DOCUMENTTRANSVERSE') %}
+
+{% set is_empty_document_filename = document.filename is empty %}
+{% set is_empty_document = document.filename is empty and 0 == count_versions_by_document_withfile(document) %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="Accueil">Accueil</a></li>
+            <li class="breadcrumb-item">
+                <a href="{{ path(breadcrumb_route_index) }}" title="{{ breadcrumb_menu_index | trans }}">
+                    {{ breadcrumb_menu_index | trans }}
+                </a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ route_show_document }}" title="{{ show_label_document }}">
+                    Fiche - {{ show_label_document }}
+                </a>
+            </li>
+        </ol>
+    </nav>
+
+    <div class="admin-block">
+
+        <div class="sf-read">
+            <h5  align="center">{{ 'entity.DocumentTransverse.action.liste'|trans }}
+
+                {% if activeMenu == 'interlocutor' and is_granted('INTERLOCUTOR_READ_WRITE_ARCHIVE_DOCUMENTTRANSVERSE', interlocutor) and route_edit is defined and document.deletedAt == null %}
+                    <a href="{{ route_edit }}" title="Modifier">
+                        <i style="margin-left: 1em;" class="fa fa-pen"></i>
+                    </a>
+                {% endif %}
+
+                {% if activeMenu == 'institution' and is_granted('INSTITUTION_READ_WRITE_ARCHIVE_DOCUMENTTRANSVERSE', institution) and route_edit is defined and document.deletedAt == null %}
+                    <a href="{{ route_edit }}" title="Modifier">
+                        <i style="margin-left: 1em;" class="fa fa-pen"></i>
+                    </a>
+                {% endif %}
+
+                {% if activeMenu == 'drugs' and is_granted('DRUG_READ_WRITE_ARCHIVE_DOCUMENTTRANSVERSE', drug) and route_edit is defined and document.deletedAt == null %}
+                    <a href="{{ route_edit }}" title="Modifier">
+                        <i style="margin-left: 1em;" class="fa fa-pen"></i>
+                    </a>
+                {% endif %}
+
+              {% if is_granted('DOCUMENTTRANSVERSE_LIST') %}
+                {% if document.institution != null %}
+                    {% if document.filename != null %}
+                        <a href="{{ vich_uploader_asset(document, 'filenameVich') }}" download title="{{ 'entity.DocumentTransverse.action.download'|trans}}">
+                            <i class="fa fa-download" aria-hidden="true"></i>
+                        </a>
+                    {% endif %}
+                {% elseif document.interlocutor != null %}
+                    {% if document.filename != null %}
+                        <a href="{{ vich_uploader_asset(document, 'filenameVich') }}" download title="{{ 'entity.DocumentTransverse.action.download'|trans}}">
+                            <i class="fa fa-download" aria-hidden="true"></i>
+                        </a>
+                    {% endif %}
+                {% endif %}
+              {% endif %}
+
+            </h5>
+
+            {# Aucun fichier attache au document #}
+            {% if is_empty_document %}
+                <div class="m-4">
+                    <div class="alert alert-info">{{ 'entity.DocumentTransverse.error.empty_file' | trans }}</div>
+                </div>
+
+            {% endif %}
+        </div>
+
+        <br>
+        <br>
+
+        <div class="row form-group">
+            <div class="col-4">
+                <label class="font-weight-bold">{{ ('entity.DocumentTransverse.field.name')|trans }}</label>
+            </div>
+            <div class="col-6">
+                <input class="form-control" type="text" disabled value="{{ document.name }}">
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-4">
+                <label class="font-weight-bold">{{ ('entity.DocumentTransverse.field.porteeDocument')|trans }}</label>
+            </div>
+            <div class="col-6">
+                <input class="form-control" type="text" disabled value="{{ document.porteeDocument.name  }}">
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-4">
+                <label class="font-weight-bold">{{ ('entity.DocumentTransverse.field.TypeDocument')|trans }}</label>
+            </div>
+            <div class="col-6">
+                <input class="form-control" type="text" disabled value="{{ document.TypeDocument }}">
+            </div>
+        </div>
+
+        {% if document.institution != null %}
+
+            <div class="row form-group">
+                <div class="col-4">
+                    <label class="font-weight-bold">{{ ('entity.DocumentTransverse.field.institution')|trans }}</label>
+                </div>
+                <div class="col-6">
+                    <input class="form-control" type="text" disabled value="{{ document.institution }}">
+                </div>
+            </div>
+
+        {% elseif document.interlocutor != null%}
+
+            <div class="row form-group">
+                <div class="col-4">
+                    <label class="font-weight-bold">{{ ('entity.DocumentTransverse.field.interlocutor')|trans }}</label>
+                </div>
+                <div class="col-6">
+                    <input class="form-control" type="text" disabled value="{{ document.interlocutor }}">
+                </div>
+            </div>
+
+        {% else %}
+
+            <div class="row form-group">
+                <div class="col-4">
+                    <label class="font-weight-bold">{{ ('entity.DocumentTransverse.field.drug')|trans }}</label>
+                </div>
+                <div class="col-6">
+                    <input class="form-control" type="text" disabled value="{{ document.drug }}">
+                </div>
+            </div>
+
+        {% endif %}
+
+        {% if document.drug==null %}
+
+            <div class="row form-group">
+                <div class="col-4">
+                    <label class="font-weight-bold" for="validStartAt">{{ ('entity.DocumentTransverse.field.validStartAt')|trans }}</label>
+                </div>
+                <div class="col-6">
+                    <input class="form-control" type="text" disabled value="{{ document.validStartAt|date("d-m-Y") }}" id="validStartAt">
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-4">
+                    <label class="font-weight-bold" for="validEndAt">{{ ('entity.DocumentTransverse.field.validEndAt')|trans }}</label>
+                </div>
+                <div class="col-6">
+                    <input class="form-control" type="text" disabled value="{{ document.validEndAt|date("d-m-Y") }}" id="validEndAt">
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-4">
+                    <label class="font-weight-bold">{{ ('entity.DocumentTransverse.field.isValid')|trans }}</label>
+                </div>
+                <div class="col-6">
+                    {% if document.isValid  %}
+                        <span class="badge badge-success">{{ 'entity.DocumentTransverse.action.valid'|trans }}</span>
+                    {% else %}
+                        <span class="badge badge-danger"> {{ 'entity.DocumentTransverse.action.invalid'|trans }}</span>
+                    {% endif %}
+                </div>
+            </div>
+
+        {% endif %}
+
+        {% if is_granted('ROLE_DOCUMENTTRANSVERSE_READ') and is_granted('ROLE_DRUG_READ') %}
+            {% if document.drug != null %}
+                <div class="admin-block" style="margin-top: 2em;">
+                    <div class="sf-read">
+                        <h5>{{ 'entity.VersionDocumentTransverse.action.liste'|trans }}
+                            {# Creation - affichage si droit autorisé #}
+                            {% if allow_edit_create_version and document.deletedAt == null %}
+                                <a href="{{ path('document_transverse.version.new', {'drug':document.drug.id, id: document.id}) }}" class="btn btn-primary" style="margin-left: 1em;"><i class="fa fa-plus-circle"></i> </a>
+                            {% endif %}
+                        </h5>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="w-100">
+                            <tr>
+                                <th>{{ 'entity.VersionDocumentTransverse.field.version'|trans}}</th>
+                                <th>{{ 'entity.VersionDocumentTransverse.field.validStartAt'|trans}}</th>
+                                <th>{{ 'entity.VersionDocumentTransverse.field.validEndAt'|trans}}</th>
+                                <th>{{ 'entity.VersionDocumentTransverse.field.isValid'|trans}}</th>
+                                <th>{{ 'entity.VersionDocumentTransverse.action.label'|trans}}</th>
+                            </tr>
+                            {% for version in document.versionDocumentTransverses %}
+                                <tr>
+                                    <td>{{ version.version }}</td>
+                                    <td>{{ version.validStartAt|date("d-m-Y") }}</td>
+                                    <td>{{ version.validEndAt|date("d-m-Y") }}</td>
+                                    <td>
+                                        {% if version.isValid  %}
+                                            <span class="badge badge-success">{{ 'entity.DocumentTransverse.action.valid'|trans}} </span>
+                                        {% else %}
+                                            <span class="badge badge-danger"> {{ 'entity.DocumentTransverse.action.invalid'|trans}} </span>
+                                        {% endif %}
+                                    <td>
+                                        {% if version.filename1 != null %}
+                                            <a href="{{ vich_uploader_asset(version, 'filename1Vich') }}" download title="{{ 'entity.DocumentTransverse.action.download'|trans}}">
+                                                <i class="fa fa-download" aria-hidden="true"></i>
+                                            </a>
+                                        {% endif %}
+
+                                        {# Edition - affichage si droit autorisé #}
+                                        {% if allow_edit_create_version and document.deletedAt == null %}
+                                        <a href="{{ path('document_transverse.version.edit', {'drug':document.drug.id, id: document.id, 'version': version.id }) }}">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+
+        <div class="row">
+            <div class="col-6">
+                <a class="btn btn-primary" href="{{ path(breadcrumb_route_index) }}">
+                    {{ 'general.back_to_list'|trans }}
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

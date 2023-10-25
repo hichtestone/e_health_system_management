@@ -1,0 +1,24 @@
+{% set arr = [
+    'user',
+    'profile',
+    'study',
+    'site',
+    'section',
+    'artefact',
+    'document',
+    'version',
+    'workflow',
+    'workflow_step',
+    'zone'
+] %}
+
+<ul class="sidebar-menu">
+    {% for item in arr %}
+        <li>
+            <a href="{{ path('admin.audit_trail.generic.index', {category: item}) }}" class="{{ activeMenu2 == item ? 'active' : '' }}">
+                {{ ('menu.admin.'~item~'s')|trans }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+

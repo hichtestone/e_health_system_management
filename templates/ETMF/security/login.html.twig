@@ -1,0 +1,56 @@
+{% extends 'layout/security.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block content %}
+
+    {{ parent() }}
+    <div class="row">
+        <div class="col-lg-4 col-md-3 col-sm-2"></div>
+        <div class="col-lg-4 col-md-6 col-sm-8">
+            <h2 class="my-5">{{ 'txt.login.header'|trans }}</h2>
+
+                {% if error %}
+                    {% if error.messageKey == 'Invalid credentials.' %}
+                        <div class="alert-danger">{{ 'security.connexion.err.bad_credentials'|trans }}</div>
+                    {% else %}
+                        <div class="alert-danger">{{ error.messageKey|trans }}</div>
+                    {% endif %}
+                {% endif %}
+
+                {% if app.user %}
+                    <div class="mb-3">
+                        <p class="text-center">
+                            {{ 'txt.logged_as' | trans }} {{ app.user.username }}</p>
+                        <p class="text-center">
+                        <a class="btn btn-primary" href="{{ path('logout') }}">
+                            {{ 'entity.User.form.btn.logout'|trans }}
+                            <i class="fa fa-sign-out"></i>
+                        </a></p>
+
+                    </div>
+                {% else %}
+                <form method="post" id="loginForm">
+                        <div class="form-group">
+                            <input type="text" required="required" class="form-control" value="{{ last_username }}" name="email" id="username" placeholder="example@gmail.com" autofocus />
+                            <span id="forgotten-err" class="d-none c-red">{{ 'security.password.forgotten.err.missing_email'|trans }}</span>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="password" class="form-control" name="password" required="required" id="password" placeholder="{{ 'entity.User.form.password_label'|trans }}" />
+                        </div>
+
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+
+                        <button type="submit" class="pull-right btn btn-primary">
+                            {{ 'form.btn.login'|trans }} <i class="fa fa-sign-in"></i>
+                        </button>
+
+                        <a href="{{ path('forgotten_password') }}">{{ 'security.password.forgotten.label'|trans }}</a>
+                </form>
+                {% endif %}
+
+        </div>
+    </div>
+{% endblock %}

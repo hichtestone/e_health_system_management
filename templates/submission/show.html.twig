@@ -1,0 +1,113 @@
+{% set activeMenu = 'project' %}
+{% set subMenu = 'project' %}
+{% set activeMenu2 = 'dates' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.home.index', { 'id' : project.id }) }}" title="{{ project.acronyme }}">{{ project.acronyme }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.list.submissions', { 'id' : project.id }) }}" title="{{ 'menu.reglementaire.submission'|trans }}">{{ 'menu.reglementaire.submission'|trans }}</a></li>
+            <li class="breadcrumb-item active">{{ 'general.file'|trans }}</li>
+        </ol>
+    </nav>
+
+    {# Onglets dates et chiffres / Soumissions / rgpd #}
+    {% include 'menu/reglementaire.html.twig' with {'activetab': 'submission'} %}
+
+
+    <h1>{{ submission.nameSubmissionRegulatory }}</h1>
+    <div class="admin-block">
+        <div class="sf-read">
+            <h5>{{ 'show.main'|trans }}</h5>
+
+            <dl class="row">
+                <div class="col-12">
+                    {% if is_granted('SUBMISSION_ARCHIVE', submission) and is_granted('PROJECT_WRITE', project) and is_granted('PROJECT_ACCESS', project) %}
+                        <a class="btn btn-info float-right" href="{{ path('project.submission.archive', {'id': project.id, 'idSubmission': submission.id}) }}">Archiver</a>
+                    {% endif %}
+                    {% if is_granted('SUBMISSION_RESTORE', submission) and is_granted('PROJECT_WRITE', project) and is_granted('PROJECT_ACCESS', project) %}
+                        <a class="btn btn-info float-right" href="{{ path('project.submission.restore', {'id': project.id, 'idSubmission': submission.id}) }}">Désarchiver</a>
+                    {%  endif %}
+                </div>
+            </dl>
+
+            <dl class="row">
+                <div class="col-4">
+                    <dt>{{ 'entity.Submission.field.country'|trans }} : </dt>
+                    <dd>{{ submission.country.name }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Submission.field.typeSubmission'|trans }} : </dt>
+                    <dd>{{ submission.typeSubmission }}</dd>
+                </div>
+                {% if submission.typeSubmission %}
+                    {% if submission.typeSubmission.id == 3 %}
+                        <div class="col-4">
+                            <dt>{{ 'entity.Submission.field.typeDeclaration'|trans }} : </dt>
+                            <dd>{{ submission.typeDeclaration }}</dd>
+                        </div>
+                    {% endif %}
+                    {% if submission.typeSubmission.id == 2 %}
+                        <div class="col-4">
+                            <dt>{{ 'entity.Submission.field.amendment_number'|trans }} : </dt>
+                            <dd>{{ submission.amendmentNumber }}</dd>
+                        </div>
+                    {% endif %}
+                {% endif %}
+                <div class="col-4">
+                    <dt>{{ 'entity.Submission.field.authorityType'|trans }} : </dt>
+                    <dd>{{ submission.typeSubmissionRegulatory }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Submission.field.authorityName'|trans }} : </dt>
+                    <dd>{{ submission.nameSubmissionRegulatory }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Submission.field.estimatedSubmissionAt'|trans }} : </dt>
+                    <dd>{{ submission.estimatedSubmissionAt is empty ? '' : submission.estimatedSubmissionAt|date('d/m/Y') }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Submission.field.submissionAt'|trans }} : </dt>
+                    <dd>{{ submission.submissionAt is empty ? '' : submission.submissionAt|date('d/m/Y') }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Submission.field.question'|trans }} : </dt>
+                    <dd>{% if submission.question == 1 %} Oui {% else %} Non {% endif %}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Submission.field.comment'|trans }} : </dt>
+                    <dd style="word-break: break-word">{{ submission.comment }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Submission.field.admissibilityAt'|trans }} : </dt>
+                    <dd>{{ submission.admissibilityAt is empty ? '' : submission.admissibilityAt|date('d/m/Y') }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Submission.field.fileNumber'|trans }} : </dt>
+                    <dd>{{ submission.fileNumber }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Submission.field.authorizationDeadlineAt'|trans }} : </dt>
+                    <dd>{{ submission.authorizationDeadlineAt is empty ? '' : submission.authorizationDeadlineAt|date('d/m/Y') }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Submission.field.authorizationAt'|trans }} : </dt>
+                    <dd>{{ submission.authorizationAt is empty ? '' : submission.authorizationAt|date('d/m/Y') }}</dd>
+                </div>
+            </dl>
+            {% if is_granted('SUBMISSION_EDIT', submission) and is_granted('PROJECT_WRITE', project) %}
+                <a class="btn btn-primary"
+                   href="{{ path('project.submission.edit', {'id' : project.id, 'idSubmission' : submission.id } ) }}">
+                    {{ 'entity.Submission.action.modify'|trans }}</a>
+            {%  endif %}
+        </div>
+    </div>
+
+
+
+{% endblock %}

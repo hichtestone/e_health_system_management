@@ -1,0 +1,13 @@
+{% extends 'email/base.html.twig' %}
+
+{% block body %}
+
+    ESM Unicancer - Notification erreurs import données interopérabilité.
+    Les erreurs suivantes ont été détectées :
+
+    {% for error in errors %}
+        {{ error }}
+
+    {% endfor %}
+
+{% endblock %}

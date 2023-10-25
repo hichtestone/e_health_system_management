@@ -1,0 +1,38 @@
+{% set activeMenu = 'project' %}
+{% set subMenu = 'project' %}
+{% set activeMenu2 = 'communication' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.home.index', { 'id' : project.id }) }}"
+                                           title="{{ project.acronyme }}">{{ project.acronyme }}</a></li>
+            <li class="breadcrumb-item">Communication</li>
+            <li class="breadcrumb-item active">{{ 'entity.Meeting.field.name'|trans}}</li>
+        </ol>
+    </nav>
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" href="{{ path('project.list.meetings', { 'id' : project.id }) }}">{{ 'entity.Meeting.field.name'|trans}}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('project.list.trainings', { 'id' : project.id }) }}">{{ 'entity.Training.field.name'|trans}}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('project.list.contacts', { 'id' : project.id }) }}">{{ 'entity.Contact.field.name'|trans}}</a>
+        </li>
+    </ul>
+
+    <h1>{{ 'entity.Meeting.action.list'|trans }}
+        {% if is_granted('PROJECT_ACCESS_AND_OPEN', project) and is_granted('PROJECT_WRITE', project) and is_granted('MEETING_CREATE') %}
+            <a class="btn btn-primary" href="{{ path('project.meeting.new', {id: project.id}) }}" ><i class="fa fa-plus"></i></a>
+        {% endif %}
+    </h1>
+
+    {{ list.render|raw }}
+{% endblock %}

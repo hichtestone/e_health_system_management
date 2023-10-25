@@ -1,0 +1,15 @@
+@import "../../css/variables";
+
+.swal2-popup .swal2-title,
+.swal2-content{
+  color: $app-color!important;
+}
+
+.swal2-fade{
+  z-index: 99999!important;
+}
+
+.swal2-overflow {
+  overflow-x: visible;
+  overflow-y: visible;
+}

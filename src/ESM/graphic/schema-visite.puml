@@ -1,0 +1,220 @@
+@startuml
+
+class patientVariable {
+    -id : int
+    -label : string
+    -position : string
+    -source_id : string
+    -has_patient : bool
+    -has_visit : bool
+    -is_visit : bool
+    -is_exam : bool
+    -is_variable : bool
+    -sys : bool
+    -deleted_at : datetime
+
+    -project_id : project (relation)
+    -variable_type_id : variableType (relation)
+    -exam_id : exam (relation)
+    -variable_list_id : variableList (relation)
+}
+
+class project {
+    -id : int
+}
+
+class variableType {
+    -id : int
+    -label : string
+}
+
+class exam {
+    -id : int
+    -name: string
+    -position: int
+    -source_id: int
+    -price: double
+    -ordre: int
+    -deleted_at : datetime
+
+    -project_id : project (relation)
+    -type_id : dlExamType (relation)
+}
+
+class dlExamType {
+    -id : int
+    -label : string
+
+    -deleted_at : datetime
+}
+
+class variableList {
+    -id : int
+    -label : string
+}
+
+class visit {
+    -id : int
+    -short : string
+    -label : string
+    -ordre : int
+    -position : int
+    -delay : int
+    -delay_approx : int
+    -source_id : int
+    -price : double
+    -deleted_at : datetime
+
+    -phase_id : phase (relation)
+    -patient_variable_id : patientVariable (relation)
+    -project_id : project (relation)
+}
+
+class phaseSetting {
+    -id : int
+    -ordre : int
+    -position : int
+    -label : string
+    -deleted_at : datetime
+
+    -project_id : project (relation)
+}
+
+
+class schemaCondition {
+    -id : int
+    -condition : text
+    -deleted_at : datetime
+    -disabled : bool
+    -phase_visit : string
+
+    -project_id : project (relation)
+    -phase_id : phaseSetting (relation)
+    -visit_id : visit (relation)
+}
+
+class patient {
+    -id : int
+    -number: string
+    -consent_at : datetime
+    -inclusion_at : datetime
+    -deleted_at : datetime
+
+    -project_id : project (relation)
+    -center_id : center (relation)
+}
+
+class "center" {
+    -id : int
+    -number : string
+    -name : string
+    -deleted_at : datetime
+    -source_id : int
+
+    -center_status_id : dlCenterStatus (relation)
+    -project_id : project (relation)
+}
+
+class dlCenterStatus {
+    -id : int
+    -label : string
+    -type : int
+    -position : int
+    -deleted_at: datetime
+}
+
+class patientData {
+    -id : int
+    -variable_value: string
+    -iteration: string
+    -value: string
+    -importing: string
+    -ordre: string
+    -disabled_at: datetime
+    -deleted_at: datetime
+
+    -patient_id: patient (relation)
+    -variable_id: patientVariable (relation)
+}
+
+class visitPatient {
+    -id : int
+    -iteration: string
+    -source_id: string
+    -occured_at: datetime
+    -monitored_at: datetime
+    -deleted_at: datetime
+    -disabled_at: datetime
+    -badge: datetime
+
+    -patient_id: patient (relation)
+    -visit_id: visit (relation)
+    -variable_id: patientVariable (relation)
+    -status_id: visitPatientStatus (relation)
+}
+
+class visitPatientStatus {
+    -id : int
+    -label : string
+    -code : string
+    -position: int
+}
+
+class variableOption {
+    -id : int
+    -label : string
+    -code : string
+
+    -list_id : variableList (relation)
+}
+
+class conditionVisitPatient {
+    -id : int
+    -executed_at: datetime
+
+    -visit_patient_id : visitPatient (relation)
+    -schema_condition_id : schemaCondition (relation)
+}
+
+
+patientVariable "n" -- "1" project
+patientVariable "n" -- "1" variableType
+patientVariable "n" -- "1" exam
+patientVariable "n" -- "1" variableList
+patientVariable "n" -- "n" visit
+patientVariable "n" -- "n" schemaCondition
+
+exam "n" -- "1" project
+exam "n" -- "1" dlExamType
+
+visit "n" -- "1" phaseSetting
+visit "n" -- "1" project
+
+phaseSetting "n" -- "1" project
+
+schemaCondition "n" -- "1" project
+schemaCondition "n" -- "1" phaseSetting
+schemaCondition "n" -- "1" visit
+
+
+patient "n" -- "1" project
+patient "n" -- "1" "center"
+
+"center" "n" -- "1" dlCenterStatus
+"center" "n" -- "1" project
+
+patientData "n" -- "1" patient
+patientData "n" -- "1" patientVariable
+
+visitPatient "n" -- "1" patient
+visitPatient "n" -- "1" visit
+visitPatient "n" -- "1" patientVariable
+visitPatient "n" -- "1" visitPatientStatus
+
+variableOption "n" -- "1" variableList
+
+
+conditionVisitPatient "n" -- "1" visitPatient
+conditionVisitPatient "n" -- "1" schemaCondition
+
+@enduml

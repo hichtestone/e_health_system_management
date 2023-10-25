@@ -1,0 +1,56 @@
+{% set activeMenu = 'project' %}
+{% set subMenu = 'project' %}
+{% set activeMenu2 = 'publication' %}
+
+{% set allowCreate = is_granted('ROLE_USER') or is_granted('ROLE_PROJECT_READ') %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block body %}
+    {# Fil d'Ariane #}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.home.index', { 'id' : project.id }) }}"
+                                           title="{{ project.acronyme }}">{{ project.acronyme }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.list.publications', { 'id' : project.id }) }}" title="formations">Publications</a></li>
+            <li class="breadcrumb-item active">{{ ('form.action.'~action)|trans }}</li>
+        </ol>
+    </nav>
+
+    <h1>{{ ('entity.Publication.action.'~action)|trans }}</h1>
+
+    <div class="admin-block" id="new-publication">
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-6">
+                {{ form_row(form.communicationType) }}
+                <div id="dateYmd" style="display: none;">
+                    {{ form_row(form.date) }}
+                </div>
+                <div id="dateY" style="display: none;">
+                    {{ form_row(form.date_year) }}
+                </div>
+                {{ form_row(form.isCongress) }}
+                {{ form_row(form.journals) }}
+                {{ form_row(form.congress) }}
+                {{ form_row(form.postType) }}
+                {{ form_row(form.comment) }}
+                {{ form_row(form.postNumber) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <button type="submit" class="btn btn-primary" type="submit">{{ ('entity.Publication.action.'~action)|trans }}</button>
+
+                <br>
+                <br>
+                <span style="color: #c30000;">* {{ ('general.star.mandatory')|trans }}</span>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}
+
+

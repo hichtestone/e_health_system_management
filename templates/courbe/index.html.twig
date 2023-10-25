@@ -1,0 +1,51 @@
+{% set activeMenu = 'settings' %}
+{% set subMenu = 'settings' %}
+
+{% set activeMenu2 = 'courbe' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block body %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('project.home.index', { 'id' : project.id }) }}" title="{{ project.acronyme }}">{{ project.acronyme }}</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <a href="{{ path('project.list.courbe.setting', { 'id' : project.id }) }}" title="ecrf-setting">{{ 'entity.CourbeSetting.label'|trans }}</a>
+            </li>
+        </ol>
+    </nav>
+
+    {# Translate text js #}
+    <div id="courbesetting">
+        <h1>{{ 'entity.CourbeSetting.action.list'|trans }} <br>
+            {% if is_granted('PROJECT_ACCESS_AND_OPEN', project) and is_granted('ROLE_PROJECT_SETTINGS_WRITE') %}
+                <a class="btn btn-primary"
+                   href="{% if courbe %}{{ path('project.list.courbe.edit',{'project' : project.id, 'courbe':project.courbe.id}) }} {% else %} {{ path('project.list.courbe.new', {'id' : project.id}) }}  {% endif %}">
+                    {{ 'entity.CourbeSetting.action.new_edit'|trans }}
+                </a>
+            {% endif %}
+            {% if is_granted('PROJECT_ACCESS_AND_OPEN', project) and courbe %} <button class="btn btn-primary" id="btn-download" href>{{ 'entity.CourbeSetting.action.downlaod'|trans }}</button> {% endif %}
+        </h1>
+        <div id="chart">
+            <canvas id="myChart"></canvas>
+        </div>
+    </div>
+
+    <div class="d-none" data-project-id="{{ project.id }}"></div>
+    {% if courbe %}
+        <div class="d-none" data-courbe-id="{{ project.courbe.id }}"></div>
+        {# Translate text js #}
+        <div class="d-none data_translate"
+                {# Translate text ecrf #}
+             data-entity-CourbeSetting-curbe-inclusion = "{{ 'entity.CourbeSetting.curbe.inclusion' | trans }}"
+             data-entity-CourbeSetting-curbe-real = "{{ 'entity.CourbeSetting.curbe.real' | trans }}"
+             data-entity-CourbeSetting-curbe-theoretical = "{{ 'entity.CourbeSetting.curbe.theoretical' | trans }}"
+        ></div>
+    {% endif %}
+
+{% endblock %}

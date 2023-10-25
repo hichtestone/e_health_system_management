@@ -1,0 +1,20 @@
+.rules-group-container {
+    width: 100%;
+}
+
+.query-builder .rules-group-container {
+    border: 0px;
+}
+
+.group-conditions  {
+    label {
+        background: #6c757d !important;
+        border-color: #6c757d;
+    }
+    label.active {
+        background-color: #000 !important;
+        border-color: #000;
+    }
+}
+
+

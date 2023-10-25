@@ -1,0 +1,98 @@
+{% set activeMenu = 'project' %}
+{% set subMenu = 'project' %}
+{% set activeMenu2 = 'communication' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.home.index', { 'id' : project.id }) }}"
+                                           title="{{ project.acronyme }}">{{ project.acronyme }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.list.meetings', { 'id' : project.id }) }}" title="communication">
+                    Communication</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.list.meetings', { 'id' : project.id }) }}" title="{{ 'entity.Meeting.field.name'|trans}}">
+                    {{ 'entity.Meeting.field.name'|trans}}<</a></li>
+            <li class="breadcrumb-item active">{{ 'general.file'|trans}}</li>
+        </ol>
+    </nav>
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" href="{{ path('project.list.meetings', { 'id' : project.id }) }}">{{ 'entity.Meeting.field.name'|trans}}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('project.list.trainings', { 'id' : project.id }) }}">{{ 'entity.Training.field.name'|trans}}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('project.list.contacts', { 'id' : project.id }) }}">{{ 'entity.Contact.field.name'|trans}}</a>
+        </li>
+    </ul>
+
+
+    <h1>{{ meeting.type }}</h1>
+    <div class="admin-block">
+        <div class="sf-read">
+            <h5>{{ 'show.main' | trans }}</h5>
+            <dl class="row">
+                <div class="col-4">
+                    <dt>{{ 'entity.Project.register.labels.user.meeting.type' | trans }} :</dt>
+                    <dd>{{ meeting.type }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Project.register.labels.user.meeting.started_at' | trans }} :</dt>
+                    <dd>{{ meeting.startedAt is empty ? '' : meeting.startedAt|date('d/m/Y') }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Project.register.labels.user.meeting.hour' | trans }} :</dt>
+                    <dd>{{ meeting.startedHour }}</dd>
+                </div>
+            </dl>
+
+            <dl class="row">
+                <div class="col-4">
+                    <dt>{{ 'entity.Project.register.labels.user.meeting.object' | trans }} :</dt>
+                    <dd>{{ meeting.object }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Project.register.labels.user.meeting.duration' | trans }} :</dt>
+                    <dd>{{ meeting.duration }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Project.register.labels.user.meeting.report' | trans }} :</dt>
+                    <dd>
+                        {% if meeting.report is not null %}
+                            {{ meeting.report }}
+                            <a href="{{ vich_uploader_asset(meeting, 'reportFile') }}" download="">
+                               <i class="fa fa-download downloadMeeting" aria-hidden="true"></i>
+                            </a>
+                        {% else %}
+                        {% endif %}
+                    </dd>
+                </div>
+            </dl>
+
+            <div class="row">
+                <div class="col-4">
+                    <dt>{{ 'entity.Training.field.users' | trans }} :</dt>
+                    {% for user in meeting.users %}
+                        {% if is_granted('ROLE_PROJECT_INTERVENANT_READ') %}
+                            <dd><a href="{{ path('project.user.show', {id: project.id, idUser: user.id}) }}">{{ user.fullname }}</a></dd>
+                        {% else %}
+                            <dd>{{ user.fullname }}</dd>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            {% if is_granted('MEETING_EDIT', meeting) %}
+            <a class="btn btn-primary"
+               href="{{ path('project.meeting.edit', {'id' : project.id, 'idMeeting' : meeting.id } ) }}">{{ 'entity.Meeting.action.edit'|trans }}</a>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

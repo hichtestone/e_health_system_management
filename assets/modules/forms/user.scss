@@ -1,0 +1,25 @@
+#app-table {
+  i {
+    cursor: pointer;
+  }
+}
+
+#user-projects {
+  .fa-edit:hover {
+    cursor: pointer;
+  }
+
+  td {
+    transition: background-color 1s;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input {
+    -moz-appearance: textfield;
+  }
+}

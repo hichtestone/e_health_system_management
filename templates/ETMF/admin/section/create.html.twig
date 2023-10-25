@@ -1,0 +1,46 @@
+{% set activeMenu = 'etmf-artefact' %}
+{% set subMenu = 'etmf-artefact' %}
+{% set activeMenu2 = 'section' %}
+
+{% extends 'ETMF/layout/app.html.twig' %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ path('app.etmf.home') }}" title="Accueil">Accueil</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('app.etmf.section') }}" title="Structure"> {{ 'etmf.section.label'|trans }}</a>
+            </li>
+            <li class="breadcrumb-item active">{% if edit %} Modification {% else %} Création {% endif %}</li>
+        </ol>
+    </nav>
+
+
+    <h1>{% if edit %} {{ 'etmf.section.action.edit'|trans }} {%  else %} {{ 'etmf.section.action.add'|trans }} {% endif %}</h1>
+
+    <div class="admin-block">
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-6">
+                {{ form_row(form.name) }}
+                {{ form_row(form.code) }}
+                {{ form_row(form.zone) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <button type="submit" class="btn btn-primary" type="submit">
+                    {% if edit %} {{ 'etmf.section.action.edit'|trans }} {%  else %} {{ 'etmf.section.action.new'|trans }} {% endif %}
+                </button>
+                <br>
+                <br>
+                <span style="color: #c30000">* {{ ('general.star.mandatory')|trans }}</span>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+

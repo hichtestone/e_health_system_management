@@ -1,0 +1,133 @@
+{% set activeMenu = 'institution' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'menu.admin.home'|trans }}">{{ 'menu.admin.home'|trans }}</a></li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('admin.institutions.index') }}" title="{{ 'menu.admin.institutions' | trans }}">
+                    {{ 'menu.admin.institutions' | trans }}
+                </a>
+            </li>
+            <li class="breadcrumb-item active">{{ ('form.action.'~action)|trans }}</li>
+        </ol>
+    </nav>
+
+    <h1>{{ ('entity.Institution.field.'~action)|trans }}</h1>
+
+    <div class="admin-block" id="new-add-institution">
+
+        {{ form_start(form) }}
+
+            <div class="row">
+
+                <div class="col-6">
+                    {{ form_row(form.name) }}
+                </div>
+
+                <div class="col-6">
+                    {{ form_row(form.institutionType) }}
+                </div>
+
+                <div class="col-6">
+                    {{ form_row(form.address1) }}
+                </div>
+
+                <div class="col-6">
+                    {{ form_row(form.address2) }}
+                </div>
+
+                <div class="col-6">
+                    {{ form_row(form.city) }}
+                </div>
+
+                <div class="col-6">
+                    {{ form_row(form.postalCode) }}
+                </div>
+
+                <div class="col-4">
+                    {{ form_row(form.country) }}
+                </div>
+
+                <div class="col-8">
+                    <div class="row">
+                        <div class="col-6" id="bloc-finess">
+                            {{ form_row(form.finess) }}
+                        </div>
+                        <div class="col-6" id="bloc-siret">
+                            {{ form_row(form.siret) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12" id="institutionDepartment">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ form_row(form.countryDepartment) }}
+                        </div>
+                        <div class="col-6">
+                            <label for="canceropole">{{ 'entity.Institution.field.canceropole'|trans}}</label><br>
+                            <input id="canceropole" disabled value="">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    {{ form_row(form.phone) }}
+                </div>
+
+                <div class="col-6">
+                    {{ form_row(form.fax) }}
+                </div>
+
+                <div class="col-6">
+                    {{ form_row(form.email) }}
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-6">
+                    <button type="submit" class="btn btn-primary">
+                        {{ ('entity.Institution.action.'~action)|trans }}
+                    </button>
+                    <br>
+                    <br>
+                    <span style="color: #c30000;">* {{ ('general.star.mandatory')|trans }}</span>
+                </div>
+
+            </div>
+
+        {{ form_end(form) }}
+
+    </div>
+
+    <div id="typeIdNoFiness" class="d-none">{{ typeIdNoFiness|json_encode() }}</div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script>
+
+         $(document).ready(function() {
+
+            let canceropole = $('#institution_countryDepartment').find(':selected').data("parent")
+            $('#canceropole').val(canceropole)
+
+            $('#institution_countryDepartment').on('change', function() {
+
+                let canceropole = $(this).find(':selected').data("parent")
+                $('#canceropole').val(canceropole)
+            })
+        });
+
+    </script>
+
+{% endblock %}

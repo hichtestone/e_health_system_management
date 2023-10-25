@@ -1,0 +1,56 @@
+{# set current menu #}
+{% set activeMenu = 'settings' %}
+{% set subMenu = 'settings' %}
+{% set activeMenu2 = 'diagram-study' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a></li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('project.home.index', { 'id' : project.id }) }}" title="{{ project.acronyme }}">{{ project.acronyme }}</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <a href="{{ path('project.settings.variable.index', { 'id' : project.id }) }}" title="ecrf-setting">{{ 'entity.EcrfSetting.label'|trans }}</a>
+            </li>
+        </ol>
+    </nav>
+
+    {# Onglets Dans Schema d'etudes #}
+    {% include 'menu/schema_etude.html.twig' with {'activetab': 'variable_settings'} %}
+
+    {# Translate text js #}
+    <div class="d-none data_translate"
+            {# Translate text ecrf #}
+         data-entity-EcrfSetting-section-variable = "{{ 'entity.EcrfSetting.section.variable' | trans }}"
+         data-entity-EcrfSetting-section-visit = "{{ 'entity.EcrfSetting.section.visit' | trans }}"
+         data-entity-EcrfSetting-section-exam = "{{ 'entity.EcrfSetting.section.exam' | trans }}"
+         data-entity-EcrfSetting-field-name = "{{ 'entity.EcrfSetting.field.name' | trans }}"
+         data-entity-EcrfSetting-field-order = "{{ 'entity.EcrfSetting.field.order' | trans }}"
+         data-entity-EcrfSetting-field-source = "{{ 'entity.EcrfSetting.field.source' | trans }}"
+         data-entity-EcrfSetting-field-archived = "{{ 'entity.EcrfSetting.field.archived' | trans }}"
+         data-entity-EcrfSetting-field-type = "{{ 'entity.EcrfSetting.field.type' | trans }}"
+         data-entity-EcrfSetting-field-hasPatient = "{{ 'entity.EcrfSetting.field.hasPatient' | trans }}"
+         data-entity-EcrfSetting-field-hasVisit = "{{ 'entity.EcrfSetting.field.hasVisit' | trans }}"
+    ></div>
+
+    {% set isGrantedWrite = is_granted('PATIENTTRACKING_CREATE') %}
+    {% set isGrantedWriteSchemaVisite = is_granted('ROLE_DIAGRAMVISIT_WRITE') %}
+    {% set isGrantedWriteEcrf = is_granted('ROLE_ECRF_READ') %}
+    {% set isGrantedProjectWrite = is_granted('PROJECT_WRITE', project) %}
+
+    {# Transfer role #}
+    <div class="d-none"
+         data-isGrantedWrite= "{{ isGrantedWrite }}"
+         data-isGrantedWriteSchemaVisite= "{{ isGrantedWriteSchemaVisite }}"
+         data-isGrantedWriteEcrf= "{{ isGrantedWriteEcrf }}"
+         data-ecrf-type="{{ project.crfType }}"
+         data-isGrantedProjectWrite= "{{ isGrantedProjectWrite }}"
+    ></div>
+
+    <identification-data-table :project-id="{{ project.id }}" id="IdentificationDataTable" />
+
+{% endblock %}

@@ -1,0 +1,31 @@
+{% set activeMenu = 'etmf-tag' %}
+{% set subMenu = '' %}
+{% set activeMenu2 = 'tag' %}
+
+{% extends 'ETMF/layout/app.html.twig' %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ path('app.etmf.home') }}" title="Accueil">Accueil</a>
+            </li>
+            <li class="breadcrumb-item active">
+                {{ 'etmf.tag.label'|trans }}
+            </li>
+        </ol>
+    </nav>
+
+    <h1>
+        {{ 'etmf.tag.action.list'|trans }}
+        {% if is_granted('TAG_CREATE') %}
+            <a class="btn btn-primary" href="{{ path('app.etmf.tag.new') }}">
+                <i class="fa fa-plus"></i>
+            </a>
+        {% endif %}
+    </h1>
+
+    {{ list.render|raw }}
+
+{% endblock %}

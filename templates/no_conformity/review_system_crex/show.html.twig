@@ -1,0 +1,230 @@
+{% set activeMenu = 'no_conformity' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ path('no_conformity.protocol_deviation_crex') }}" title="{{ 'menu.NonConformity.label' | trans }}">{{ 'menu.NonConformity.label' | trans }}</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <a href="{{ path('no_conformity.system_crex')}}">{{ 'entity.NoConformity.menu.system_crex'|trans }}</a>
+            </li>
+            <li class="breadcrumb-item">
+                {{ 'entity.NoConformity.field.system.review.file'|trans }}
+            </li>
+        </ol>
+    </nav>
+
+    <h1> {{'entity.NoConformity.field.system.review.numberCrex'|trans}} {{ review.numberCrex }}</h1>
+    <h2>
+        {{'entity.NoConformity.field.system.review.deviation.statutShort'|trans}}: {{ constant('App\\ESM\\Entity\\DeviationReview::STATUS')[review.status]  | trans }}
+    </h2>
+
+    <div class="admin-block">
+        <div class="sf-read">
+            <h5>{{ 'entity.Deviation.DeviationReview.file.deviation'|trans }}</h5>
+        </div>
+
+        <dl class="row">
+            <div class="col-4">
+                <dt>{{'entity.NoConformity.field.system.review.deviation.statut'|trans}} :</dt>
+                <dd>{{ constant('App\\ESM\\Entity\\Deviation::STATUS')[review.deviationSystem.status]  | trans }}</dd>
+            </div>
+            <div class="col-4">
+                <dt>{{'entity.NoConformity.field.system.review.deviation.closedAt'|trans}} :</dt>
+                <dd>{{ review.deviationSystem.closedAt is empty ? '' : review.deviationSystem.closedAt|date('d/m/Y') }}</dd>
+            </div>
+            <div class="col-4">
+                <dt> {{'entity.NoConformity.field.system.review.deviation.declaredBy'|trans}} :</dt>
+                <dd>{{ review.deviationSystem.declaredBy }}</dd>
+            </div>
+        </dl>
+
+        <dl class="row">
+            <div class="col-4">
+                <dt>{{'entity.NoConformity.field.system.review.deviation.refISO9001'|trans}}</dt>
+                <dd>{{ review.deviationSystem.refISO9001 }}</dd>
+            </div>
+            <div class="col-4">
+                <dt>{{'entity.NoConformity.field.system.review.deviation.process'|trans}} :</dt>
+                <dd>{{ review.deviationSystem.process|join(' | ') }}</dd>
+            </div>
+            <div class="col-4">
+                <dt>{{'entity.NoConformity.field.system.review.deviation.referentQA'|trans}} :</dt>
+                <dd>{{ review.deviationSystem.referentQA }}</dd>
+            </div>
+        </dl>
+
+        <dl class="row">
+            <div class="col-4">
+                <dt>{{'entity.NoConformity.field.system.review.deviation.nc_system_code'|trans}} :</dt>
+                <dd>{{ review.deviationSystem.code }}</dd>
+            </div>
+            <div class="col-4">
+                <dt>{{'entity.NoConformity.field.system.review.deviation.resume'|trans}} :</dt>
+                <dd>{{ review.deviationSystem.resume }}</dd>
+            </div>
+            <div class="col-4">
+                <dt>{{'entity.NoConformity.field.system.review.deviation.description'|trans}} :</dt>
+                <dd style="overflow-wrap:break-word;">{{ review.deviationSystem.description}}</dd>
+            </div>
+        </dl>
+
+        <div class="sf-read mt-5">
+            <h5>{{ 'entity.Deviation.field.action'|trans }}</h5>
+        </div>
+
+        <div class="table-responsive">
+            <table class="w-100" id="review-actions">
+                <tr>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.type'|trans }}</th>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.description'|trans }}</th>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.applicationAt'|trans }}</th>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.doneAt'|trans }}</th>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.status'|trans }}</th>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.intervenant'|trans }}</th>
+                </tr>
+
+                {% for reviewAction in reviewActions %}
+                    <tr>
+                        <td>{{ constant('App\\ESM\\Entity\\DeviationReviewAction::TYPE_ACTION')[reviewAction.typeAction]  | trans }}</td>
+                        <td>{{ reviewAction.description }}</td>
+                        <td>{{ reviewAction.applicationAt is empty ? '' : reviewAction.applicationAt|date('d/m/Y') }}</td>
+                        <td>{{ reviewAction.doneAt is empty ? '' : reviewAction.doneAt|date('d/m/Y') }}</td>
+                        <td>{{ constant('App\\ESM\\Entity\\DeviationReviewAction::STATUS')[reviewAction.status] | trans }}</td>
+                        <td>
+                            {% if reviewAction.intervener is not empty %}
+                                {{ reviewAction.intervener.displayName }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+    </div>
+
+    <div class="admin-block">
+        <div class="sf-read">
+            <h5>{{'entity.NoConformity.field.system.review.crex.title'|trans}}</h5>
+        </div>
+
+        <dl class="row">
+            <div class="col-4">
+                <dt>{{'entity.NoConformity.field.system.review.crex.reader'|trans}} :</dt>
+                <dd>{{ review.reader }}</dd>
+            </div>
+            <div class="col-4">
+                <dt>{{'entity.NoConformity.field.system.review.crex.createdAt'|trans}} :</dt>
+                <dd>{{ review.createdAt is empty ? '' : review.createdAt|date('d/m/Y') }}</dd>
+            </div>
+        </dl>
+
+        <dl class="row">
+            <div class="col-4">
+                <dt>{{'entity.NoConformity.field.system.review.crex.doneAt'|trans}} :</dt>
+                <dd>{{ review.doneAt is empty ? '' : review.doneAt|date('d/m/Y') }}</dd>
+            </div>
+            <div class="col-4">
+                <dt>{{'entity.NoConformity.field.system.review.crex.comment'|trans}}:</dt>
+                <dd>{{ review.comment }}</dd>
+            </div>
+        </dl>
+
+        <div class="sf-read mt-5">
+            <h5>{{ 'entity.Deviation.DeviationReview.file.action'|trans }}
+                {% if is_granted('DEVIATION_SYSTEM_REVIEW_ACTION_CREATE', review) %}
+                    <a href="{{ path('no_conformity.system_crex.action.new', {'reviewSystemCrexID' : review.id }) }}" class="btn btn-primary ml-2"><i class="fa fa-plus"></i></a>
+                {% endif %}
+            </h5>
+        </div>
+
+        <div class="table-responsive">
+            <table class="w-100" id="review-actions">
+                <tr>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.type'|trans }}</th>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.description'|trans }}</th>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.applicationAt'|trans }}</th>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.doneAt'|trans }}</th>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.status'|trans }}</th>
+                    <th>{{ 'entity.Deviation.DeviationReviewAction.field.intervenant'|trans }}</th>
+                    <th>Action</th>
+                </tr>
+
+                {% for action in actions %}
+                    <tr>
+                        <td>{{ constant('App\\ESM\\Entity\\DeviationReviewAction::TYPE_ACTION')[action.typeAction]  | trans }}</td>
+                        <td>{{ action.description }}</td>
+                        <td>{{ action.applicationAt is empty ? '' : action.applicationAt|date('d/m/Y') }}</td>
+                        <td>{{ action.doneAt is empty ? '' : action.doneAt|date('d/m/Y') }}</td>
+                        <td>{{ constant('App\\ESM\\Entity\\DeviationReviewAction::STATUS')[action.status] | trans }}</td>
+                        <td>
+                            {% if action.intervener is not empty %}
+                                {{ action.intervener.displayName }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if is_granted('DEVIATION_SYSTEM_REVIEW_ACTION_EDIT', action.deviationSystemReview) %}
+                                <a href="{{ path('no_conformity.system_crex.action.edit', { 'reviewSystemCrexID' : action.deviationSystemReview.id, 'actionID' : action.id }) }}">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                            {% endif %}
+                            {% if is_granted('DEVIATION_SYSTEM_REVIEW_ACTION_DELETE', action.deviationSystemReview) %}
+                                <a class="deleteSystemReviewCrexActionBtn" href="{{ path('no_conformity.system_crex.action.delete', { 'reviewSystemCrexID' : action.deviationSystemReview.id, 'actionID' : action.id }) }}">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+
+    </div>
+
+    <dl class="row">
+        <div class="col-4">
+            {% if is_granted('DEVIATION_SYSTEM_REVIEW_DELETE', review) %}
+                <a class="btn btn-primary"
+                   id="deleteSystemReviewBtn"
+                   href="{{ path('no_conformity.system_crex.delete', { 'reviewSystemCrexID' : review.id}) }}">
+                    {{ 'entity.Deviation.DeviationReview.action.delete'|trans }}
+                </a>
+            {% endif %}
+        </div>
+        <div class="col-4"></div>
+        <div class="col-4">
+            {% if is_granted('DEVIATION_SYSTEM_REVIEW_EDIT', review) %}
+                <a class="btn btn-primary"
+                   href="{{ path('no_conformity.system_crex.review.edit', { 'reviewSystemCrexID' : review.id }) }}">
+                    {{ 'entity.Deviation.DeviationReview.action.modify'|trans }}
+                </a>
+            {% endif %}
+            {% if is_granted('DEVIATION_SYSTEM_REVIEW_CLOSE', review) %}
+                {% if review.doneAt is not null %}
+                    <a class="btn btn-primary float-right"
+                       id="closeSystemReviewBtn"
+                       href="{{ path('no_conformity.system_crex.close', { 'reviewSystemCrexID' : review.id}) }}">
+                        {{ 'entity.Deviation.DeviationReview.action.close'|trans }}
+                    </a>
+                {% else %}
+                    <i class="btn btn-secondary disabled float-right" href data-placement="left" data-toggle="tooltip" title="La date de la revue n'est pas renseignée">
+                        {{ 'entity.Deviation.DeviationReview.action.close'|trans }}
+                    </i>
+                {% endif %}
+            {% endif %}
+        </div>
+    </dl>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('deviation-system') }}
+{% endblock %}

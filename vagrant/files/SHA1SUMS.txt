@@ -1,0 +1,5 @@
+ef70239b73c8fd83608343e98c65f03af47658d7 *ubuntu-18.04.1-preinstalled-server-armhf+raspi2.img.xz
+87bedd68607f059ca973f86346bbdf1caa6e1077 *ubuntu-18.04.1-server-amd64.iso
+aa2b563d3e1359d80b4c5d44d05302147bc8aa9f *ubuntu-18.04.1-server-arm64.iso
+6be16a8a5c2cd2113e5bab8a676583c79c20cf02 *ubuntu-18.04.1-server-ppc64el.iso
+48fb8b0a14ed3fb85c20c9f2b2898352bd05bd6f *ubuntu-18.04.1-server-s390x.iso

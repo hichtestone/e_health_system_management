@@ -1,0 +1,157 @@
+{% set activeMenu = 'interlocutor' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'menu.admin.home'|trans }}">{{ 'menu.admin.home'|trans }}</a></li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('admin.interlocutors.index') }}" title="{{ 'menu.admin.interlocutors' | trans }}">
+                    {{ 'menu.admin.interlocutors' | trans }}
+                </a>
+            </li>
+            <li class="breadcrumb-item active">{{ ('form.action.'~action)|trans }}</li>
+        </ol>
+    </nav>
+
+    {% if institution | length == 0 %}
+        <div class="row">
+            <h2 class="badge badge-danger">Merci de créer au moins un établisement </h2><br>
+        </div>
+        <div class="row">
+            <a href="{{ path('admin.interlocutors.index') }}" class="btn btn-primary">Retour</a>
+        </div>
+    {% else %}
+        <h1>{{ ('entity.Interlocutor.field.'~action)|trans }}</h1>
+        <div class="admin-block" id="new-add-interlocutor">
+            {{ form_start(form) }}
+            <div class="row mb-2">
+                <div class="col-2">
+                    {{ form_label(form.civility, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-2">
+                    {{ form_widget(form.civility) }}
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-2">
+                    {{ form_label(form.firstName, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-3">
+                    {{ form_widget(form.firstName) }}
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-2">
+                    {{ form_label(form.lastName, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-3">
+                    {{ form_widget(form.lastName) }}
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-2">
+                    {{ form_label(form.job, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-3">
+                    {{ form_widget(form.job) }}
+                </div>
+                <div class="col-6">
+                    <div class="row" id="interlocutorRpps">
+                        <div class="col-2">
+                            {{ form_label(form.rppsNumber, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                        </div>
+                        <div class="col-3">
+                            {{ form_widget(form.rppsNumber) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="interlocutorSpecs">
+                <div class="row mb-2 required">
+                    <div class="col-2">
+                        {{ form_label(form.specialtyOne, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                    </div>
+                    <div class="col-3">
+                        {{ form_widget(form.specialtyOne) }}
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-2">
+                        {{ form_label(form.specialtyTwo, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                    </div>
+                    <div class="col-3">
+                        {{ form_widget(form.specialtyTwo) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-2">
+                    {{ form_label(form.cooperators, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-3">
+                    {{ form_widget(form.cooperators) }}
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-2">
+                    {{ form_label(form.phone, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-3">
+                    {{ form_widget(form.phone) }}
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-2">
+                    {{ form_label(form.fax, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-3">
+                    {{ form_widget(form.fax) }}
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-2">
+                    {{ form_label(form.email, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-3">
+                    {{ form_widget(form.email) }}
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-2">
+                    {{ form_label(form.institutions, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-3">
+                    {{ form_widget(form.institutions) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <button type="submit" class="btn btn-primary" type="submit">
+                        {{ ('entity.Interlocutor.action.'~action)|trans }}
+                    </button>
+                    <br>
+                    <br>
+                    <span style="color: #c30000">* {{ ('general.star.mandatory')|trans }}</span>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+        <div id="jobNoRpps" class="d-none">{{ jobNoRpps|json_encode() }}</div>
+        <div id="jobInv" class="d-none">{{ jobInv|json_encode() }}</div>
+    {% endif %}
+
+{% endblock %}

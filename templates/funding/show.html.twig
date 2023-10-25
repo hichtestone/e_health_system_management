@@ -1,0 +1,77 @@
+{% set activeMenu = 'project' %}
+{% set subMenu = 'project' %}
+{% set activeMenu2 = 'funding' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.home.index', { 'id' : project.id }) }}"
+                                           title="{{ project.acronyme }}">{{ project.acronyme }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.list.fundings', { 'id' : project.id }) }}" title="financement">
+                    {{ 'entity.Funding.action.list'|trans }}</a></li>
+            <li class="breadcrumb-item active">{{ 'general.file'|trans }}</li>
+        </ol>
+    </nav>
+
+
+    <h1>{{ funding.funder }}</h1>
+    <div class="admin-block">
+        <div class="sf-read">
+            <h5>{{ 'show.main' | trans }}</h5>
+
+            <dl class="row">
+                <div class="col-12">
+                    {% if is_granted('FUNDING_ARCHIVE', funding) and is_granted('PROJECT_WRITE', project) %}
+                        <a class="btn btn-info float-right" href="{{ path('project.fundings.archive', {'id': project.id, 'idFunding': funding.id}) }}">Archiver</a>
+                    {% endif %}
+                    {% if is_granted('FUNDING_RESTORE', funding) and is_granted('PROJECT_WRITE', project) %}
+                        <a class="btn btn-info float-right" href="{{ path('project.fundings.restore', {'id': project.id, 'idFunding': funding.id}) }}">Désarchiver</a>
+                    {%  endif %}
+                </div>
+            </dl>
+
+            <dl class="row">
+                <div class="col-4">
+                    <dt>{{ 'entity.Funding.field.funder' | trans }} :</dt>
+                    <dd>{{ funding.funder }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Funding.field.publicFundingShort' | trans }} :</dt>
+                    <dd>{% if funding.publicFunding == 1 %}  Oui  {% else %} Non {% endif %}</dd>
+                </div>
+
+                {% if funding.publicFunding == 1 %}
+                    <div class="col-4">
+                        <dt>{{ 'entity.Funding.field.callProject' | trans }} :</dt>
+                        <dd>{{ funding.callProject is empty ? '' : funding.callProject.label }}</dd>
+                    </div>
+
+                    <div class="col-4">
+                        <dt>{{ 'entity.Funding.field.demandedAtShort' | trans }} :</dt>
+                        <dd>{{ funding.demandedAt is empty ? '' : funding.demandedAt|date('d/m/Y') }}</dd>
+                    </div>
+                {% endif %}
+
+                <div class="col-4">
+                    <dt>{{ 'entity.Funding.field.amountDevice' | trans }} :</dt>
+                    <dd>{{ funding.amount }} {{ funding.devise }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Funding.field.obtainedAtShort' | trans }} :</dt>
+                    <dd>{{ funding.obtainedAt is empty ? '' : funding.obtainedAt|date('d/m/Y') }}</dd>
+                </div>
+            </dl>
+            {% if is_granted('FUNDING_EDIT', funding) and is_granted('PROJECT_WRITE', project) %}
+            <a class="btn btn-primary"
+               href="{{ path('project.fundings.edit', {'id' : project.id, 'idFunding' : funding.id } ) }}">
+                {{ 'entity.Funding.action.modify'|trans }}</a>
+            {%  endif %}
+        </div>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,226 @@
+{% set activeMenu = 'institution' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'menu.admin.home'|trans }}">{{ 'menu.admin.home'|trans }}</a></li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('admin.institutions.index') }}" title="{{ 'menu.admin.institutions' | trans }}">
+                    {{ 'menu.admin.institutions' | trans }}
+                </a>
+            </li>
+            <li class="breadcrumb-item active">{{ 'general.file' | trans }}  - {{ institution.name|capitalize }} </li>
+        </ol>
+    </nav>
+
+    <h1>{{ institution.name|capitalize }}</h1>
+
+    <div class="admin-block">
+
+        <div class="sf-read">
+
+            <dl class="row">
+                <div class="col-12">
+                    <h5>
+                        {{ 'show.main'|trans }}
+
+                        {% if is_granted('ROLE_INSTITUTION_ARCHIVE') and institution.deletedAt is null %}
+                            {% if is_granted('INSTITUTION_ARCHIVE', institution) %}
+                                <a class="btn btn-info float-right" href="{{ path('admin.institution.archive', {'id': institution.id }) }}">
+                                    {{ 'general.archive' | trans }}
+                                </a>
+                            {% else %}
+                                <button class="btn btn-secondary disabled float-right" data-placement="left" data-toggle="tooltip" title="{{ 'entity.Institution.action.title' | trans }}">
+                                    {{ 'general.archiver' | trans }}
+                                </button>
+                            {% endif %}
+                        {% endif %}
+                        {% if is_granted('INSTITUTION_RESTORE', institution) %}
+                            <a class="btn btn-info float-right" href="{{ path('admin.institution.restore', {'id': institution.id }) }}">
+                                {{ 'general.unarchive' | trans }}
+                            </a>
+                        {% endif %}
+                    </h5>
+                </div>
+            </dl>
+
+            <dl class="row">
+                <div class="col-4">
+                    <dt>{{ 'entity.Institution.field.name'|trans }} :</dt>
+                    <dd>{{ institution.name }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Institution.field.type'|trans }} :</dt>
+                    <dd>{{ institution.institutionType }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Institution.field.address1'|trans }} :</dt>
+                    <dd>{{ institution.address1 }}</dd>
+                </div>
+
+                <div class="col-4">
+                    <dt>{{ 'entity.Institution.field.address2'|trans }} :</dt>
+                    <dd>{{ institution.address2 }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Institution.field.postalCode'|trans }} :</dt>
+                    <dd>{{ institution.postalCode }}</dd>
+                </div>
+                {% if institution.country.id == 1 %}
+                    <div class="col-4">
+                        <dt>{{ 'entity.Institution.field.department'|trans }} :</dt>
+                        <dd>{{ institution.countryDepartment }}</dd>
+                    </div>
+                {% endif %}
+
+                <div class="col-4">
+                    <dt>{{ 'entity.Institution.field.city'|trans }} :</dt>
+                    <dd>{{ institution.city }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Institution.field.country'|trans }} :</dt>
+                    <dd>{{ institution.country.name }}</dd>
+                </div>
+                {% if institution.country.id == 1 %}
+                    <div class="col-4">
+                        <dt>{{ 'entity.Institution.field.canceropole'|trans }} :</dt>
+                        <dd>{{ institution.countryDepartment is null ? '' : institution.countryDepartment.parent }}</dd>
+                    </div>
+                {% endif %}
+
+                {% if institution.country.id == 1 and institution.institutionType.id not in typeIdNoFiness %}
+                    <div class="col-4">
+                        <dt>{{ 'entity.Institution.field.finess'|trans }} :</dt>
+                        <dd>{{ institution.finess }}</dd>
+                    </div>
+                    <div class="col-4">
+                        <dt>{{ 'entity.Institution.field.siret'|trans }} :</dt>
+                        <dd>{{ institution.siret }}</dd>
+                    </div>
+                {% endif %}
+
+                <div class="col-4">
+                    <dt>{{ 'entity.Institution.field.phone'|trans }} :</dt>
+                    <dd>{{ institution.phone }}</dd>
+                </div>
+
+                <div class="col-4">
+                    <dt>{{ 'entity.Institution.field.fax'|trans }} :</dt>
+                    <dd>{{ institution.fax }}</dd>
+                </div>
+                <div class="col-4">
+                    <dt>{{ 'entity.Institution.field.email'|trans }} :</dt>
+                    <dd>{{ institution.email }}</dd>
+                </div>
+            </dl>
+
+            {% if is_granted('INSTITUTION_EDIT', institution) %}
+                <a class="btn btn-primary"
+                   href="{{ path('admin.institution.edit', {'id' : institution.id } ) }}">{{ 'entity.Institution.action.edit'|trans }}</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="admin-block">
+        <h5>{{ 'entity.Service.action.list'|trans }}
+            {% if is_granted('INSTITUTION_EDIT', institution) %}
+                <a class="btn btn-primary float-right" id="service-new" href="{{ path('admin.service.new', {id: institution.id}) }}"><i class="fa fa-plus"></i></a>
+            {% endif %}
+        </h5>
+        <div class="table-responsive">
+            <table class="w-100" id="institution-services" data-institution-id="{{ institution.id }}">
+                <tr>
+                    <th>{{ 'entity.Service.field.name'|trans }}</th>
+                    <th style="width: 20%;">{{ 'entity.Service.field.address_inherited'|trans }}</th>
+                    <th>{{ 'entity.Service.field.address'|trans }}</th>
+                    <th>{{ 'entity.Service.field.city'|trans }}</th>
+                    <th>{{ 'entity.Service.field.postal_code'|trans }}</th>
+                    <th>{{ 'entity.Service.field.country'|trans }}</th>
+                    <th>{{ 'entity.status.label'|trans }}</th>
+                    {% if is_granted('INSTITUTION_EDIT', institution) %}
+                        <th>{{ 'form.action.action'|trans }}</th>
+                    {% endif %}
+                </tr>
+                {% for service in institution.services %}
+                    <tr>
+                        <td>
+                            {{ service.name }}
+                        </td>
+                        <td>{{ service.addressInherited ? 'oui' : 'non' }}</td>
+                        {% if service.addressInherited %}
+                            <td>{{ institution.address1 }} {{ institution.address2 }}</td>
+                            <td>{{ institution.city }}</td>
+                            <td>{{ institution.postalCode }}</td>
+                            <td>{{ institution.country.name }}</td>
+                        {% else %}
+                            <td>{{ service.address }} {{ service.address2 }}</td>
+                            <td>{{ service.city }}</td>
+                            <td>{{ service.postalCode }}</td>
+                            <td>{{ institution.country.name }}</td>
+                        {% endif %}
+                        <td>{{ service.deletedAt is null ? '' : 'entity.status.archived'|trans }}</td>
+                        <td>
+                            {% if is_granted('SERVICE_EDIT', service) %}
+                                <a title="{{ 'form.action.edit'|trans }}"
+                                   href="{{ path('admin.service.edit', {id: institution.id, idService: service.id}) }}"
+                                   class="service-edit"><i class="fa fa-edit"></i></a>
+                            {% endif %}
+                            {% if is_granted('INSTITUTION_EDIT', institution) and service.deletedAt is null %}
+                                {% if is_granted('SERVICE_ARCHIVE', service) %}
+                                    <a title="{{ 'form.action.archive'|trans }}"
+                                       href="{{ path('admin.service.archive', {id: institution.id, idService: service.id}) }}"><i
+                                                class="fa fa-archive"></i></a>
+                                {% else %}
+                                    <i class="fa fa-archive c-grey" data-placement="right" data-toggle="tooltip"
+                                       title="{{ 'entity.Institution.action.servicetitle' | trans }}"></i>
+                                {% endif %}
+                            {% endif %}
+                            {% if is_granted('SERVICE_RESTORE', service) %}
+                                <a title="{{ 'form.action.restore'|trans }}"
+                                   href="{{ path('admin.service.restore', {id: institution.id, idService: service.id}) }}"><i
+                                            class="fa fa-box-open"></i></a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <div class="admin-block">
+        <div class="sf-read">
+            <h5>{{ 'entity.Interlocutor.action.list'|trans }}</h5>
+            <div class="table-responsive">
+                <table class="w-100" id="interlocutor-institution">
+                    <tr>
+                        <th>{{ 'entity.Interlocutor.field.civility'|trans }}</th>
+                        <th>{{ 'entity.Interlocutor.field.lastName'|trans }}</th>
+                        <th>{{ 'entity.Interlocutor.field.firstName'|trans }}</th>
+                        <th>{{ 'entity.Interlocutor.field.job'|trans }}</th>
+                    </tr>
+                    {% for interlocutor in institution.interlocutors %}
+                        {% if interlocutor.deletedAt is null %}
+                            <tr>
+                                <td>{{ interlocutor.civility }}</td>
+                                <td>
+                                    <a href="{{ path('admin.interlocutor.show', {'id' : interlocutor.id }) }}">
+                                        {{ interlocutor.lastName }}
+                                    </a>
+                                </td>
+                                <td>{{ interlocutor.firstName }}</td>
+                                <td>{{ interlocutor.job }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+    {# Liste des documents transverses dans un etablissement #}
+    {{ render_esi(controller('App\\ESM\\Controller\\DocumentTransverseController::institution_single_list', { 'id': institution.id })) }}
+
+{% endblock %}

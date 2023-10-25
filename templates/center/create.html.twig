@@ -1,0 +1,80 @@
+{% set activeMenu = 'center' %}
+{% set subMenu = 'center' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block body %}
+
+    {# Fil d'Ariane #}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.home.index', { 'id' : project.id }) }}" title="{{ project.acronyme }}">{{ project.acronyme }}</a></li>
+            <li class="breadcrumb-item">
+                {% if activeMenu2 == 'center' %}
+                    <a href="{{ path('project.center.index', { 'id' : project.id }) }}" title="{{ 'entity.Center.suite.list'|trans }}">{{ 'entity.Center.suite.list'|trans }}</a>
+                {% else %}
+                    <a href="{{ path('project.center.index', { 'id' : project.id }) }}" title="{{ 'entity.Center.action.list'|trans }}">{{ 'entity.Center.action.list'|trans }}</a>
+                {% endif %}
+            </li>
+            <li class="breadcrumb-item active">{{ ('form.action.'~action)|trans }}</li>
+
+        </ol>
+    </nav>
+
+    <h1>{{ ('entity.Center.action.'~action)|trans }}</h1>
+
+    <div class="admin-block" id="new-center">
+
+        {{ form_start(form) }}
+
+        <div class="row mb-3">
+            <div class="col-4">
+                {{ form_label(form.number, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-4">
+                {{ form_widget(form.number) }}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-4">
+                {{ form_label(form.name, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-4">
+                {{ form_widget(form.name) }}
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-4">
+                {{ form_label(form.institutions, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+            </div>
+            <div class="col-4">
+                {{ form_widget(form.institutions) }}
+            </div>
+        </div>
+
+        {% if action == 'edit' %}
+            <div class="row">
+                <div class="col-4">
+                    {{ form_label(form.centerStatus, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.centerStatus) }}
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="row">
+            <div class="col-6">
+                <button type="submit" class="btn btn-primary">{{ ('entity.Center.action.'~action)|trans }}</button>
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+
+    </div>
+
+{% endblock %}
+
+

@@ -1,0 +1,75 @@
+{% set allow_document_transverse_interlocutor = is_granted('INTERLOCUTOR_READ_WRITE_ARCHIVE_DOCUMENTTRANSVERSE', interlocutor) %}
+
+{% if is_granted('INTERLOCUTOR_LIST_DOCUMENTTRANSVERSE', interlocutor) %}
+    <div class="admin-block">
+
+        <h5 style="margin-bottom: 2em;">{{ 'entity.Interlocutor.documenttransverse.list'|trans }}
+            {% if allow_document_transverse_interlocutor %}
+                <a class="btn btn-primary float-right"
+                   href="{{ path('admin.interlocutor.addTransverseDocument', {'id': interlocutor.id }) }}">
+                    <i class="fa fa-plus"></i>
+                </a>
+            {% endif %}
+        </h5>
+
+        <div class="table-responsive">
+            <table class="w-100">
+                <tr>
+                    <th>{{ 'entity.DocumentTransverse.field.name'|trans}}</th>
+                    <th>{{ 'entity.DocumentTransverse.field.porteeDocument'|trans}}</th>
+                    <th>{{ 'entity.DocumentTransverse.field.TypeDocument'|trans}}</th>
+                    <th>{{ 'entity.DocumentTransverse.field.validStartAt' |trans}}</th>
+                    <th>{{ 'entity.DocumentTransverse.field.validEndAt' |trans}}</th>
+                    <th>{{ 'entity.DocumentTransverse.field.isValid'|trans}}</th>
+                    <th>{{ 'entity.DocumentTransverse.action.label'|trans}}</th>
+                </tr>
+                {% for document in interlocutor.DocumentTransverses %}
+                    <tr>
+                        <td><a href="{{ path('document_transverse_interlocuteur.show', {'interlocutor':interlocutor.id,id: document.id}) }}">{{ document.name }}</a></td>
+                        <td>{{ document.porteeDocument.name }}</td>
+                        <td>{{ document.TypeDocument.name }}</td>
+
+                        <td>{{ document.validStartAt|date('d-m-Y') }}</td>
+                        <td>{{ document.validEndAt|date('d-m-Y') }}</td>
+                        <td>
+                            {% if document.isValid %}
+                                <span class="badge badge-success">{{ 'entity.DocumentTransverse.action.valid'|trans }} </span>
+                            {% else %}
+                                <span class="badge badge-danger"> {{ 'entity.DocumentTransverse.action.invalid'|trans }} </span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            <a title="Voir fiche" href="{{ path('document_transverse_interlocuteur.show', {'interlocutor':interlocutor.id,id: document.id}) }}">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                            {% if is_granted('ROLE_DOCUMENTTRANSVERSE_READ', interlocutor) %}
+                                {% if document.filename != null %}
+                                    <a href="{{ vich_uploader_asset(document, 'filenameVich') }}" download
+                                       title="{{ 'entity.DocumentTransverse.action.download'|trans }}">
+                                        <i class="fa fa-download" aria-hid  den="true"></i>
+                                    </a>
+                                {% endif %}
+                            {% else %}
+                                <i class="fa fa-download c-grey"></i>
+                            {% endif %}
+
+                            {% if allow_document_transverse_interlocutor and document.deletedAt is null %}
+                                <a href="{{ path('document_transverse.archive_restore', { id: document.id}) }}" title="{{ 'form.action.archive'|trans}}" >
+                                    <i class="fa fa-archive"></i>
+                                </a>
+                            {% endif %}
+
+                            {% if allow_document_transverse_interlocutor and document.deletedAt is not null %}
+                                <a href="{{ path('document_transverse.archive_restore', { id: document.id}) }}" title="{{ 'form.action.restore'|trans}}" >
+                                    <i class="fa fa-box-open"></i>
+                                </a>
+                            {% endif %}
+
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endif %}

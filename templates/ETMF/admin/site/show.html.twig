@@ -1,0 +1,35 @@
+{% set activeMenu = 'sites' %}
+
+{% extends 'ETMF/layout/app.html.twig' %}
+
+{% block body %}
+
+    <h1>{{ (row.id is null) ? 'entity.Site.show.header'|trans : row.institution }}</h1>
+
+    <div class="admin-block switchable-form-wrap">
+
+        <div class="sf-read{{ action == 'edit' ? ' d-none' : '' }}">
+                <dl>
+                    <dt>{{ 'entity.Site.show.number'|trans }}</dt><dd>{{ row.number }}</dd>
+                    <dt>{{ 'entity.Site.show.institution'|trans }}</dt><dd>{{ row.institution }}</dd>
+                    <dt>{{ 'entity.Site.show.department'|trans }}</dt><dd>{{ row.department }}</dd>
+                    <dt>{{ 'entity.Site.show.address'|trans }}</dt><dd>{{ row.address }}</dd>
+                    <dt>{{ 'entity.Site.show.city'|trans }}</dt><dd>{{ row.city }}</dd>
+                    <dt>{{ 'entity.Site.show.postalCode'|trans }}</dt><dd>{{ row.postalCode }}</dd>
+                </dl>
+
+                {% if is_granted('EDIT', row) %}
+                    <button class="btn btn-primary sf-button">{{ 'form.btn.edit'|trans }}</button>
+                {% endif %}
+        </div>
+
+        <div class="sf-write{{ action == 'show' ? ' d-none' : '' }}">
+            {% if not form is null %}
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <button type="submit" class="btn btn-primary" type="submit">{{ ('form.btn.'~(action == 'create' ? 'create' : 'edit'))|trans }}</button>
+                {{ form_end(form) }}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

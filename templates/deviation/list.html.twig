@@ -1,0 +1,37 @@
+{# set current menu #}
+{% set activeMenu = 'project' %}
+{% set subMenu = 'project' %}
+{% set activeMenu2 = 'protocol-deviation' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <h1>{{'menu.project.protocol_deviation.list'|trans}}
+        {% if is_granted('DEVIATION_DRAFT_CREATE') and is_granted('PROJECT_WRITE', project) %}
+            <a class="btn btn-primary" href="{{ path('deviation.declaration', {'projectID': project.id}) }}">
+                <i class="fa fa-plus"></i>
+            </a>
+        {% endif %}
+    </h1>
+
+    {{ list.render|raw }}
+
+    <div class="row">
+        <div class="col-lg-12">
+            {% if is_granted('ROLE_DEVIATION_CLOSE') and is_granted('PROJECT_WRITE', project) %}
+                <button id="deviation-protocol-multi-close" class="btn btn-primary float-right">{{'menu.project.protocol_deviation.all_clos'|trans}}</button>
+            {% endif %}
+        </div>
+    </div>
+
+    <input id="project-id" type="hidden" value="{{ project.id }}">
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('deviation') }}
+{% endblock %}

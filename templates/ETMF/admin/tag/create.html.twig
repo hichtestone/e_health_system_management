@@ -1,0 +1,50 @@
+{% set activeMenu = '' %}
+{% set subMenu = '' %}
+{% set activeMenu2 = 'tag' %}
+
+{% extends 'ETMF/layout/app.html.twig' %}
+
+{% block content %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ path('app.etmf.home') }}" title="Accueil">Accueil</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('app.etmf.tag.list') }}" title="Tag"> {{ 'etmf.tag.label'|trans }}</a>
+            </li>
+            <li class="breadcrumb-item active">{% if edit %} Modification {% else %} Création {% endif %}</li>
+        </ol>
+    </nav>
+
+    <h1>{% if edit %} {{ 'etmf.tag.action.edit'|trans }} {%  else %} {{ 'etmf.tag.action.add'|trans }} {% endif %}</h1>
+
+    <div class="admin-block">
+
+        {{ form_start(form) }}
+
+        <div class="row">
+            <div class="col-6">
+                {{ form_row(form.name) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <button type="submit" class="btn btn-primary" type="submit">
+                    {% if edit %} {{ 'etmf.tag.action.edit'|trans }} {%  else %} {{ 'etmf.tag.action.new'|trans }} {% endif %}
+                </button>
+                <br>
+                <br>
+                <span style="color: #c30000">* {{ ('general.star.mandatory')|trans }}</span>
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+
+    </div>
+
+{% endblock %}
+
+

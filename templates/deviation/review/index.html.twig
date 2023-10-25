@@ -1,0 +1,47 @@
+{% set activeMenu = 'project' %}
+{% set subMenu = 'project' %}
+{% set activeMenu2 = 'protocol-deviation' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block title %}Deviation - Revues{% endblock %}
+
+{% block body %}
+
+    <h1>Deviations protocolaires</h1>
+
+    {% include 'menu/deviation.html.twig' with {'activetab': 'review'} %}
+
+    <h1>{{ 'entity.Deviation.DeviationReview.review'|trans }}<br>
+        {% if is_granted('DEVIATION_REVIEW_CREATE_BTN') and is_granted('PROJECT_WRITE', project) %}
+            {% if constant('STATUS_DRAFT', deviation) == deviation.status %}
+                <i class="btn btn-secondary disabled" href data-placement="left" data-toggle="tooltip" title="{{ 'entity.Deviation.DeviationReview.action.deviationDraft'|trans }}">{{ 'entity.Deviation.DeviationReview.action.create'|trans }}</i>
+            {% endif %}
+            {% if constant('STATUS_IN_PROGRESS', deviation) == deviation.status %}
+                <a class="btn btn-primary" href="{{ path('deviation.review.new', { 'projectID' : project.id, 'deviationID': deviation.id }) }}">{{ 'entity.Deviation.DeviationReview.action.create'|trans }}</a>
+            {% endif %}
+            {% if constant('STATUS_DONE', deviation) == deviation.status %}
+                <i class="btn btn-secondary disabled" href data-placement="left" data-toggle="tooltip" title="{{ 'entity.Deviation.DeviationReview.action.deviationClosed'|trans }}">{{ 'entity.Deviation.DeviationReview.action.create'|trans }}</i>
+            {% endif %}
+        {% endif %}
+
+        {% if is_granted('DEVIATION_REVIEW_CREATE_BTN') and is_granted('PROJECT_WRITE', project)%}
+            {% if constant('STATUS_DRAFT', deviation) == deviation.status %}
+                <i class="btn btn-secondary disabled" href data-placement="right" data-toggle="tooltip" title="{{ 'entity.Deviation.DeviationReview.action.deviationDraftCrex'|trans }}">{{ 'entity.Deviation.DeviationReview.action.submitCrex'|trans }}</i>
+            {% endif %}
+            {% if constant('STATUS_IN_PROGRESS', deviation) == deviation.status %}
+                <a class="btn btn-primary" href="{{ path('deviation.review.send.crex', { 'projectID' : project.id, 'deviationID': deviation.id }) }}">{{ 'entity.Deviation.DeviationReview.action.submitCrex'|trans }}</a>
+            {% endif %}
+            {% if constant('STATUS_DONE', deviation) == deviation.status %}
+                <i class="btn btn-secondary disabled" href data-placement="right" data-toggle="tooltip" title="{{ 'entity.Deviation.DeviationReview.action.deviationClosedCrex'|trans }}">{{ 'entity.Deviation.DeviationReview.action.submitCrex'|trans }}</i>
+            {% endif %}
+        {% endif %}
+    </h1>
+
+    <h3>{{ 'entity.Deviation.DeviationReview.reviewCrex'|trans }}</h3>
+    {{ listReviewCrex.render|raw }}
+
+    <h3>{{ 'entity.Deviation.DeviationReview.review'|trans }}</h3>
+    {{ listReview.render|raw }}
+
+{% endblock %}

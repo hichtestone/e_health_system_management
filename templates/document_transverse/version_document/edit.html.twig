@@ -1,0 +1,24 @@
+{% set activeMenu = 'drugs' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="Accueil">Accueil</a></li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('document_transverse_drug.show',{'drug': document.drug.id, 'id': document.id }) }}" >
+                    {{ document.name }}
+                </a>
+            </li>
+            <li class="breadcrumb-item active">{{ 'menu.header.version'|trans }}</li>
+        </ol>
+    </nav>
+
+        <h1> {{ 'entity.VersionDocumentTransverse.field.label_edit'|trans }}  </h1>
+
+
+        {{ include('document_transverse/version_document/_form.html.twig') }}
+
+{% endblock %}

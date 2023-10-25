@@ -1,0 +1,60 @@
+{% if app.request.get('_route') == 'admin.interlocutor.addTransverseDocument'%}
+    {% set activeMenu = 'interlocutor' %}
+{% elseif app.request.get('_route') == 'admin.institution.addTransverseDocument'  %}
+    {% set activeMenu = 'institution' %}
+{% elseif app.request.get('_route') == 'admin.drug.document.new'  %}
+    {% set activeMenu = 'drug' %}
+{% endif %}
+
+
+{% extends 'layout/app.html.twig' %}
+
+{% block content %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="Accueil">Accueil</a></li>
+            {% if app.request.get('_route') == 'admin.interlocutor.addTransverseDocument'%}
+                <li class="breadcrumb-item">
+                    <a href="{{ path('admin.interlocutors.index') }}" title="{{ 'menu.admin.interlocutors' | trans }}">
+                        {{ 'menu.admin.interlocutors' | trans }}
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ path('admin.interlocutor.show',{'id': interlocutor.id }) }}">
+                        Fiche - {{ interlocutor.firstName }} {{ interlocutor.lastName }}
+                    </a>
+                </li>
+            {% elseif app.request.get('_route') == 'admin.institution.addTransverseDocument'%}
+                <li class="breadcrumb-item">
+                    <a href="{{ path('admin.institutions.index') }}" title="{{ 'menu.admin.institutions' | trans }}">
+                        {{ 'menu.admin.institutions' | trans }}
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ path('admin.institution.show',{'id': institution.id }) }}">
+                        {{ institution.name }}
+                    </a>
+                </li>
+            {% elseif app.request.get('_route') == 'admin.drug.document.new'  %}
+                <li class="breadcrumb-item">
+                    <a href="{{ path('admin.drugs.index') }}" title="{{ 'menu.admin.drugs' | trans }}">
+                        {{ 'menu.admin.drugs' | trans }}
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ path('admin.drug.show',{'id': drug.id }) }}" >
+                        Fiche - {{ drug.name }}
+                    </a>
+                </li>
+            {% endif %}
+
+            <li class="breadcrumb-item active">{% if edit %} {{ ('entity.DocumentTransverse.action.edit')|trans }} {%  else %} {{ 'entity.DocumentTransverse.action.create'|trans }} {% endif %}</li>
+        </ol>
+    </nav>
+
+    <h1> {% if edit %} {{ ('entity.DocumentTransverse.action.edit')|trans }} {%  else %} {{ 'entity.DocumentTransverse.action.create'|trans }} {% endif %}</h1>
+
+    {{ include('document_transverse/_form.html.twig') }}
+
+{% endblock %}

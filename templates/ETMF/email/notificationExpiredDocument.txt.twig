@@ -1,0 +1,21 @@
+{% extends 'email/base.html.twig' %}
+
+{% block body %}
+
+    L'application ETMF de Unicancer vous informe que le document suivant va arriver à expiration :\n
+
+    {% set difference = date(documentVersion.expiredAt).diff(date(dateNow)) %}
+
+    Projet : {{ documentVersion.document.project.name }}\n
+    Document : {{ documentVersion.document.name }}\n
+    Version : {{ documentVersion.numberVersion }}\n
+    Délai d'expiration : {{ difference.days }} jours\n
+
+    \n\n
+
+    Nous vous conseillons : \n
+
+    de téléverser une nouvelle version du document \n
+    de ne plus utiliser la version actuelle \n
+
+{% endblock %}

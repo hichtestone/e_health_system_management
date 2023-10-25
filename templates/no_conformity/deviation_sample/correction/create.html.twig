@@ -1,0 +1,68 @@
+{% set activeMenu = 'no_conformity' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('deviation-sample') }}
+{% endblock %}
+
+{% block title %}Déviation échantillon biologique - corrections{% endblock %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ path('no_conformity.protocol_deviation_crex') }}" title="Accueil">Non-Conformités</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('no_conformity.deviation.sample.index') }}">{{ 'entity.NoConformity.menu.sample'|trans }}</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('no_conformity.deviation.sample.declaration', { 'deviationSampleID' : deviationSample.id }) }}">{{ 'Déclaration'|trans }}</a>
+            </li>
+            <li class="breadcrumb-item active">
+                {% if action == 'edit' %} Édition correction immédiate {% else %} Création correction immédiate {% endif %}
+            </li>
+        </ol>
+    </nav>
+
+    <h1>Déviations échantillon biologique</h1>
+
+    {% include 'menu/no_conformity.html.twig' with {'activetab': 'sample'} %}
+
+    <br>
+    <h2>{% if action == 'edit' %} Édition correction immédiate {% else %} Création correction immédiate {% endif %}</h2>
+    <br>
+
+    <div class="admin-block">
+        {{ form_start(form) }}
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-lg-12">{{ form_row(form.applicationPlannedAt) }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">{{ form_row(form.realizedAt) }}</div>
+                    </div>
+                </div>
+                <div class="col-lg-6">{{ form_row(form.description) }}</div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">{{ form_row(form.efficiencyMeasure) }}</div>
+                <div class="col-lg-6">{{ form_row(form.notEfficiencyMeasureReason) }}</div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 offset-9">
+                    <button class="btn btn-primary float-right" type="submit">Enregistrer</button>
+                </div>
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('deviation-sample') }}
+{% endblock %}

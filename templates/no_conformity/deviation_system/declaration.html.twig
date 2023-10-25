@@ -1,0 +1,375 @@
+{% set activeMenu = 'no_conformity' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('deviation-system') }}
+{% endblock %}
+
+{% block title %}Déviation NC - Declaration{% endblock %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ path('no_conformity.protocol_deviation_crex') }}" title="{{ 'menu.NonConformity.label' | trans }}">{{ 'menu.NonConformity.label'| trans }}</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <a href="{{ path('deviation.system.list')}}">{{ 'entity.NoConformity.menu.system'|trans }}</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <a href="{{ path('deviation.system.declaration')}}">{{ 'deviation.titre.declaration'|trans }}</a>
+            </li>
+        </ol>
+    </nav>
+
+    <h1>{{ 'entity.NoConformity.menu.system'|trans }}</h1>
+
+    {% if deviationSystem is not null %}
+        {% include 'menu/deviation_system.html.twig' with {'activetab': 'declaration', 'deviationSystemID' : deviationSystem.id, 'editMode': editMode } %}
+        <h1> {% if editMode is not null  %} {{ 'entity.NoConformity.field.system.action.add_or_update'|trans }} {% else %} {{ 'entity.NoConformity.field.system.action.declaration'|trans }} {{ deviationSystem.code }} {% endif %}</h1>
+    {% else %}
+        {% include 'menu/deviation_system.html.twig' with {'activetab': 'declaration' } %}
+    {% endif %}
+
+    {% if fromMonitoring %}<p class="text-center"><a href="https://duckduckgo.com">{{'entity.report_visit.field.report.monitoring'|trans}}</a></p>{% endif %}
+
+    <div class="row pl-3 mb-3 mt-3">
+
+        <div class="col-lg-3">
+            <b>{{ 'entity.NoConformity.field.system.declaration.statut'|trans }} : </b><button type="button" class="btn btn-secondary">{{ constant('App\\ESM\\Entity\\Deviation::STATUS')[deviationSystem.status]|trans }}</button>
+        </div>
+
+        {% if deviationSystem.status == constant('App\\ESM\\Entity\\Deviation::STATUS_IN_PROGRESS') %}
+
+            <div class="col-lg-4">
+                {% if editMode is null and is_granted('DEVIATION_SYSTEM_DRAFT_EDIT', deviationSystem) %}
+                    <a href="{{ path('deviation.system.declaration', {'deviationSystemID': deviationSystem.id, 'edit': 'edit'}) }}" class="btn btn-primary">Modifier la déclaration</a>
+                {% endif %}
+            </div>
+
+            <div class="col-lg-4">
+                {% if editMode is null and is_granted('DEVIATION_SYSTEM_QA_WRITE', deviationSystem) %}
+                    <a href="{{ path('deviation.system.declaration', {'deviationSystemID': deviationSystem.id, 'edit': 'edit', 'editQA': 'qa'}) }}" class="btn btn-primary">Modification par l'AQ</a>
+                {% endif %}
+            </div>
+
+            <div class="col-lg-2">
+                {% if is_granted('DEVIATION_SYSTEM_CLOSE', deviationSystem) and editMode != 'edit' %}
+                    <a id="deviation-system-close" class="btn btn-primary float-right">{{ 'general.close'|trans}}</a>
+                {% endif %}
+            </div>
+
+        {% endif %}
+
+    </div>
+
+    {{ form_start(form) }}
+
+        {# IDENTIFICATION block ################################################################################## #}
+
+        <div id="identification" class="container-fluid admin-block pl-3 mb-2">
+
+            <div class="row">
+                <div class="col-lg-12"><h5 class="text-center">{{ 'entity.NoConformity.field.system.declaration.section.identification'|trans }}</h5></div>
+            </div>
+
+            <br>
+
+            <div class="row">
+                <div class="col-lg-2 form-inline form-group">{{ form_label(form.observedAt) }} :</div>
+                <div class="col-lg-3 form-inline form-group">{{ form_widget(form.observedAt) }}</div>
+                <div class="col-lg-2 offset-2 form-inline form-group">{{ form_label(form.declaredBy) }} :</div>
+                <div class="col-lg-3 form-inline form-group">{{ form_widget(form.declaredBy) }}</div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-2 form-inline form-group">{{ 'entity.NoConformity.field.system.declaration.declaredAt'|trans }} :</div>
+                <div class="col-lg-3 form-inline form-group">{% if deviationSystem.declaredAt is not null %}{{ deviationSystem.declaredAt|date('d-m-Y') }}{% endif %}</div>
+            </div>
+
+            <div class="row">
+                {% if editMode != 'edit' or (editMode == 'edit' and editQA == 'qa') %}
+                    <div class="col-lg-2 form-inline form-group">{{ 'entity.NoConformity.field.system.declaration.process'|trans }}  :</div>
+                    <span> {{ deviationSystem.process|join(' | ') }}</span>
+                {% else %}
+                    <div class="col-lg-2 form-inline form-group">{{ form_label(form.process) }}</div>
+                    <div class="col-lg-8 form-inline form-group">{{ form_widget(form.process) }}</div>
+                {% endif %}
+            </div>
+
+        </div>
+
+        {# IDENTIFICATION QA block ######################################################################### #}
+
+        <div id="identification-qa" class="container-fluid admin-block pl-3 mb-2">
+
+            <div class="row">
+                <div class="col-lg-12"><h5 class="text-center text-uppercase">{{ 'entity.NoConformity.field.system.declaration.section.identificationQA'|trans }}</h5></div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-2 form-inline form-group">{{ form_label(form.activity) }} :</div>
+                <div class="col-lg-3 form-inline form-group">{{ form_widget(form.activity) }}</div>
+                <div class="col-lg-2 offset-2 form-inline form-group">{{ form_label(form.refISO9001) }} :</div>
+                <div class="col-lg-3 form-inline form-group">{{ form_widget(form.refISO9001) }}</div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-2 form-inline form-group">{{ form_label(form.referentQA) }} :</div>
+                <div class="col-lg-3 form-inline form-group">{{ form_widget(form.referentQA) }}</div>
+                <div class="col-lg-2 offset-2 form-inline form-group">{{ form_label(form.document) }} :</div>
+                <div class="col-lg-3 form-inline form-group">{{ form_widget(form.document) }}</div>
+            </div>
+
+        </div>
+
+        {# DESCRIPTION block ######################################################################### #}
+
+        <div id="description" class="container-fluid admin-block pl-3 mb-2">
+
+            <div class="row">
+                <div class="col-lg-12"><h5 class="text-center">{{ 'entity.NoConformity.field.system.declaration.section.description'|trans }}</h5></div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-2 form-inline form-group">{{ form_label(form.resume) }} :</div>
+                <div class="col-lg-3 form-inline form-group">{{ form_widget(form.resume) }}</div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-2 form-inline form-group">{{ form_label(form.description) }} :</div>
+                <div class="col-lg-3 form-inline form-group">{{ form_widget(form.description) }}</div>
+            </div>
+
+        </div>
+
+        {# CAUSES block ######################################################################################### #}
+
+        <div id="causes" class="container-fluid admin-block pl-3 mb-2">
+
+            <div class="row">
+                <div class="col-lg-12"><h5 class="text-center">{{ 'entity.NoConformity.field.system.declaration.section.cause'|trans }}</h5></div>
+            </div>
+
+            <br>
+
+            <div class="row">
+                <div class="col-lg-2 form-inline form-group">{{ form_label(form.causality) }}</div>
+                <div class="col-lg-2 form-inline form-group">{{ form_widget(form.causality) }}</div>
+                <div class="col-lg-2 form-inline form-group">{{ form_label(form.causalityDescription) }}</div>
+                <div class="col-lg-6 form-inline form-group overflow-auto">{{ form_widget(form.causalityDescription) }}</div>
+            </div>
+
+            <br>
+
+            <div class="row">
+                <div class="col-lg-2 form-inline form-group">{{ form_label(form.grade) }}</div>
+                <div class="col-lg-3 form-inline form-group">{{ form_widget(form.grade) }}</div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-2 form-inline form-group">{{ form_label(form.potentialImpact) }}</div>
+                <div class="col-lg-3 form-inline form-group">{{ form_widget(form.potentialImpact) }}</div>
+                <div class="col-lg-2 form-inline form-group">{{ form_label(form.potentialImpactDescription) }}</div>
+                <div class="col-lg-3 form-inline form-group">{{ form_widget(form.potentialImpactDescription) }}</div>
+            </div>
+
+        </div>
+
+        {# Corrections immédiates block ############################################################################################################### #}
+
+        <div id="corrections" class="container-fluid admin-block pl-3 mb-2">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <h5 class="text-center" class="text-center">
+                        {{ 'entity.NoConformity.field.system.declaration.section.correction'|trans }}
+                        {% if is_granted('DEVIATION_SYSTEM_CORRECTION_CREATE', deviationSystem) %}
+                            <a href="{{ path('deviation.system.correction.new', {'deviationSystemID' : deviationSystem.id }) }}" class="btn btn-primary ml-2">
+                                <i class="fa fa-plus"></i>
+                            </a>
+                        {% endif %}
+                    </h5>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="table-responsive">
+                    <table class="w-100" id="deviation-correction">
+                        <tr>
+                            <th>{{ 'entity.DeviationSample.DeviationCorrection.field.description'|trans }}</th>
+                            <th>{{ 'entity.DeviationSample.DeviationCorrection.field.applicationPlannedAt'|trans }}</th>
+                            <th>{{ 'entity.DeviationSample.DeviationCorrection.field.realizedAt'|trans }}</th>
+                            <th>{{ 'entity.DeviationSample.DeviationCorrection.field.efficiencyMeasure'|trans }}</th>
+                            <th>{{ 'entity.DeviationSample.DeviationCorrection.field.notEfficiencyMeasureReason'|trans }}</th>
+                            <th>Actions</th>
+                        </tr>
+
+                        {% for listDeviationSystemCorrection in listDeviationSystemCorrections %}
+                            <tr>
+                                <td>{{ listDeviationSystemCorrection.description }}</td>
+                                <td>{{ listDeviationSystemCorrection.applicationPlannedAt is empty ? '' : listDeviationSystemCorrection.applicationPlannedAt|date('d/m/Y') }}</td>
+                                <td>{{ listDeviationSystemCorrection.realizedAt is empty ? '' : listDeviationSystemCorrection.realizedAt|date('d/m/Y') }}</td>
+                                <td>{{ constant('App\\ESM\\Entity\\Deviation::EFFICIENCY_MEASURE')[listDeviationSystemCorrection.efficiencyMeasure] }}</td>
+                                <td>{{ listDeviationSystemCorrection.notEfficiencyMeasureReason }}</td>
+                                <td>
+                                    {% if is_granted('DEVIATION_SYSTEM_CORRECTION_EDIT', listDeviationSystemCorrection) %}
+                                        <a href="{{ path('deviation.system.correction.edit', {'deviationSystemID' : listDeviationSystemCorrection.deviationSystem.id, 'correctionID' : listDeviationSystemCorrection.id }) }}">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                    {% endif %}
+                                    {% if is_granted('DEVIATION_SYSTEM_CORRECTION_DELETE', listDeviationSystemCorrection) %}
+                                        <a class="deviation-action-delete"
+                                           href="{{ path('deviation.system.correction.delete', {'deviationSystemID' : listDeviationSystemCorrection.deviationSystem.id, 'correctionID' : listDeviationSystemCorrection.id }) }}">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        {# Plan action block ############################################################################################################################## #}
+
+        <div id="plan-action-system" class="container-fluid admin-block pl-3 mb-2">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <h5 id="titre-plan-action" class="text-center">
+                        {{ 'entity.NoConformity.field.system.declaration.section.action'|trans }}
+                        {% if is_granted('DEVIATION_SYSTEM_ACTION_CREATE', deviationSystem) and editMode != 'edit' %}
+                            <a id="link-create-action-system" href="{{ path('deviation.system.declaration.action.new', { 'deviationSystemID': deviationSystem.id }) }}" class="btn btn-primary ml-2">
+                                <i class="fa fa-plus"></i>
+                            </a>
+                        {% endif %}
+                    </h5>
+                </div>
+                <div class="col-lg-12">
+                    <div class="table-responsive">
+                        <table class="w-100" id="review-actions">
+                            <tr>
+                                <th>{{ 'entity.Deviation.DeviationReviewAction.field.type'|trans }}</th>
+                                <th>{{ 'entity.Deviation.DeviationReviewAction.field.description'|trans }}</th>
+                                <th>{{ 'entity.Deviation.DeviationReviewAction.field.applicationAt'|trans }}</th>
+                                <th>{{ 'entity.Deviation.DeviationReviewAction.field.doneAt'|trans }}</th>
+                                <th>{{ 'entity.Deviation.DeviationReviewAction.field.intervenant'|trans }}</th>
+                                <th>{{ 'entity.Deviation.DeviationReviewAction.field.status'|trans }}</th>
+                                <th>Actions</th>
+                            </tr>
+
+                            {% for deviationSystemAction in deviationSystemActions %}
+                                <tr>
+                                    <td>{{ constant('App\\ESM\\Entity\\DeviationAction::TYPE_ACTION')[deviationSystemAction.typeAction]|trans }}</td>
+                                    <td>{{ deviationSystemAction.description }}</td>
+                                    <td>{{ deviationSystemAction.applicationAt is empty ? '' : deviationSystemAction.applicationAt|date('d/m/Y') }}</td>
+                                    <td>{{ deviationSystemAction.doneAt is empty ? '' : deviationSystemAction.doneAt|date('d/m/Y') }}</td>
+                                    <td>
+                                        {% if deviationSystemAction.intervener is not empty %}
+                                            {{ deviationSystemAction.intervener.displayName }}
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ deviationSystemAction.status is empty ? '' : constant('App\\ESM\\Entity\\DeviationAction::STATUS')[deviationSystemAction.status] | trans }} </td>
+                                    <td>
+                                        {% if is_granted('DEVIATION_SYSTEM_ACTION_EDIT', deviationSystem) %}
+                                            <a href="{{ path('deviation.system.declaration.action.edit', { 'deviationSystemID': deviationSystem.id, 'actionID' : deviationSystemAction.id}) }}">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                        {% endif %}
+                                        {% if is_granted('DEVIATION_SYSTEM_ACTION_DELETE', deviationSystem) %}
+                                            <a class="deviation-action-delete"
+                                               href="{{ path('deviation.system.declaration.action.delete', { 'deviationSystemID': deviationSystem.id, 'actionID' : deviationSystemAction.id }) }}">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+            <br>
+            <br>
+            <br>
+
+            <div class="row">
+
+                <div class="col-lg-2 form-inline form-group">{{ form_label(form.efficiencyMeasure) }}</div>
+                <div class="col-lg-3 form-inline form-group">{{ form_widget(form.efficiencyMeasure) }}</div>
+
+            </div>
+
+            <br>
+
+            <div class="row">
+
+                <div class="col-lg-2 form-inline form-group">{{ form_label(form.efficiencyJustify) }}</div>
+                <div class="col-lg-4 form-inline form-group">{{ form_widget(form.efficiencyJustify) }}</div>
+
+                <div class="col-lg-2 form-inline form-group">{{ form_label(form.notEfficiencyMeasureReason) }}</div>
+                <div class="col-lg-4 form-inline form-group">{{ form_widget(form.notEfficiencyMeasureReason) }}</div>
+
+            </div>
+
+        </div>
+
+        {# Quality Assurance block ######################################################################################################################### #}
+
+        <div id="quality-assurance" class="container-fluid admin-block pl-3 mb-2">
+
+            <div class="row">
+                <div class="col-lg-12"><h5 class="text-center text-uppercase">{{ 'entity.NoConformity.field.system.declaration.section.validataionQa'|trans }}</h5></div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-2 form-inline form-group">{{ form_label(form.visaPilotProcessChiefQA) }}</div>
+                <div class="col-lg-2 form-inline form-group">{{ form_widget(form.visaPilotProcessChiefQA) }}</div>
+                <div class="col-lg-1 form-inline form-group">{{ form_label(form.visaAt) }}</div>
+                <div class="col-lg-2 form-inline form-group">{{ form_widget(form.visaAt) }}</div>
+                <div class="col-lg-1 form-inline form-group">{{ form_label(form.officialQA) }}</div>
+                <div class="col-lg-2 form-inline form-group">{{ form_widget(form.officialQA) }}</div>
+            </div>
+
+        </div>
+
+        {# End page ######################################################################################################################################## #}
+
+        <input type="hidden" id="deviation-system-id" value="{{ deviationSystem.id }}" />
+        <input type="hidden" id="deviation-system-status" value="{{ deviationSystem.status }}" />
+        <input type="hidden" id="edit-mode" value="{{ editMode }}" />
+        <input type="hidden" id="edit-qa" value="{{ editQA }}" />
+        <input type="hidden" id="is-qa-nc-system-granted" value="{{ isGrantedDeviationSystemQAWrite }}" />
+
+        <div class="row mb-5">
+
+            <div class="col-lg-9">
+                {% if deviationSystem is not null and deviationSystem.status == constant('App\\ESM\\Entity\\Deviation::STATUS_DRAFT') and is_granted('DEVIATION_SYSTEM_DRAFT_DELETE', deviationSystem) %}
+                    <a id="delete-draft-popup" class="btn btn-primary">{{ 'general.draft'|trans }}</a>
+                {% endif %}
+            </div>
+
+            <div class="col-lg-3">
+                {% if (is_granted('DEVIATION_SYSTEM_DRAFT_EDIT', deviationSystem) or is_granted('DEVIATION_SYSTEM_BLOCK_QA', deviationSystem)) and editMode == 'edit' %}
+                    <button type="submit" class="btn btn-primary float-right">{{ 'word.save'|trans }}</button>
+                {% endif %}
+            </div>
+
+        </div>
+
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('deviation-system') }}
+{% endblock %}

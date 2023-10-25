@@ -1,0 +1,14 @@
+{% block content %}
+    <h1>Supprimer la revue CREX NC Système</h1>
+    <div class="admin-block">
+        {{ form_start(form, {'action': url}) }}
+        <p>Êtes vous sûr de vouloir supprimer cette revue? Cette action est irréversible</p>
+        <a href type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</a>
+        <button type="submit" class="btn btn-primary">Confirmer</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('deviation-system') }}
+{% endblock %}

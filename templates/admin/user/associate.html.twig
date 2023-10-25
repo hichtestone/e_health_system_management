@@ -1,0 +1,9 @@
+{% block content %}
+    <h1>Activé</h1>
+
+    <div class="admin-block">
+        <p>Êtes-vous sûr de vouloir activé le projet ?</p>
+        <a href type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</a>
+        <a class="btn btn-primary" href="{{ path('admin.user.project.associate.btn', { 'id' : id , 'idProject': idProject}) }}">Valider</a>
+    </div>
+{% endblock %}

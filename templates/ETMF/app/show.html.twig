@@ -1,0 +1,126 @@
+{% set activeMenu = 'etmf' %}
+
+{% extends 'ETMF/layout/app.html.twig' %}
+
+{% block body %}
+    <h1>Document - {{ documentVersion.file }}</h1>
+    <div class="admin-block">
+        <dl class="row">
+            <div class="col-4">
+                <dt>{{ 'etmf.document.field.name'|trans }} :</dt>
+                <dd>
+                    {{ documentVersion.file }}
+                </dd>
+            </div>
+            <div class="col-4">
+                <dt>{{ 'etmf.document.field.description'|trans }} :</dt>
+                <dd>
+                    {% if documentVersion.document is not null %}
+                        {{ documentVersion.document.description }}
+                    {% endif %}
+                </dd>
+            </div>
+            <div class="col-4">
+                <dt>{{ 'etmf.document.field.sponsor'|trans }} :</dt>
+                <dd>
+                    {% if documentVersion.document is not null %}
+                        {% if documentVersion.document.sponsor is not null %}
+                            {{ documentVersion.document.sponsor.label }}
+                        {% endif %}
+                    {% endif %}
+                </dd>
+            </div>
+
+            <div class="col-4">
+                <dt>{{ 'etmf.document.field.project'|trans }} :</dt>
+                <dd>
+                    {% if documentVersion.document is not null %}
+                        {% if documentVersion.document.project is not null %}
+                            {{ documentVersion.document.project.name }}
+                        {% endif %}
+                    {% endif %}
+                </dd>
+            </div>
+
+            <div class="col-4">
+                <dt>{{ 'etmf.document.field.country'|trans }} :</dt>
+                <dd>
+                    {% if documentVersion.document is not null %}
+                        {% if documentVersion.document.countries is not null %}
+                            {{ documentVersion.document.countries|map((country) => country.name )|join(' | ') }}
+                        {% endif %}
+                    {% endif %}
+                </dd>
+            </div>
+
+            <div class="col-4">
+                <dt>{{ 'etmf.document.field.center'|trans }} :</dt>
+                <dd>
+                    {% if documentVersion.document is not null %}
+                        {% if documentVersion.document.centers is not null %}
+                            {{ documentVersion.document.centers|map((center) => center.name )|join(' | ') }}
+                        {% endif %}
+                    {% endif %}
+                </dd>
+            </div>
+
+            <div class="col-4">
+                <dt>{{ 'etmf.document.field.zone'|trans }} :</dt>
+                <dd>
+                    {% if documentVersion.document is not null %}
+                        {% if documentVersion.document.zone is not null %}
+                            {{ documentVersion.document.zone.name }}
+                        {% endif %}
+                    {% endif %}
+                </dd>
+            </div>
+
+            <div class="col-4">
+                <dt>{{ 'etmf.document.field.section'|trans }} :</dt>
+                <dd>
+                    {% if documentVersion.document is not null %}
+                        {% if documentVersion.document.section is not null %}
+                            {{ documentVersion.document.section.name }}
+                        {% endif %}
+                    {% endif %}
+                </dd>
+            </div>
+
+            <div class="col-4">
+                <dt>{{ 'etmf.document.field.artefact'|trans }} :</dt>
+                <dd>
+                    {% if documentVersion.document is not null %}
+                        {% if documentVersion.document.artefact is not null %}
+                            {{ documentVersion.document.artefact.name }}
+                        {% endif %}
+                    {% endif %}
+                </dd>
+            </div>
+
+            <div class="col-4">
+                <dt>{{ 'etmf.document.field.tag'|trans }} :</dt>
+                <dd>
+                    {% if documentVersion.document is not null %}
+                        {% if documentVersion.document.tags is not null %}
+                            {{ documentVersion.document.tags|map((tag) => tag.name )|join(' | ') }}
+                        {% endif %}
+                    {% endif %}
+                </dd>
+            </div>
+        </dl>
+
+        <dl class="row">
+            <div class="col-4">
+                <a class="btn btn-secondary" href="{{ path('app.etmf.home') }}">{{ 'general.back_to_list'|trans }}</a>
+                <a class="btn btn-primary" href="{{ path('app.etmf.documentVersion.show', { 'id' : documentVersion.id }) }}">{{ 'etmf.document.action.edit'|trans }}</a>
+            </div>
+        </dl>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('app-etmf') }}
+{% endblock %}
+

@@ -1,0 +1,50 @@
+{% extends 'layout/app.html.twig' %}
+
+{% block title %}{{ 'security.profile.label'|trans }}{% endblock %}
+
+{% block content %}
+    <div class="container">
+
+        <h1>{{ 'security.profile.label'|trans }}</h1>
+        <div class="admin-block">
+            <h5>{{ 'show.main'|trans }}</h5>
+            <dl class="row">
+                <div class="col-6">
+                    <dt>{{ 'Civility : ' }}</dt><dd>{{ user.civility.label ?? '' }}</dd>
+                </div>
+                <div class="col-6">
+                    <dt>{{ 'Last Name : ' }}</dt><dd>{{ user.lastName }}</dd>
+                </div>
+                <div class="col-6">
+                    <dt>{{ 'First Name : ' }}</dt><dd>{{ user.firstName }}</dd>
+                </div>
+                <div class="col-6">
+                    <dt>{{ 'E-Mail :' }}</dt><dd>{{ user.email }}</dd>
+                </div>
+            </dl>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h2>{{ 'security.password.label'|trans }}</h2>
+                <a class="btn btn-primary" href="{{ path('reset_password') }}">{{ 'security.password.reset'|trans }}</a>
+            </div>
+        </div>
+        {#<div class="row">
+            <div class="col">
+                <h2>{{ 'security.two_factor.label'|trans }}</h2>
+                {% if user.twoFactorSecret is null %}
+                    <a class="btn btn-primary" href="{{ path('two_factor.enable') }}">{{ 'security.two_factor.enable'|trans }}</a>
+                {% else %}
+                    <a class="btn btn-danger" href="{{ path('two_factor.disable') }}">{{ 'security.two_factor.disable'|trans }}</a>
+                    <a class="btn btn-primary" href="{{ path('two_factor.enable') }}">{{ 'security.two_factor.reset'|trans }}</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h2>{{ 'account.session_status'|trans }}</h2>
+                <p id="session-status"></p>
+            </div>
+        </div>#}
+    </div>
+{% endblock %}

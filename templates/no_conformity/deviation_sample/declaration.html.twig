@@ -1,0 +1,449 @@
+{% set activeMenu = 'no_conformity' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('deviation-sample') }}
+{% endblock %}
+
+{% form_theme form _self %}
+
+{% block wrapped_causality_widget %}
+    <div id="deviation_sample_declaration_causality">
+        {% for childs in form.children %}
+            {% set isChecked = childs.vars.checked == 'checked' %}
+            <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                    <input
+                            {% if form.vars.disabled %}disabled{% endif %}
+                            type="checkbox"
+                            class="form-check-input"
+                            id="{{ childs.vars.id }}"
+                            name="{{ childs.vars.full_name }}"
+                            value="{{ childs.vars.value }}"
+                            {% if isChecked %}checked="checked"{% endif %}
+                    >
+                    {{ childs.vars.label }}
+                </label>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ path('no_conformity.protocol_deviation_crex') }}" title="{{ 'menu.NonConformity.label' | trans }}">{{ 'menu.NonConformity.label' | trans }}</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <a href="{{ path('no_conformity.deviation.sample.index')}}">{{ 'entity.NoConformity.menu.sample'|trans }}</a>
+            </li>
+        </ol>
+    </nav>
+
+    {% include 'menu/no_conformity.html.twig' with {'activetab': 'sample'} %}
+
+    <br>
+    <h2>{{ 'entity.NoConformity.field.sample.declaration.title'|trans }} : {{ deviationSample.code }}</h2>
+
+    <div class="row pl-3 mb-3 mt-5">
+
+        <div class="col-lg-3">
+          <b>{{ 'entity.NoConformity.field.sample.declaration.statut'|trans }} : </b><button type="button" class="btn btn-secondary">{{ constant('STATUS', deviation)[deviationSample.status] |trans }}</button>
+        </div>
+
+        {% if deviationSample.status == constant('STATUS_IN_PROGRESS', deviation) %}
+
+            <div class="col-lg-8">
+                {% if editMode is null and is_granted('DEVIATION_SAMPLE_DRAFT_EDIT', deviationSample) %}
+                    <a href="{{ path('no_conformity.deviation.sample.declaration', {'deviationSampleID': deviationSample.id, 'edit': 'edit'}) }}" class="btn btn-primary">{{ 'entity.NoConformity.field.system.action.update'|trans }}</a>
+                {% endif %}
+            </div>
+
+            <div class="col-lg-2">
+                {% if is_granted('ROLE_DEVIATION_SAMPLE_CLOSE', deviationSample)  and editMode != 'edit' %}
+                    <a id="deviation-sample-close" class="btn btn-primary float-right">{{ 'general.close'|trans}}</a>
+                {% endif %}
+            </div>
+
+        {% endif %}
+
+    </div>
+
+    {{ form_start(form) }}
+
+    <div class="container-fluid admin-block pl-3 mb-2">
+
+        <div class="row">
+            <div class="col-lg-12"><h5 class="text-center">{{'entity.NoConformity.field.sample.declaration.section.identification'|trans }}</h5></div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-2 form-inline form-group">{{'entity.NoConformity.field.sample.declaration.userWriter'|trans }}</div>
+            <div class="col-lg-4 form-inline form-group">{% if deviationSample.createdBy is not null %}{{ deviationSample.createdBy }}{% endif %}</div>
+            <div class="col-lg-2 form-inline form-group">{{ form_label(form.observedAt) }}</div>
+            <div class="col-lg-4 form-inline form-group">{{ form_widget(form.observedAt) }}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-2 form-inline form-group">{{ form_label(form.occurrenceAt) }}</div>
+            <div class="col-lg-4 form-inline form-group">{{ form_widget(form.occurrenceAt) }}</div>
+            <div class="col-lg-2 form-inline form-group">{{'entity.NoConformity.field.sample.declaration.declaredAt'|trans }}</div>
+            <div class="col-lg-4 form-inline form-group">{% if deviationSample.declaredAt is not null %}{{ deviationSample.declaredAt|date('d-m-Y') }}{% endif %}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-2 form-inline form-group">{{ form_label(form.declaredBy) }}</div>
+            <div class="col-lg-4 form-inline form-group">{{ form_widget(form.declaredBy) }}</div>
+            <div class="col-lg-2 form-inline form-group"><span>{{'entity.NoConformity.field.sample.declaration.declaredFunction'|trans }}</span></div>
+            <div class="col-lg-3 form-inline form-group"><span id="declaredByJobDeviationSample"> {% if deviationSample.declaredBy %} {{ deviationSample.declaredBy.job }} {% else %} {% endif %}</span></div>
+
+        </div>
+    </div>
+
+    <div class="container-fluid admin-block pl-3 mb-2">
+
+        <div class="row">
+            <div class="col-lg-12"><h5 class="text-center">{{ 'entity.NoConformity.field.sample.declaration.section.description'|trans }}</h5></div>
+        </div>
+
+        <div class="row">
+            {% if deviationSample.projects is not null and editMode != 'edit' %}
+                <div class="col-lg-2 form-inline form-group">{{ 'entity.NoConformity.field.sample.declaration.projects'|trans }}</div>
+                <div class="col-lg-4 form-inline form-group">
+                    <span>{{ deviationSample.projects|join(' | ') }}</span>
+                </div>
+            {% else %}
+                <div class="col-lg-2 form-inline form-group">{{ 'entity.NoConformity.field.sample.declaration.projects'|trans }}<span class="c-red">*</span></div>
+                <div class="col-lg-4 form-inline form-group">{{ form_widget(form.projects) }}</div>
+            {% endif %}
+        </div>
+
+        <div class="row">
+            {% if deviationSample.institutions is not null and editMode != 'edit' %}
+                <div class="col-lg-2 form-inline form-group">{{ 'entity.NoConformity.field.sample.declaration.institutions'|trans }}</div>
+                <div class="col-lg-4 form-inline form-group">
+                    <span>{{ deviationSample.institutions|join(' | ') }}</span>
+                </div>
+            {% else %}
+                <div class="col-lg-2 form-inline form-group">{{ 'entity.NoConformity.field.sample.declaration.institutions'|trans }}</div>
+                <div class="col-lg-4 form-inline form-group">{{ form_widget(form.institutions) }}</div>
+            {% endif %}
+        </div>
+
+        <div class="row">
+            <div class="col-lg-2 form-inline form-group">{{ form_label(form.detectionContext) }}</div>
+            <div class="col-lg-4 form-inline form-group">{{ form_widget(form.detectionContext) }}</div>
+            <div class="col-lg-2 form-inline form-group">{{ form_label(form.detectionContextReason) }}</div>
+            <div class="col-lg-4 form-inline form-group">{{ form_widget(form.detectionContextReason) }}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-2 form-inline form-group">{{ form_label(form.detectionCenter) }}</div>
+            <div class="col-lg-4 form-inline form-group">{{ form_widget(form.detectionCenter) }}</div>
+            <div class="col-lg-2 form-inline form-group">{{ form_label(form.detectionCenterReason) }}</div>
+            <div class="col-lg-4 form-inline form-group">{{ form_widget(form.detectionCenterReason) }}</div>
+        </div>
+
+        <div class="row">
+            {% if deviationSample.processInvolves is not null and editMode != 'edit' %}
+                <div class="col-lg-2 form-inline form-group">Processus impliqué(s)</div>
+                <div class="col-lg-4 form-inline form-group">
+                    <span>{{ deviationSample.processInvolves|join(' | ') }}</span>
+                </div>
+            {% else %}
+                <div class="col-lg-2 form-inline form-group">{{ form_label(form.processInvolves) }}</div>
+                <div class="col-lg-4 form-inline form-group">{{ form_widget(form.processInvolves) }}</div>
+            {% endif %}
+            <div class="col-lg-2 form-inline form-group">{{ form_label(form.processInvolvedReason) }}</div>
+            <div class="col-lg-4 form-inline form-group">{{ form_widget(form.processInvolvedReason) }}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-2 form-inline form-group">{{ form_label(form.natureType) }}</div>
+            <div class="col-lg-4 form-inline form-group">{{ form_widget(form.natureType) }}</div>
+            <div class="col-lg-2 form-inline form-group">{{ form_label(form.natureTypeReason) }}</div>
+            <div class="col-lg-4 form-inline form-group">{{ form_widget(form.natureTypeReason) }}</div>
+        </div>
+
+        <br>
+
+        <div class="row">
+            <div class="col-lg-2 form-inline form-group">{{ form_label(form.resume) }}</div>
+            <div class="col-lg-4 form-inline form-group">{{ form_widget(form.resume) }}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-2 form-inline form-group">{{ form_label(form.description) }}</div>
+            <div class="col-lg-4 form-inline form-group">{{ form_widget(form.description) }}</div>
+        </div>
+
+    </div>
+
+    <div class="container-fluid admin-block pl-3 mb-2">
+
+        <div class="row">
+            <div class="col-lg-12"><h5 class="text-center">{{ 'entity.NoConformity.field.sample.declaration.section.cause'|trans }}</h5></div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-2 form-inline form-group">{{ form_label(form.causality) }}</div>
+            <div class="col-lg-4 form-inline form-group">{{ form_widget(form.causality) }} </div>
+            <div class="col-lg-2 form-inline form-group">{{ form_label(form.causalityReason) }}</div>
+            <div class="col-lg-4 form-inline form-group">{{ form_widget(form.causalityReason) }} </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-2 form-inline form-group">{{ form_label(form.causalityDescription) }}</div>
+            <div class="col-lg-4 form-inline form-group">{{ form_widget(form.causalityDescription) }} </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-2 form-inline form-group">{{ form_label(form.potentialImpactSample) }}</div>
+            <div class="col-lg-4 form-inline form-group">{{ form_widget(form.potentialImpactSample) }} </div>
+            <div class="col-lg-2 form-inline form-group">{{ form_label(form.potentialImpactSampleReason) }}</div>
+            <div class="col-lg-4 form-inline form-group">{{ form_widget(form.potentialImpactSampleReason) }} </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-2 form-inline form-group">{{ form_label(form.grade) }}</div>
+            <div class="col-lg-4 form-inline form-group">{{ form_widget(form.grade) }} </div>
+        </div>
+    </div>
+
+    <div class="container-fluid admin-block pl-3 mb-2">
+
+        <div class="row">
+            <div class="col-lg-12"><h5 class="text-center">{{ 'entity.NoConformity.field.sample.declaration.section.decision'|trans }}</h5></div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-2 form-group">{{ form_label(form.decisionTaken) }}</div>
+            <div class="col-lg-4 form-group">{{ form_widget(form.decisionTaken) }}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-2 form-inline form-group">Date de la décision</div>
+            <div class="col-lg-4 form-inline form-group currentDate">{% if deviationSample.decisionAt is not null %}{{ deviationSample.decisionAt|date('d-m-Y') }}{% endif %}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-2 form-inline form-group" id="deviation-sample-decision-file">{{ form_label(form.decisionFileVich) }}</div>
+            <div class="col-lg-4 form-inline form-group">{{ form_widget(form.decisionFileVich) }} </div>
+        </div>
+
+    </div>
+
+    <div class="container-fluid admin-block pl-3 mb-2">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h5 class="text-center">{{ 'entity.NoConformity.field.sample.declaration.section.deviation_protocol'|trans }}
+                    {% if is_granted('DEVIATION_SAMPLE_ASSOCIATE_DEVIATION', deviationSample) %}
+                        <a class="btn btn-primary ml-2" href="{{ path('no_conformity.deviation.sample.declaration.deviation.associate', {'deviationSampleID' : deviationSample.id }) }}">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    {% endif %}
+                </h5>
+            </div>
+        </div>
+
+        <div class="row mb-5">
+
+            <div class="col-lg-12">
+                <div class="table-responsive">
+                    <table class="w-100">
+                        <tr>
+                            <th>{{ 'entity.Deviation.DeviationSample.field.deviation.project'|trans }}</th>
+                            <th>{{ 'entity.Deviation.DeviationSample.field.deviation.number'|trans }}</th>
+                            <th>{{ 'entity.Deviation.DeviationSample.field.deviation.description'|trans }}</th>
+                            <th>Actions</th>
+                        </tr>
+
+                        {% for deviationAndSample in deviationAndSamples %}
+                            <tr>
+                                <td>{{ deviationAndSample.deviation.project }}</td>
+                                <td>{{ deviationAndSample.deviation.code }}</td>
+                                <td>{{ deviationAndSample.deviation.resume }}</td>
+                                <td>
+                                    {% if is_granted('DEVIATION_SAMPLE_ASSOCIATE_DEVIATION', deviationAndSample.deviationSample) %}
+                                        <a class="deviationSample-disassociate-deviation" href="{{ path('no_conformity.deviation.sample.declaration.deviation.disassociate', {'deviationSampleID' : deviationAndSample.deviationSample.id, 'deviationID' : deviationAndSample.deviation.id }) }}">
+                                            <i class="fa fa-unlink"></i>
+                                        </a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="container-fluid admin-block pl-3 mb-2">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h5 class="text-center">{{ 'entity.NoConformity.field.sample.declaration.section.correction'|trans }}
+                    {% if is_granted('DEVIATION_SAMPLE_CORRECTION_CREATE', deviationSample) %}
+                    <a class="btn btn-primary ml-2" href="{{ path('no_conformity.deviation.sample.declaration.correction.new', {'deviationSampleID' : deviationSample.id }) }}">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                    {% endif %}
+                </h5>
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-lg-12">
+            <div class="table-responsive">
+                <table class="w-100">
+                    <tr>
+                        <th>{{ 'entity.DeviationSample.DeviationCorrection.field.description'|trans }}</th>
+                        <th>{{ 'entity.DeviationSample.DeviationCorrection.field.applicationPlannedAt'|trans }}</th>
+                        <th>{{ 'entity.DeviationSample.DeviationCorrection.field.realizedAt'|trans }}</th>
+                        <th>{{ 'entity.DeviationSample.DeviationCorrection.field.efficiencyMeasure'|trans }}</th>
+                        <th>{{ 'entity.DeviationSample.DeviationCorrection.field.notEfficiencyMeasureReason'|trans }}</th>
+                        <th>Actions</th>
+                    </tr>
+
+                    {% for deviationSampleCorrection in deviationSampleCorrections %}
+                        <tr>
+                            <td>{{ deviationSampleCorrection.description }}</td>
+                            <td>{{ deviationSampleCorrection.applicationPlannedAt is empty ? '' : deviationSampleCorrection.applicationPlannedAt|date('d/m/Y') }}</td>
+                            <td>{{ deviationSampleCorrection.realizedAt is empty ? '' : deviationSampleCorrection.realizedAt|date('d/m/Y') }}</td>
+                            <td> {{ constant('EFFICIENCY_MEASURE', deviation)[deviationSampleCorrection.efficiencyMeasure] | trans }}</td>
+                            <td>{{ deviationSampleCorrection.notEfficiencyMeasureReason }}</td>
+                            <td>
+                                {% if is_granted('DEVIATION_SAMPLE_CORRECTION_EDIT', deviationSampleCorrection) %}
+                                    <a href="{{ path('no_conformity.deviation.sample.declaration.correction.edit', {'deviationSampleID' : deviationSampleCorrection.deviationSample.id, 'deviationSampleCorrectionID' : deviationSampleCorrection.id }) }}">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                {% endif %}
+                                {% if is_granted('DEVIATION_SAMPLE_CORRECTION_DELETE', deviationSampleCorrection) %}
+                                    <a class="deviation-sample-correction-delete" href="{{ path('no_conformity.deviation.sample.declaration.correction.delete', {'deviationSampleID' : deviationSampleCorrection.deviationSample.id, 'deviationSampleCorrectionID' : deviationSampleCorrection.id }) }}">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        </div>
+
+    </div>
+
+    <div class="container-fluid admin-block pl-3 mb-2">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h5 class="text-center" id="deviation-sample-plan-action">{{ 'entity.NoConformity.field.sample.declaration.section.action'|trans }}
+                    {% if is_granted('DEVIATION_SAMPLE_ACTION_CREATE_EDIT', deviationSample) and editMode != 'edit' %}
+                        <a class="btn btn-primary ml-2" href="{{ path('no_conformity.deviation.sample.declaration.action.new', {'deviationSampleID' : deviationSample.id }) }}">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    {% endif %}
+                </h5>
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-lg-12">
+                <div class="table-responsive">
+                    <table class="w-100" id="sample-actions">
+                        <tr>
+                            <th>{{ 'entity.Deviation.DeviationReviewAction.field.type'|trans }}</th>
+                            <th>{{ 'entity.Deviation.DeviationReviewAction.field.description'|trans }}</th>
+                            <th>{{ 'entity.Deviation.DeviationReviewAction.field.applicationAt'|trans }}</th>
+                            <th>{{ 'entity.Deviation.DeviationReviewAction.field.doneAt'|trans }}</th>
+                            <th>{{ 'entity.Deviation.DeviationReviewAction.field.status'|trans }}</th>
+                            <th>{{ 'entity.Deviation.DeviationReviewAction.field.interlocutor_intervenant'|trans }}</th>
+                            <th>Actions</th>
+                        </tr>
+
+                        {% for deviationSampleAction in deviationSampleActions %}
+                            <tr>
+                                <td>{{ constant('TYPE_ACTION', deviationAction)[deviationSampleAction.typeAction]  | trans }}</td>
+                                <td>{{ deviationSampleAction.description }}</td>
+                                <td>{{ deviationSampleAction.applicationAt is empty ? '' : deviationSampleAction.applicationAt|date('d/m/Y') }}</td>
+                                <td>{{ deviationSampleAction.doneAt is empty ? '' : deviationSampleAction.doneAt|date('d/m/Y') }}</td>
+                                <td>{{ deviationSampleAction.status is empty ? '' : constant('STATUS', deviationAction)[deviationSampleAction.status] | trans }} </td>
+                                <td>
+                                    {% if deviationSampleAction.interlocutor is not empty %}
+                                        {{ deviationSampleAction.interlocutor.displayName }}
+                                    {% endif %}
+
+                                    {% if deviationSampleAction.user is not empty %}
+                                        {{ deviationSampleAction.user.displayName }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if is_granted('DEVIATION_SAMPLE_ACTION_CREATE_EDIT', deviationSample) %}
+                                        <a class="deviation-sample-action-edit" href="{{ path('no_conformity.deviation.sample.declaration.action.edit', { 'deviationSampleID': deviationSample.id, 'deviationSampleActionID' : deviationSampleAction.id}) }}">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                    {% endif %}
+                                    {% if is_granted('DEVIATION_SAMPLE_ACTION_DELETE', deviationSample) %}
+                                        <a class="deviation-sample-action-delete" href="{{ path('no_conformity.deviation.sample.declaration.action.delete', { 'deviationSampleID': deviationSample.id, 'deviationSampleActionID' : deviationSampleAction.id}) }}">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-2 form-inline form-group">{{ form_label(form.efficiencyMeasure) }}</div>
+            <div class="col-lg-4 form-inline form-group">{{ form_widget(form.efficiencyMeasure) }}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-2 form-inline form-group">{{ form_label(form.efficiencyJustify) }}</div>
+            <div class="col-lg-4 form-inline form-group">{{ form_widget(form.efficiencyJustify) }}</div>
+            <div class="col-lg-2 form-inline form-group">{{ form_label(form.notEfficiencyMeasureReason) }}</div>
+            <div class="col-lg-4 form-inline form-group">{{ form_widget(form.notEfficiencyMeasureReason) }}</div>
+        </div>
+
+    </div>
+
+    <div class="row mb-5">
+
+        <input type="hidden" id="deviation-sample-id" value="{{ deviationSample.id }}" />
+        <input type="hidden" id="deviation-sample-status" value="{{ deviationSample.status }}" />
+        <input type="hidden" id="edit-sample-mode" value="{{ editMode }}" />
+
+        <div class="col-lg-9">
+            {% if deviationSample is not null and deviationSample.status == constant('STATUS_DRAFT', deviation) and is_granted('DEVIATION_SAMPLE_DRAFT_DELETE', deviationSample) %}
+                <a id="delete-deviation-sample-draft-popup" class="btn btn-primary">{{ 'entity.NoConformity.field.sample.declaration.draft'|trans }}</a>
+            {% endif %}
+        </div>
+
+        <div class="col-lg-3">
+            {% if is_granted('DEVIATION_SAMPLE_DRAFT_EDIT', deviationSample) and editMode == 'edit' %}
+                <button type="submit" class="btn btn-primary float-right">{{ 'word.save'|trans }}</button>
+            {% endif %}
+        </div>
+
+    </div>
+
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('deviation-sample') }}
+{% endblock %}

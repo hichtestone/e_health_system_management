@@ -1,0 +1,40 @@
+{% block content %}
+    <div class="admin-block">
+        <div>
+            <p>
+                <span class="text-primary">Êtes-vous sûr de vouloir clôturer les déviations échantillons biologiques suivantes ?</span>
+            </p>
+
+            <div>
+                {% if deviationSamplesNotClosed is not empty %}
+                    {% for deviationSampleNotClosed in deviationSamplesNotClosed %}
+                        <li class="text-primary">{{ deviationSampleNotClosed.code }}</li>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <br>
+
+            <div>
+                {% if deviationSamplesDraft is not empty %}
+                    <p class="text-danger">Attention les déviations échantillons biologiques suivantes sont en mode brouillon</p>
+                    {% for deviationSampleDraft in deviationSamplesDraft %}
+                        <li>{{ deviationSampleDraft.code }}</li>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <br>
+
+            <div>
+                {% if deviationSamplesAlreadyClosed is not empty %}
+                    <p class="text-danger">Attention les déviations échantillons biologiques suivantes sont déjà clôturées</p>
+                    {% for deviationSampleAlreadyClosed in deviationSamplesAlreadyClosed %}
+                        <li>{{ deviationSampleAlreadyClosed.code }}</li>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

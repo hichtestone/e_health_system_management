@@ -1,0 +1,55 @@
+@startuml
+
+class VariableList {
+  -String idxdxdx
+  -String name
+  +String name()
+}
+
+class VariableOption {
+  -String id
+  -String name
+  +String name()
+}
+
+class VariableType {
+  -String id
+  -String name
+  +String name()
+}
+
+class PatientData {
+  -String id
+  -String name
+  +String name()
+}
+
+class PatientVariable {
+  -String id
+  -String name
+  +String name()
+}
+
+class Patient {
+  -String id
+  -String name
+  +String name()
+}
+
+class Project {
+  -String id
+  -String name
+  +String name()
+}
+
+
+VariableList "1" -- "n" VariableOption
+VariableList "1" -- "n" PatientVariable
+PatientData "n" -- "1" Patient
+PatientData "n" -- "1" PatientVariable
+PatientVariable "n" -- "1" Project
+PatientVariable "n" -- "1" VariableType
+
+
+
+@enduml

@@ -1,0 +1,88 @@
+{% set activeMenu = 'project' %}
+{% set subMenu = 'project' %}
+{% set activeMenu2 = 'dates' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    {# Fil d'Ariane #}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="{{ 'app.home'|trans }}">{{ 'app.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.home.index', { 'id' : project.id }) }}" title="{{ project.acronyme }}">{{ project.acronyme }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.list.rule', { 'id' : project.id }) }}" title="dates">RGPD</a></li>
+            <li class="breadcrumb-item active">{{ 'entity.Rule.action.modify'|trans }}</li>
+        </ol>
+    </nav>
+
+    <h1>{{ 'entity.Rule.action.modify'|trans }}</h1>
+
+
+    {{ form_start(form) }}
+        <div class="admin-block">
+                <div class="sf-read">
+                    <h5>{{ 'entity.Rule.section.section1'|trans }}</h5>
+                    <dl class="row">
+                        <div class="col-6">
+                            {{ form_row(form.formality) }}
+                            {{ form_row(form.conformity) }}
+
+                        </div>
+                    </dl>
+                </div>
+        </div>
+        <div class="admin-block">
+            <h5>{{ 'entity.Rule.section.section2'|trans }}</h5>
+            <dl class="row">
+                <div class="col-6">
+                    {{ form_row(form.studyTransfer) }}
+                    <div id="studyTransferTerritory">
+                        {{ form_row(form.studyTransferTerritory) }}
+                    </div>
+                </div>
+                <div class="col-6">
+                    {{ form_row(form.outStudyTransfer) }}
+                    <div id="outTransferTerritory">
+                        {{ form_row(form.outTransferTerritory) }}
+                        {{ form_row(form.post) }}
+                        {{ form_row(form.partner) }}
+                    </div>
+                </div>
+            </dl>
+        </div>
+        <div class="admin-block">
+            <div class="sf-read">
+                <h5>{{ 'entity.Rule.section.section3'|trans }}</h5>
+                <dl class="row">
+                    <div class="col-6">
+                        {{ form_row(form.mapping) }}
+                        <div id="ruleMapping">
+                            {{ form_row(form.reference) }}
+                            {{ form_row(form.validateMapping) }}
+                            {{ form_row(form.eTmf) }}
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        {{ form_row(form.dataProtection) }}
+                        {{ form_row(form.dataAccess) }}
+                    </div>
+                </dl>
+                <dl class="row">
+                    <div class="col-6">
+                        <button type="submit" class="btn btn-primary">
+                            {{ ('entity.Rule.action.modify')|trans }}
+                        </button>
+                        <br>
+                        <br>
+                        <span style="color: #c30000">* {{ ('general.star.mandatory')|trans }}</span>
+                    </div>
+                </dl>
+            </div>
+        </div>
+    {{ form_end(form) }}
+
+{% endblock %}
+
+

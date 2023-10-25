@@ -1,0 +1,23 @@
+action:
+    label: '{1}Action|]1,Inf]Actions'
+
+data:
+    no_data: Aucune donnée
+
+filter:
+    archived:
+        all: Tous
+        label: Archivé
+        no: Non
+        yes: Oui
+
+toolbar:
+    export: Export
+    of: sur
+    page: Page
+    reset: Réinitialiser
+    show: Afficher
+    submit: Valider
+    total: Total
+    total_filtered: Total filtré
+    search: Recherche

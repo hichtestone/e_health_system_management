@@ -1,0 +1,103 @@
+{% set activeMenu = 'no_conformity' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block title %}Deviation système - actions{% endblock %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ path('no_conformity.protocol_deviation_crex') }}" title="Accueil">Non-Conformités</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('deviation.system.list')}}">{{ 'entity.NoConformity.menu.sample'|trans }}</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('deviation.system.declaration', { 'deviationSystemID' : deviationSystem.id })}}">{{ 'Déclaration'|trans }}</a>
+            </li>
+            <li class="breadcrumb-item active">
+                {% if action == 'edit' %} Édition plan d'action {% else %} Création plan d'action {% endif %}
+            </li>
+        </ol>
+    </nav>
+
+    <h1>Deviations systèmes</h1>
+
+    {% include 'menu/no_conformity.html.twig' with {'activetab': 'system'} %}
+
+    <br>
+    <h2>{% if action == 'edit' %} {{ 'entity.Deviation.DeviationAction.action.modify'|trans }} {% else %} {{ 'entity.Deviation.DeviationAction.action.new'|trans }} {% endif %}</h2>
+    <br>
+
+    <div class="admin-block">
+
+        {{ form_start(form) }}
+
+            <div class="row mb-3">
+                <div class="col-4">
+                    {{ form_label(form.typeAction, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.typeAction) }}
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-4">
+                    {{ form_label(form.description, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.description) }}
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-4">
+                    {{ form_label(form.applicationAt, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.applicationAt) }}
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-4">
+                    {{ form_label(form.doneAt, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.doneAt) }}
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-4">
+                    {{ form_label(form.status, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.status) }}
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-4">
+                    {{ form_label(form.intervener, null, {'label_attr': {'class': 'font-weight-bold'}}) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.intervener) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <a class="btn btn-secondary" href="{{ path('deviation.system.declaration', { 'deviationSystemID' : deviationSystem.id }) }}">{{ ('form.action.cancel')|trans }}</a>
+                    <button class="btn btn-primary" type="submit">{{ ('entity.Deviation.DeviationReviewAction.action.'~action)|trans }}</button>
+                </div>
+            </div>
+
+        {{ form_end(form) }}
+
+    </div>
+
+{% endblock %}

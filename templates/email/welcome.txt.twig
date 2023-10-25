@@ -1,0 +1,8 @@
+{% extends 'email/base.txt.twig' %}
+
+{% block body %}
+    {{ 'email.welcome.part1'|trans }}
+
+    {{ 'email.welcome.part2'|trans }} {{ absolute_url(path('set_password',{'token':user.resetPasswordToken})) }}
+
+{% endblock %}

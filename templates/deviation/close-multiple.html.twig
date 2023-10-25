@@ -1,0 +1,24 @@
+{# set current menu #}
+{% set activeMenu = 'project' %}
+{% set subMenu = 'project' %}
+{% set activeMenu2 = 'protocol-deviation' %}
+
+{% extends 'layout/app.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('projects.index') }}" title="Accueil">{{ 'menu.project.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('project.show', { 'id' : project.id }) }}">{{ 'menu.project.manage'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('deviation.list', { 'projectID' : project.id }) }}">{{ 'menu.project.protocol_deviation'|trans }}</a></li>
+            <li class="breadcrumb-item active">{{ 'entity.Deviation.action.closeMultiple'|trans }}</li>
+        </ol>
+    </nav>
+
+    <h1>{{ 'entity.Deviation.action.closeMultiple'|trans }}</h1>
+
+
+{% endblock %}
