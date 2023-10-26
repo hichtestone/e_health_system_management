@@ -1,5 +1,5 @@
 # ESM v3.0
-> Easy Study Managment product of Clinfile
+> Easy Study Managment
 
 ## Table of contents
 * [General info](#general-info)
@@ -13,7 +13,7 @@
 * [Contact](#contact)
 
 ## General info
-ESM Clinfile v3.0 - product by Clinfile
+ESM Clinfile v3.0
 
 ## Server system
 
@@ -75,7 +75,7 @@ with this commands:
 ```shell
 mkdir template
 cd template
-git clone https://github.com/Clinfile/esm-template-v3.git
+git clone https://github.com/hichtestone/e_health_system_management.git
 cd esm-template-v3
 git checkout ongoing
 ```
@@ -192,4 +192,4 @@ http://localhost:9510/#/
 Project is: _in progress_
 
 ## Contact
-Created by [@devclinfile(https://clinfile.com/) 
+mohamed.hichem@gmail.com
