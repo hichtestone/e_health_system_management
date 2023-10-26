@@ -189,7 +189,9 @@ http://localhost:9510/#/
 * TODO
 
 ## Status
+
 Project is: _in progress_
 
 ## Contact
-mohamed.hichem@gmail.com
+
+mohamed.hichem@gmail.com 
