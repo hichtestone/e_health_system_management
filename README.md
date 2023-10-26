@@ -192,4 +192,4 @@ http://localhost:9510/#/
 Project is: _in progress_
 
 ## Contact
-mohamed.hichem@gmail.com
+mohamed.hichem@gmail.com 
